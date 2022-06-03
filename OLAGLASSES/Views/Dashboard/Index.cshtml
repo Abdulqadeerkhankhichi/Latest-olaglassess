@@ -1,0 +1,192 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+    <strong>Hello!</strong> @Session["userName"] <a href="@Url.Action("Logout", "Account")" class="alert-link"> (Logout)</a>
+    <br>
+    This is your portal from where will be able to do alot of things in the upcoming sprints.
+</div>
+<div class="row">
+    <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="dash-widget-header">
+                    <span class="dash-widget-icon text-primary ">
+                        <i class="fa fa-users"></i>
+
+                    </span>
+                    <div class="dash-count">
+                        <h3>@ViewBag.users</h3>
+                    </div>
+                </div>
+                <div class="dash-widget-info">
+                    <h6 class="text-muted">Total Users</h6>
+                    <div class="progress progress-sm">
+                        <div class="progress-bar bg-primary w-50"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="dash-widget-header">
+                    <span class="dash-widget-icon text-success">
+                        <i class="fas fa-file-invoice"></i>
+                    </span>
+                    <div class="dash-count">
+                        <h3>@ViewBag.TotalOrder</h3>
+                    </div>
+                </div>
+                <div class="dash-widget-info">
+
+                    <h6 class="text-muted">Total Orders</h6>
+                    <div class="progress progress-sm">
+                        <div class="progress-bar bg-success w-50"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="dash-widget-header">
+                    <span class="dash-widget-icon text-info border-info">
+                        <i class="fa fa-fighter-jet"></i>
+                    </span>
+                    <div class="dash-count">
+                        <h3>@ViewBag.Delivered</h3>
+                    </div>
+                </div>
+                <div class="dash-widget-info">
+
+                    <h6 class="text-muted">Delivered</h6>
+                    <div class="progress progress-sm">
+                        <div class="progress-bar bg-info w-50"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="dash-widget-header">
+                    <span class="dash-widget-icon text-success border-success">
+                        <i class="fa fa-check-square"></i>
+                    </span>
+                    <div class="dash-count">
+                        <h3>@ViewBag.Complete</h3>
+                    </div>
+                </div>
+                <div class="dash-widget-info">
+
+                    <h6 class="text-muted">Completed Orders</h6>
+                    <div class="progress progress-sm">
+                        <div class="progress-bar bg-success w-50"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="dash-widget-header">
+                    <span class="dash-widget-icon text-warning border-warning">
+                        <i class="fas fa-clock"></i>
+                    </span>
+                    <div class="dash-count">
+                        <h3>@ViewBag.NotStarted</h3>
+                    </div>
+                </div>
+                <div class="dash-widget-info">
+
+                    <h6 class="text-muted">Not Started</h6>
+                    <div class="progress progress-sm">
+                        <div class="progress-bar bg-warning w-50"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="dash-widget-header">
+                    <span class="dash-widget-icon text-danger border-danger">
+                        <i class="fa fa-undo"></i>
+                    </span>
+                    <div class="dash-count">
+                        <h3>@ViewBag.Remake</h3>
+                    </div>
+                </div>
+                <div class="dash-widget-info">
+
+                    <h6 class="text-muted">Remake</h6>
+                    <div class="progress progress-sm">
+                        <div class="progress-bar bg-danger w-50"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="dash-widget-header">
+                    <span class="dash-widget-icon text-secondary border-secondary">
+                        <i class="fa fa-glasses"></i>
+                    </span>
+                    <div class="dash-count">
+                        <h3>@ViewBag.Pending</h3>
+                    </div>
+                </div>
+                <div class="dash-widget-info">
+
+                    <h6 class="text-muted">In Progress</h6>
+                    <div class="progress progress-sm">
+                        <div class="progress-bar bg-secondary w-50"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="dash-widget-header">
+                    <span class="dash-widget-icon text-primary ">
+                        <i class="fa fa-envelope"></i>
+
+                    </span>
+                    <div class="dash-count">
+                        <h3>@ViewBag.Subscription</h3>
+                    </div>
+                </div>
+                <div class="dash-widget-info">
+                    <h6 class="text-muted">Total Subscriptions</h6>
+                    <div class="progress progress-sm">
+                        <div class="progress-bar bg-primary w-50"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $(".nav li").removeClass("active");
+        $('#dashboard').addClass('active');
+
+    });
+</script>

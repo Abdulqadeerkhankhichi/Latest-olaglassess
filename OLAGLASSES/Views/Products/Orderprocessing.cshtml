@@ -1,0 +1,2934 @@
+﻿@using Olaglasses.Models;
+@model Olaglasses.Models.tblProduct
+
+@{
+    ViewBag.Title = "Orderprocessing";
+}
+
+<head>
+    <style>
+        /*disable slick slider from click */
+        /*.proccessing-aria .proccessing-right-aria .slick-dots {
+            pointer-events: none !important;
+        }*/
+
+
+        .disable-click {
+            pointer-events: none !important;
+        }
+
+
+        .proccessing-item {
+            padding-top: 0px !important;
+        }
+
+        video {
+            width: 100% !important;
+            border-radius: 20px !important
+        }
+
+        video {
+            -webkit-transform: scaleX(-1);
+            transform: scaleX(-1);
+        }
+
+        .proccessing-aria .proccessing-right-aria .proccessing-item .provide .provide-btn {
+            
+            font-size: 13px;
+                height: 43px;
+        }
+        .proccessing-aria .proccessing-right-aria .proccessing-item .provide input[type=checkbox] {
+            transform: scale(1.2);
+            margin-right: 10px;
+            margin-top: 17px;
+            margin-left: 7px;
+        }
+
+        .ddlstyle {
+            padding: 10px 20px;
+            border: 1px solid #b3b1b1;
+            border-radius: 50px;
+            color: #979595;
+            display: flex;
+            font-size: 14px;
+            line-height: 150%;
+            letter-spacing: 0.01em;
+            width: 100%;
+            -webkit-appearance: menulist;
+        }
+        .proccessing-aria .proccessing-right-aria .proccessing-item .provide ul li input {
+            padding: 7px 20px!important;
+            border-radius: 50px;
+            border: 1px solid #b3b1b1;
+        }
+
+            .ddlstyle option {
+                text-align: left !important;
+            }
+
+        .proccessing-aria .proccessing-right-aria .proccessing-item .provide .list-inline {
+            flex-wrap: initial;
+        }
+
+        .icon {
+            background: var(--Secondery-color);
+            height: 36px;
+            width: 37px;
+            border-radius: 60%;
+            padding: 8px;
+            float: right;
+        }
+        .lens_btn_text button {
+            background: #0068AB;
+            border: #0068AB;
+        }
+        .proccessing-aria .proccessing-right-aria h3 {
+
+            line-height: 0;
+            font-size: 30px;
+            
+        }
+        .proccessing-aria .proccessing-right-aria .proccessing-item h3 {
+            padding-top: 24px;
+            padding-bottom: 4px;
+        }
+        .col-md-4.col-xs-12.upload-measure-btn {
+            margin-left: 37px;
+        }
+
+
+        @@media(min-width: 300px) and (max-width: 768.98px) {
+            .camera-modal-instructions {
+                border-right: 0px solid #0068AB !important;
+            }
+
+            .take-photo {
+                width: 100% !important;
+                border-radius: 22px !important;
+                background-color: #0068AB !important;
+                border-color: #0068AB !important;
+                margin-top: 10px;
+            }
+        }
+
+        @@media(max-width: 576px) {
+            .submit-btn {
+                margin-top: 20px;
+            }
+
+            .upload-pd-btn {
+                margin-top: 2%;
+            }
+
+            .upload-measure-btn {
+                margin-top: 2%;
+            }
+        }
+
+        @@media(min-width: 769.98px) {
+            .camera-modal-instructions {
+                border-right: 2px solid #0068AB !important;
+            }
+
+            .take-photo {
+                width: 100% !important;
+                border-radius: 22px !important;
+                background-color: #0068AB !important;
+                border-color: #0068AB !important;
+            }
+
+            .submit-btn {
+                margin-top: 0px;
+            }
+        }
+
+        @@media(max-width: 768px) {
+            .mobile-view {
+                text-align: center !important;
+            }
+
+            .prescription-detail-main {
+                width: 50% !important;
+            }
+
+            .prescription-detail-list {
+                width: 100% !important;
+            }
+        }
+
+        @@media (min-width: 320px) and (max-width: 575.98px) {
+            .proccessing-aria .proccessing-right-aria .slick-dots li {
+                margin-right: 19px;
+                padding-left: 4px;
+            }
+
+                .proccessing-aria .proccessing-right-aria .slick-dots li:first-child {
+                    padding-left: 0px !important;
+                }
+
+            .proccessing-aria .proccessing-right-aria .hadding-line {
+                width: 90%;
+            }
+        }
+    </style>
+
+
+</head>
+<script src="~/assets/Twillio/twilio-video.min.js"></script>
+
+<div class="modal fade" id="videocameramodal" aria-hidden="true" tabindex="-1" style="border-radius:5px !important">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="border-radius:20px !important" id="cameramodalcontent">
+            <div class="modal-header">
+                <h3 style="font-weight:bold;color:#0068AB !important;text-align:center !important;width:100% !important">Look At The Camera</h3>
+                <a>
+                    <img onclick="closevideocamera()" src="/assets/img/clos.png" alt="img" style=" background: var(--Secondery-color); height: 30px; width: 30px; border-radius: 50%; padding: 9px; float: right;">
+                </a>
+
+            </div>
+            <div class="modal-body ">
+
+
+                <div id="video-camera-section">
+                    <div id="video-div">
+
+                    </div>
+                    <canvas id="canvas" hidden></canvas>
+
+                    <button class="btn btn-primary take-photo"
+                            onclick="CaptureImage()">
+                        Take Photo
+                    </button>
+                </div>
+
+                <div id="Uploaded-Image-Section" class="image-section text-left" style="display:none;">
+                    <img style="border-radius:20px !important;width:100% !important;height:100% !important" id="uploaded-image" src="~/assets/img/camera-overlay.png" />
+
+                    <div class="row" style="padding-top:10px  !important">
+
+                        <div class="col-md-6 col-xs-6 col-sm-6">
+                            <button style="width:100% !important;border-radius:22px !important;background-color:#0068AB !important;border-color:#0068AB !important" class="btn btn-primary"
+                                    onclick="Retake()">
+                                RETAKE
+                            </button>
+                        </div>
+                        <div class="col-md-6 col-xs-6 col-sm-6">
+                            <button style="width:100% !important;border-radius:22px !important;background-color:#009B95 !important;border-color:#009B95 !important" class="btn btn-primary submit-btn"
+                                    onclick="Submit()">
+                                SUBMIT
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="cameramodal">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" style="border-radius:1.3rem !important">
+            <div class="modal-body md">
+                <div class="modal-item">
+                    <div class="text-center">
+                        <h3 style="color:#0068AB !important">
+                            Follow the steps below
+                            <a>
+                                <img onclick="closevideocamera()" src="/assets/img/clos.png" alt="img" style=" background: var(--Secondery-color); height: 30px; width: 30px; border-radius: 50%; padding: 9px; float: right;">
+                            </a>
+                        </h3>
+
+                        <div class="row">
+                            <div class="col-md-6 camera-modal-instructions">
+                                <img style="width: 95% !important" src="~/assets/img/Instruction.png" />
+
+                            </div>
+                            <div class="col-md-6">
+                                <img style="width: 95% !important" src="~/assets/img/Blue_and_ distance.png" />
+                            </div>
+                            <div class="col-md-12">
+                                <ul style="text-align:left !important">
+                                    <li style="font-size:16px !important">
+                                        <img style="width:3% !important;padding:3px !important;border-radius:32px !important;border:2px solid orange !important" src="~/assets/img/Ellipse 34.png" />
+                                        <strong> &nbsp; &nbsp; Take off your glasses. Make sure the image is well-lit. </strong>
+                                    </li>
+                                    <br />
+                                    <li style="font-size:16px !important">
+                                        <img style="width:3% !important;padding:3px !important;border-radius:32px !important;border:2px solid orange !important" src="~/assets/img/Ellipse 34.png" />
+                                        <strong> &nbsp; &nbsp; Adjust your screen or phone so it is at the same height as your face, approximately 15inches away. </strong>
+                                    </li>
+                                    <br />
+                                    <li style="font-size:16px !important">
+                                        <img style="width:3% !important;padding:3px !important;border-radius:32px !important;border:2px solid orange !important" src="~/assets/img/Ellipse 34.png" />
+                                        <strong> &nbsp; &nbsp; Look at the camera not the screen. </strong>
+                                    </li>
+                                    <br />
+                                    <li style="font-size:16px !important">
+                                        <img style="width:3% !important;padding:3px !important;border-radius:32px !important;border:2px solid orange !important" src="~/assets/img/Ellipse 34.png" />
+                                        <strong> &nbsp; &nbsp; Place any card with a magnetic strip under your nose, facing the camera. </strong>
+                                    </li>
+
+                                </ul>
+
+                            </div>
+
+                        </div>
+
+
+
+
+
+                        <br />
+
+
+                        <button style="width:100% !important;border-radius:22px !important;background-color:#009B95 !important;border-color:#009B95 !important" class="btn btn-primary" onclick="opencamera()">I AM READY</button>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="segmentheightmodel" aria-hidden="true"
+     tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-item">
+                    <div class="text-center">
+                        <br/>
+                        <h2 style="color: #0068AB !important">
+                            Segment Height <br />
+                            (Bifocal/Progressives only)
+                        </h2><br />
+                        <img src="~/assets/img/frame.png" style="width:80%" />
+                        <img src="/assets/img/scale.png" style="width: 10%;">
+                        <span style="border-bottom:0px !important" id="product-name"></span>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="measuremodal" aria-hidden="true"
+     tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="modal-item">
+                    <div class="text-center">
+
+                        <h2 style="color: #0068AB !important">What is PD?</h2>
+                        <br />
+                        <h3>SINGLE PD MEASUREMENT</h3>
+                        <br />
+                        <img src="~/assets/img/pd1.png" style="width:75%" />
+                        <br />
+                        <br />
+                        <h3>DUAL PUPILLARY DISTANCE</h3>
+                        <br />
+                        <img src="~/assets/img/pd2.png" style="width: 75%" />
+
+                        @*<span style="border-bottom:0px !important" id="product-name"></span>
+        <p class="text-center text-justify">
+            PD or Pupillary distance, is the distance between the center of each pupil and the bridge of your nose measured in millimeters.
+            This measurement is critical to making prescription glasses
+        </p>*@
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="ValidationModal" tabindex="-1" aria-labelledby="sign-in" aria-modal="true" role="dialog">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="sign-in-area-bg">
+                    <img class="img-fluid" src="~/assets/img/Logo-sm.png" alt="img">
+                    <br />
+                    <h4>Extra Charges ($15)</h4>
+                    <p>
+                        The combination of your prescription and PD value is not suitable for this product.  Please select another product that supports a wider range of PD values
+                    </p>
+                    <div class="row">
+                        <div class="col-md-6"><button class="btn btn-primary" type="button" onclick="AddExtrcharges()"> Pay charges</button></div>
+                        <div class="col-md-6">
+                            <button class="btn btn-danger" onclick="HideValidatioModal()">Cancel</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="cameraopening" aria-hidden="true"
+     tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@*@using (Html.BeginForm("Product_Details", "Products"))
+    {
+        <form>
+            @Html.AntiForgeryToken()*@
+<section class="proccessing-aria">
+    <div class="has-bg">
+        <div class="has-bg-user-left">
+            <img src="~/assets/img/user-information-left-bg.png" alt="">
+        </div>
+        <div class="has-bg-user-right">
+            <img src="~/assets/img/user-information-right-bg.png" alt="">
+        </div>
+    </div>
+    <div class="container-fluid custum-pd">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="proccessing-left-aria">
+                    @*<img style="width:548px !important;height:279px" class="img-fluid img" src="@ViewBag.Image" alt="img">*@
+                    <img style="width:100% !important" class="img-fluid img" src="@ViewBag.Image" alt="img">
+                    <h3>@Model.Title</h3>
+                    <span>$@Model.Price</span>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="proccessing-right-aria">
+
+
+
+                    <input name="GlassID" id="GlassID" value="@Model.GlassID" hidden />
+                    <input name="Variationid" id="Variationid" value="@ViewBag.VariationId" hidden />
+                    <input name="ProductImagePath" id="ProductImagePath" value="@ViewBag.Image" hidden />
+                    <input name="Size" id="Size" value="@ViewBag.size" hidden />
+                    <input name="Colour" id="Colour" value="@ViewBag.hexacolor" hidden />
+                    <input name="Title" id="Title" value="@Model.Title" hidden />
+                    <input name="price" id="Productprice" value="@Model.Price" hidden />
+                    <input name="Quantity" id="Quantity" value="1" hidden />
+                    <input name="LensType" id="LensType" hidden />
+                    <input name="VisionType" id="VisionType" hidden />
+                    <input name="TotalAmount" id="TotalAmount" value="0" hidden />
+                    <input name="Productcategory" id="Productcategory" value="@ViewBag.Productcategory" hidden />
+                    <input name="UserID" id="Userid" value="@ViewBag.UserID" hidden />
+                    <input name="Shape" id="Shape" value="@ViewBag.Shape" hidden />
+                    <input name="pd" id="pd" value="0" hidden />
+                    <input name="pdimage" id="pdimage" value=""  hidden />
+                    <input name="pdprescriptionimage" id="pdprescriptionimage" value=""  hidden />
+
+                    <input name="FrameAWidth" id="FrameAWidth" value="@ViewBag.FrameAWidth" hidden />
+                    <input name="FrameDBBridger" id="FrameDBBridger" value="@ViewBag.FrameDBBridger" hidden />
+                    <input name="FrameED" id="FrameED" value="@ViewBag.FrameED" hidden />
+                    <input name="Extracharges" id="Extracharges" value="0" hidden />
+
+                    <input hidden id="fromwhichtype" />
+                    <input id="stage" hidden />
+                    <input id="price" value="0" hidden /> <br />
+                    <input id="UVProtection" name="UVProtection" value="0" hidden />
+                    <input id="noprescriptionstatus" hidden />
+                    <input id="txtenterprescription" value="0" hidden />
+                    <input id="isusedsaveprescription" name="isusedsaveprescription" value="0" hidden />
+
+                    @*<br/>*@
+                    <button style="display:none" type="button" onclick="getback()" class="btn btn-primary"><i class="fa fa-backward"></i> back</button>
+                    @*<br/><br />*@
+                    <h3 class=" proccessing-right-hadding mobile-view" style="height:36px !important">
+                        Processing To Buy
+                    </h3>
+
+
+
+
+
+                    <img class="img-fluid hadding-line" src="~/assets/img/line-slider.png" alt="im">
+                    <div class="proccessing-right-slider">
+                        <div class="proccessing-item" id="one">
+                            <div class="slider-headding">
+                                <h3 class="mobile-view">Vision</h3>
+                                <p class="headding-pragarph mobile-view">Choose a lens enhancement for your everyday needs</p>
+                            </div>
+                            <div class="vision-blog d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="vission-blog-item" onclick="slidersteps('Reading')" id="readingsinglevisiondiv">
+                                    <h4>reading Single Vision</h4>
+                                    <p>
+                                        One Prescription that covers the whole lens
+                                        for close-up tasks, like reading
+                                    </p>
+                                    <img class="img-fluid" src="~/assets/img/vission-img-1.png" alt="">
+                                </div>
+                                <div class="vission-blog-item" onclick="slidersteps('Distance')" id="readingdistancevisiondiv">
+                                    <h4>Distance Single Vision</h4>
+                                    <p>
+                                        One Prescription that covers the whole lens
+                                        for close-up tasks, like reading
+                                    </p>
+                                    <img class="img-fluid" src="~/assets/img/vission-img-2.png" alt="">
+                                </div>
+                                <div class="vission-blog-item" id="Noprescriptiondiv" onclick="slidersteps('nop')">
+                                    <h4>No Prescription</h4>
+                                    <p>
+                                        Non prescription lenses, for fashion cosmetic
+                                        wear.
+                                    </p>
+                                    <img class="img-fluid" src="~/assets/img/vission-img-3.png" alt="">
+                                </div>
+                            </div>
+                        </div>
+
+                        @*Skip second step*@
+                        @*<div class="proccessing-item" id="two"  >
+                                <div class="slider-headding">
+                                    <h3 class="mobile-view">Presription</h3>
+                                    <p class="headding-pragarph mobile-view">How will you provide your prescription?</p>
+                                </div>
+                                <div class="vision-blog d-flex flex-wrap justify-content-between align-items-center">
+                                    <div class="vission-blog-item presription-blog-item" onclick="slidersteps('enterprescription')" id="enterprescriptiondivborder">
+                                        <svg width="60" height="68" viewBox="0 0 60 68" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M45.0239 10.8448H14.9778V13.0431H45.0239V10.8448Z" fill="#009B95" />
+                                            <path d="M45.0239 21.4515H14.9778V23.6498H45.0239V21.4515Z" fill="#009B95" />
+                                            <path d="M34.6212 30.7209H14.9778V32.9192H34.6212V30.7209Z" fill="#009B95" />
+                                            <path d="M29.6592 0H26.0994V2.19828H29.6592V0Z" fill="#FFAC00" />
+                                            <path d="M56.9752 46.9149H54.7619V11.3944L45.761 2.19828H34.2332V0H46.7016L56.9752 10.5151V46.9149Z"
+                                                  fill="#009B95" />
+                                            <path d="M5.23873 47.153H3.02539V0H22.6872V2.19828H5.23873V47.153Z" fill="#009B95" />
+                                            <path d="M34.934 54.4989H25.0662V56.6972H34.934V54.4989Z" fill="#009B95" />
+                                            <path d="M46.4061 68C38.9176 68 32.8125 61.9547 32.8125 54.4989C32.8125 47.0431 38.8992 40.9978 46.4061 40.9978C53.913 40.9978 59.9997 47.0431 59.9997 54.4989C59.9997 61.9547 53.913 68 46.4061 68ZM46.4061 43.2144C40.135 43.2144 35.0443 48.2705 35.0443 54.4989C35.0443 60.7274 40.135 65.7834 46.4061 65.7834C52.6772 65.7834 57.7679 60.7274 57.7679 54.4989C57.7679 48.2705 52.6772 43.2144 46.4061 43.2144Z"
+                                                  fill="#009B95" />
+                                            <path d="M13.5936 68C6.08669 68 0 61.9364 0 54.4989C0 47.0614 6.08669 40.9978 13.5936 40.9978C21.1005 40.9978 27.1872 47.0431 27.1872 54.4989C27.1872 61.9547 21.0821 68 13.5936 68ZM13.5936 43.2144C7.32247 43.2144 2.23179 48.2705 2.23179 54.4989C2.23179 60.7274 7.32247 65.7834 13.5936 65.7834C19.8647 65.7834 24.9554 60.7274 24.9554 54.4989C24.9554 48.2705 19.8463 43.2144 13.5936 43.2144Z"
+                                                  fill="#009B95" />
+                                        </svg>
+                                        <h4 class="text-active presription-box-hedding">Enter Prescription Now</h4>
+                                        <p class="text-black ">
+                                            Add new prescription,
+                                            this will be saved for future use.
+                                        </p>
+                                    </div>
+
+
+                                    <div class="vission-blog-item presription-blog-item" onclick="slidersteps('SavePrescription')" id="saveprescriptiondivborder">
+                                        <svg width="60" height="75" viewBox="0 0 60 75" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M29.6415 0H25.6753V2.4642H29.6415V0Z" fill="#008EC5" />
+                                            <path d="M59.9999 52.4431H57.5316V12.7422L47.5316 2.4642H34.7046V0H48.5653L59.9999 11.7523V52.4431Z"
+                                                  fill="#0068AB" />
+                                            <path d="M60 54.4019H0V36.6259H2.46835V51.9377H57.5316V36.6259H60V54.4019Z"
+                                                  fill="#0068AB" />
+                                            <path d="M2.46835 52.4431H0V0H21.8776V2.4642H2.46835V52.4431Z" fill="#0068AB" />
+                                            <path d="M45.6548 15.7961H12.2371V18.2603H45.6548V15.7961Z" fill="#008EC5" />
+                                            <path d="M45.6548 27.6748H12.2371V30.139H45.6548V27.6748Z" fill="#008EC5" />
+                                            <path d="M31.222 41.5754H28.7537V72.0514H31.222V41.5754Z" fill="#FFAC00" />
+                                            <path d="M29.9994 75L17.7842 62.2999L19.5563 60.5939L29.9994 71.4406L40.4424 60.5939L42.2146 62.2999L29.9994 75Z"
+                                                  fill="#FFAC00" />
+                                        </svg>
+                                        <h4 class="presription-box-hedding ">Use Saved Prescription</h4>
+                                        <p>
+                                            Load a previously saved prescription
+                                            from your account, requires login
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>*@
+
+
+                        <div class="proccessing-item" id="three">
+                            <div id="enterprescriptiondiv" style="display:none">
+                                <div class="slider-headding">
+                                    <h3 class="mobile-view">Provide Your Prescription</h3>
+                                    <p class="headding-pragarph mobile-view">How will you provide your prescription?</p>
+                                    <p id="prescriptionerrormessage" style="color:red;"></p>
+                                </div>
+                                <div class="provide">
+                                    <div class="provide-item">
+                                        <div class="eye-size">
+                                            <div class="dropdown_content_btn">
+                                                <div class="lens_dpr">
+                                                    @*<select onchange="loadprescriptiondetail(this)" id="ddlrsph" name="ddlrsph" class="form-control ddlstyle js-example-basic-single ddl">
+                                                            <option value="0">Load Save Prescription</option>
+                                                            @foreach (var item in ViewBag.UserPrescription)
+                                                            {
+                                                                <option value="@item.PrescriptionID">@item.prescription </option>
+                                                            }
+                                                        </select>*@
+
+                                                    @{int Dualpd = 0;}
+                                                    @{double Rightpd = 0; }
+                                                    @{string Segmentheight = ""; }
+
+                                                    <div class="provice_proccess dropdown">
+                                                        <button class="btn dropdown-toggle" type="button" id="ddloldprescription" data-bs-toggle="dropdown" aria-expanded="false" tabindex="0">
+                                                            Load Save Prescription <img src="~/assets/img/provide-dropdown-icon.png" alt="icon">
+                                                        </button>
+                                                        <ul class="dropdown-menu" aria-labelledby="ddloldprescription">
+                                                            @foreach (var item in ViewBag.UserPrescription)
+                                                            {
+                                                                if (@item.Dualpd != null)
+                                                                {
+                                                                    Dualpd = item.Dualpd;
+                                                                }
+                                                                if (@item.Rightpd != null)
+                                                                {
+                                                                    Rightpd = item.Rightpd;
+                                                                }
+                                                                if (@item.Segmentheight != null)
+                                                                {
+                                                                    Segmentheight = item.Segmentheight;
+                                                                }
+                                                                string date = @item.prescriptionDate.ToString("yyyy-MM-dd");
+                                                                //string date="";
+                                                                <li onclick="loadprescriptiondetail(@Dualpd,@Rightpd,'@Segmentheight',@item.PrescriptionID,@item.ProductID,@item.OrderID,'@item.r_sph','@item.r_cyl','@item.r_axis','@item.r_add','@item.l_sph','@item.l_cyl','@item.l_axis','@item.l_add','@item.lensType', @item.quantity,'@item.Fname', '@item.Lname','@item.prescription', '@date',@item.PD, @item.UserID, '@item.PDImage', '@item.PrescriptionImage')">
+                                                                    <a class="dropdown-item" tabindex="0">@item.prescription</a>
+                                                                </li>
+                                                            }
+
+
+                                                        </ul>
+                                                        <input id="ddloldprescriptionvalue" value="0" hidden />
+                                                    </div>
+
+                                                </div>
+                                                <div class="lens_btn_text">
+                                                    <button class="btn btn-primary" type="button" onclick="clearvalues()">Enter New Prescription</button>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="row justify-content-between align-items-center flex-wrap">
+                                                <div class="col-lg-3">
+                                                    <h5>Right Eyes</h5>
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    <ul class="list-inline">
+
+                                                        <div class="row">
+                                                            <div class="col-lg-3 col-sm-6 col-xs-6 prescription-detail-main">
+                                                                <li class="list-inline-item prescription-detail-list">
+                                                                    <span>SPH</span>
+                                                                    <div class="dropdown">
+                                                                        <select onchange="slidersteps('confirmnow1')" id="ddlrsph" name="ddlrsph" class="form-control ddlstyle js-example-basic-single ddl">
+                                                                            @foreach (var item in ViewBag.SPH)
+                                                                            {
+
+                                                                                <option value="@item.TypeValue">@item.TypeValue </option>
+
+                                                                            }
+
+                                                                        </select>
+                                                                    </div>
+                                                                </li>
+                                                            </div>
+
+                                                            <div class="col-lg-3 col-sm-6 col-xs-6 prescription-detail-main">
+                                                                <li class="list-inline-item prescription-detail-list">
+                                                                    <span>CYL</span>
+                                                                    <div class="dropdown">
+                                                                        <select id="ddlrcyl" name="ddlrcyl" class="form-control ddlstyle js-example-basic-single ddl">
+                                                                            @foreach (var item in ViewBag.CYL)
+                                                                            {
+
+                                                                                <option value="@item.TypeValue">@item.TypeValue</option>
+
+                                                                            }
+
+                                                                        </select>
+                                                                    </div>
+                                                                </li>
+                                                            </div>
+
+                                                            <div class="col-lg-3 col-sm-6 col-xs-6 prescription-detail-main">
+                                                                <li class="list-inline-item prescription-detail-list">
+                                                                    <span>AXIS</span>
+                                                                    <div class="dropdown">
+
+                                                                        <input id="txtraxis" name="txtraxis" type="text" class="form-control" />
+
+                                                                    </div>
+                                                                </li>
+                                                            </div>
+                                                            <div class="col-lg-3 col-sm-6 col-xs-6 prescription-detail-main">
+                                                                <li class="list-inline-item prescription-detail-list">
+                                                                    <span>ADD</span>
+                                                                    <div class="dropdown">
+                                                                        <select id="ddlradd" name="ddlradd" class="form-control ddlstyle js-example-basic-single ddl">
+                                                                            @foreach (var item in ViewBag.ADD)
+                                                                            {
+
+                                                                                <option value="@item.TypeValue">@item.TypeValue</option>
+
+                                                                            }
+
+                                                                        </select>
+                                                                    </div>
+                                                                </li>
+
+                                                            </div>
+
+                                                        </div>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-between align-items-center flex-wrap mt-3">
+                                                <div class="col-lg-3">
+                                                    <h5>Left Eye</h5>
+                                                </div>
+                                                <div class="col-lg-9">
+                                                    <ul class="list-inline">
+
+                                                        <div class="row">
+
+
+                                                            <div class="col-lg-3 col-sm-6 col-xs-6 prescription-detail-main">
+                                                                <li class="list-inline-item prescription-detail-list">
+                                                                    <span>SPH</span>
+                                                                    <div class="dropdown">
+
+                                                                        <select onchange="slidersteps('confirmnow1')" id="ddllsph" name="ddllsph" class="form-control ddlstyle js-example-basic-single ddl">
+                                                                            @foreach (var item in ViewBag.SPH)
+                                                                            {
+
+                                                                                <option value="@item.TypeValue">@item.TypeValue</option>
+
+                                                                            }
+
+                                                                        </select>
+                                                                    </div>
+                                                                </li>
+                                                            </div>
+
+                                                            <div class="col-lg-3 col-sm-6 col-xs-6 prescription-detail-main">
+                                                                <li class="list-inline-item prescription-detail-list">
+                                                                    <span>CYL</span>
+                                                                    <div class="dropdown">
+                                                                        <select id="ddllcyl" name="ddllcyl" class="form-control ddlstyle js-example-basic-single ddl">
+                                                                            @foreach (var item in ViewBag.CYL)
+                                                                            {
+
+                                                                                <option value="@item.TypeValue">@item.TypeValue</option>
+
+                                                                            }
+
+                                                                        </select>
+                                                                    </div>
+                                                                </li>
+                                                            </div>
+                                                            <div class="col-lg-3 col-sm-6 col-xs-6 prescription-detail-main">
+                                                                <li class="list-inline-item prescription-detail-list">
+                                                                    <span>AXIS</span>
+                                                                    <div class="dropdown">
+
+                                                                        <input id="txtlaxis" name="txtlaxis" type="text" class="form-control" />
+
+                                                                    </div>
+                                                                </li>
+
+                                                            </div>
+
+                                                            <div class="col-lg-3 col-sm-6 col-xs-6 prescription-detail-main">
+                                                                <li class="list-inline-item prescription-detail-list">
+                                                                    <span>ADD</span>
+                                                                    <div class="dropdown">
+                                                                        <select id="ddlladd" name="ddlladd" class="form-control ddlstyle js-example-basic-single ddl">
+                                                                            @foreach (var item in ViewBag.ADD)
+                                                                            {
+
+                                                                                <option value="@item.TypeValue">@item.TypeValue</option>
+
+                                                                            }
+
+                                                                        </select>
+                                                                    </div>
+                                                                </li>
+                                                            </div>
+                                                        </div>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="provide-item provide-item2">
+                                        <div class="eye-size">
+
+
+                                            <div class="row justify-content-between align-items-center flex-wrap">
+
+                                                <div class="col-lg-5 col-sm-6">
+                                                    <div class="distance_pd_check">
+                                                        <h5>
+                                                            Pupillary Distance <br>
+                                                            (PD)
+                                                        </h5>
+                                                        <div class="text-center" id="simplepd">
+
+                                                            <span class="pd">PD</span>
+                                                            <div class="dropdown">
+                                                                <select onchange="slidersteps('confirmnow1')" id="ddllPD" name="ddllPD" class="form-control ddlstyle js-example-basic-single ddl">
+                                                                    @foreach (var item in ViewBag.PD)
+                                                                    {
+
+                                                                        <option value="@item.TypeValue">@item.TypeValue</option>
+
+                                                                    }
+
+                                                                </select>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="uplode_ntr col-lg-7 col-sm-8">
+                                                    <div class="row" style="width:100%">
+
+                                                        <div class="col-md-6 col-xs-12 upload-pd-btn">
+
+                                                            <div class="uploded-btn-area" onclick="opencameramodal()">
+
+                                                                <label class="provide-btn">
+
+                                                                    upload Pd phot
+                                                                </label>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="col-md-6 col-xs-12  upload-measure-btn">
+
+                                                            <div class="uploded-btn-area">
+                                                                <label onclick="openmeasuremodal()" class="provide-btn me-btn">
+
+                                                                    <img src="~/assets/img/provide-btn-img.png" alt="img">
+                                                                    uMeasure my
+                                                                    Pd
+                                                                </label>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <input type="checkbox" id="chkdualpd" onclick="showrightleftpd()" /> Two pd numbers
+
+                                            
+                                            <div class="card" id="divduappd" style="margin-top:2%;display: none; border: 0px; box-shadow: 0 3px 10px rgb(0 0 0 / 20%);">
+                                                <div class="card-body">
+                                                    <div class="card-header" style="border:0;background-color:transparent">
+                                                        <h5>PD-Pupilary Distance</h5>
+                                                    </div>
+                                                    <div class="lens_left_right_pd" style="padding:2%">
+                                                        <div class="lens_sc_box">
+                                                            <span>Right PD*</span>
+                                                            <div class="dropdown">
+                                                                <select style="border-radius:0px" id="ddlrightPD" name="ddlrightPD" class="form-control ddlstyle js-example-basic-single ddl">
+                                                                    <option value="0">Please select a value</option>
+                                                                    @foreach (var item in ViewBag.PD)
+                                                                    {
+
+                                                                        <option value="@item.TypeValue">@item.TypeValue</option>
+
+                                                                    }
+
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="lens_sc_box">
+
+                                                            <span>Left PD*</span>
+                                                            <div class="dropdown">
+                                                                <select style="border-radius:0px" id="ddlleftPD" name="ddlleftPD" class="form-control ddlstyle js-example-basic-single ddl">
+                                                                    <option value="0">Please select a value</option>
+                                                                    @foreach (var item in ViewBag.PD)
+                                                                    {
+
+                                                                        <option value="@item.TypeValue">@item.TypeValue</option>
+
+                                                                    }
+
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            
+
+                                        </div>
+                                    </div>
+
+                                    <div class="provide-item provide-item2">
+                                        <div class="eye-size">
+                                            <div class="row justify-content-between align-items-center flex-wrap">
+                                                <div class="col-lg-4 col-sm-4">
+                                                    <h5>
+                                                       Segment Height <br>
+                                                       (Bifocal/Progressives only)
+
+                                                    </h5>
+                                                </div>
+                                                <div class="col-lg-8 col-sm-8">
+                                                    <ul class="list-inline">
+                                                        <li class="list-inline-item" id="segment"  >
+
+                                                            <div class="dropdown" >
+                                                                <label>Optional</label>
+                                                                <input value="0.00"  id="ddlSegmentheight" name="ddlSegmentheight" type="text" class="form-control text-center" tabindex="0">
+                                                                @*<select id="ddlSegmentheight" name="ddlSegmentheight" class="form-control ddlstyle js-example-basic-single ddl">
+
+
+                                                                    <option selected value="Bifocal">Bifocal</option>
+                                                                    <option value="Progressive Only">Progressive Only</option>
+
+
+
+                                                                </select>*@
+                                                            </div>
+                                                        </li>
+                                                        <li class="list-inline-item">
+                                                            <p onclick="opensegmentmodal()" class="segment-height">What Segment Height?</p>
+                                                        </li>
+
+                                                    </ul>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="prescription-form">
+                                        <div class="row justify-content-between align-items-start flex-wrap">
+                                            <div class="col-lg-3 col-sm-4">
+                                                <h5 class="pt-3 whois-the custom-mt d-sm-block d-none">
+                                                    Who is the <br>
+                                                    Prescription For*
+                                                </h5>
+                                                <h5 class="mt-4 pt-5 whois-the custom-mt3  d-sm-block d-none">
+                                                    Save Prescription *
+                                                </h5>
+                                                <h5 class="mt-4 pt-2 whois-the custom-mt2 d-sm-block d-none">
+                                                    Upload
+                                                    Prescription *
+                                                </h5>
+                                            </div>
+                                            <div class="col-lg-9 col-sm-8">
+
+                                                <div class="row align-items-center">
+                                                    <h5 class="whois-the custom-mt d-block d-sm-none">
+                                                        Who is the <br>
+                                                        Prescription For*
+                                                    </h5>
+                                                    <div class="col-md-6 col-sm-6 mb-sm-4  mb-2">
+                                                        <label for="name">
+                                                            First Name*
+                                                        </label> <br>
+                                                        <input id="name" class="input form-control " type="text"
+                                                               placeholder="Enter First name">
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6 mb-sm-4  mb-2">
+                                                        <label for="lname">Last Name*</label> <br>
+                                                        <input id="lname" class="input form-control" type="text"
+                                                               placeholder="Enter Last name">
+                                                    </div>
+                                                    <h5 class="mt-sm-4 pt-sm-4 mt-1 pt-1 whois-the custom-mt3 d-block d-sm-none">
+                                                        Save Prescription *
+                                                    </h5>
+                                                    <div class="col-md-6 col-sm-6 mb-sm-4  mb-2">
+                                                        <label for="prescription">
+                                                            Save Your Prescription For Future Use
+                                                        </label> <br>
+
+                                                        <input placeholder="Prescription Name" class="input form-control" type="text" id="prescription" name="prescription" />
+                                                        @*<select class="form-control  ddlstyle js-example-basic-single ddl">
+                <option value="Yes">Yes</option>
+                <option selected value="No">No</option>
+            </select>*@
+
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6  mb-sm-4  mb-2">
+                                                        <label for="date">Date Of Prescription * </label> <br>
+                                                        <input required id="presctiptiondate" class="input form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" type="date" placeholder="Date">
+                                                    </div>
+                                                    <h5 class="mt-4 pt-3 whois-the custom-mt2 d-block d-sm-none">
+                                                        Upload <br>
+                                                        Prescription *
+                                                    </h5>
+                                                    <div class="col-md-6 col-sm-6 mb-sm-4  mb-2">
+                                                        <div class="uploded-btn-area">
+                                                            <label for="uplod" class="provide-btn measure btn" style="font-size:12px !important">
+                                                                <input id="uplod" class="form-control" type="file" onchange="show(this)" />
+                                                                Upload Prescription Here
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6 mb-sm-4  mb-2">
+                                                        <div class="uploded-btn-area">
+
+                                                            <p class="text-aria">Allowed Types (JPG, PDF, PNG, JPEG)</p>
+                                                        </div>
+                                                    </div>
+
+
+                                                  
+                                                    <div class="row d-flex justify-content-between align-items-center flex-wrap" id="PDRXImage">
+
+                                                        <div class="profile-div col-md-6 col-sm-6 mb-sm-4  mb-2">
+                                                            <div class="subtotal-blog">
+
+                                                                <img src="~/assets/img/placeholder.jpg" id="ImagePath">
+                                                                <input type="text" name="ImagePath" hidden id="txtImagePath">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="profile-div col-md-6 col-sm-6 mb-sm-4  mb-2">
+                                                            <div class="subtotal-blog">
+
+                                                                <img src="~/assets/img/placeholder.jpg" id="ImagePDPath">
+                                                                <input type="text" name="ImagePDPath" hidden id="txtImagePDPath">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="upload-area">
+                                    </div>
+                                    <div class="confirm-btn-aria">
+                                        <a style="width:100% !important" class="provide-btn d-block" onclick="slidersteps('confirmnow')" href="#">confirm now</a>
+                                    </div>
+
+                                    <div style="height:150px">
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*select prescription*@
+                            <div id="saveprescriptiondiv" style="display:none">
+                                <div class="slider-headding">
+                                    <h3 class="mobile-view">Save Presription</h3>
+                                    <p class="headding-pragarph mobile-view">Please select one  </p>
+                                    <p id="saveprescriptionerrormessage" style="color:red;"></p>
+                                </div>
+                                @*<div class="table-responsive">
+                                        <table class="table table-bordered text-center">
+                                            <tbody>
+                                                <tr class="table-headding">
+
+                                                    <td>R_SPH</td>
+                                                    <td>R_CYL</td>
+                                                    <td>R_AXIS</td>
+                                                    <td>R_ADD</td>
+                                                    <td>L_SPH</td>
+                                                    <td>L_CYL</td>
+                                                    <td>L_AXIS</td>
+                                                    <td>L_ADD</td>
+                                                    <td>PD</td>
+                                                    <td>PD Photo</td>
+                                                    <td>Prescription Photo</td>
+                                                    <td></td>
+                                                </tr>
+                                                @foreach (var item in ViewBag.UserPrescription)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            @item.r_sph
+                                                        </td>
+                                                        <td>
+                                                            @item.r_cyl
+
+                                                        </td>
+                                                        <td>@item.r_axis</td>
+                                                        <td>@item.r_add</td>
+                                                        <td>@item.l_sph</td>
+                                                        <td>@item.l_cyl </td>
+                                                        <td>@item.l_axis</td>
+                                                        <td>@item.l_add</td>
+                                                        <td>@item.PD</td>
+                                                        <td><a href="@item.PDImage"><i class="fa fa-file"></i></a></td>
+                                                        <td><a href="@item.PrescriptionImage"><i class="fa fa-file"></i></a></td>
+                                                        <td>
+                                                            <button onclick="slidersteps('PrescriptionList'); Yourprescription('table',@item.r_sph,@item.r_cyl,@item.r_axis,@item.r_add,
+                                    @item.l_sph,@item.l_cyl,@item.l_axis,@item.l_add,@item.PD,'@item.PDImage','@item.PrescriptionImage')" class="btn btn-primary">
+                                                                Select
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                }
+
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>*@
+                                <div class="frame-item">
+                                    <div class="table-aria">
+                                        <table class="table table-bordered text-center">
+                                            <tbody>
+                                                <tr class="table-headding">
+                                                    <td></td>
+                                                    <td>SPH</td>
+                                                    <td>CYL</td>
+                                                    <td>AXIS</td>
+                                                    <td>ADD</td>
+                                                    <td>PD</td>
+                                                    <td></td>
+                                                </tr>
+                                                @foreach (var item in ViewBag.UserPrescription)
+                                                {
+                                                    <tr>
+                                                        <td>Left</td>
+                                                        <td>@item.l_sph</td>
+                                                        <td>@item.l_cyl</td>
+                                                        <td>@item.l_axis</td>
+                                                        <td>@item.l_add</td>
+                                                        <td rowspan="2" class="alinment" style="padding-top:30px !important">@item.PD</td>
+                                                        <td rowspan="2" class="alinment" style="padding-top:30px !important">
+                                                            <i onclick="slidersteps('PrescriptionList'); Yourprescription('table',@item.r_sph,@item.r_cyl,@item.r_axis,@item.r_add,
+                                    @item.l_sph,@item.l_cyl,@item.l_axis,@item.l_add,@item.PD,'@item.PDImage','@item.PrescriptionImage')"
+                                                               class="fa fa-arrow-right" style="background-color:#0d6efd;color:white;padding:10px" aria-hidden="true"></i>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="table-bg">
+                                                        <td>Right</td>
+                                                        <td>@item.r_sph</td>
+                                                        <td>@item.r_cyl</td>
+                                                        <td>@item.r_axis</td>
+                                                        <td>@item.r_add</td>
+                                                    </tr>
+                                                }
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="proccessing-item" id="four">
+                            <div class="slider-headding">
+                                <h3 class="mobile-view">Lens Ennancement</h3>
+                                <p class="headding-pragarph mobile-view">Choose a lens enhancement for your everyday needs</p>
+                            </div>
+                            <div class="ennancement-blog">
+                                <div class="row g-4">
+                                    <div class="col-sm-6">
+                                        <div class="ennancement-bg h-100" onclick="slidersteps('Standardlens')" id="standarddiv">
+                                            <h4>
+                                                Standard lens <br>
+                                                $39
+                                            </h4>
+                                            <img class="img-fluid" src="~/assets/img/ennancement-blog-img-1.png" alt="img">
+                                            <p>Clear plastic Lens</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="ennancement-bg" onclick="slidersteps('Enhancedlens')" id="enhanceddiv">
+                                            <h4>
+                                                Enhanced lens <br>
+                                                $49
+                                            </h4>
+                                            <img class="img-fluid" src="~/assets/img/ennancement-blog-2.png" alt="img">
+                                            <div class="d-flex justify-content-around">
+                                                <p>
+                                                    Anti glare coat <br>
+                                                    Scratch Resistant
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="proccessing-item" id="five">
+                            <div class="slider-headding">
+                                <h3 class="mobile-view">UV Protection</h3>
+                                <p class="headding-pragarph mobile-view">Make your lenses transition in sunligh</p>
+                            </div>
+                            <div class="uv-protection">
+                                <div class="uv-protection-img position-relative ">
+                                    <div class="img">
+                                        <img id="uvprotectionborder" class="img-fluid" src="~/assets/img/blog-img-three.png" alt="img" onclick="slidersteps('UVProtection')">
+                                        <a id="skipborder" class="position-absolute skip-btn" href="#" onclick="slidersteps('Skip')">or skip</a>
+                                    </div>
+                                    <div class="uv-protection-shape position-absolute">
+                                        <div class="shape-1"> <img src="~/assets/img/uv-protection-shape-1.png" alt="img"></div>
+                                        <div class="shape-details ">
+                                            <div class="shape-2 position-relative ">
+                                                <img src="~/assets/img/uv-protection-shape-2.png" alt="img">
+                                                <h4 class="position-absolute">For only <br>$20</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="six" class="proccessing-item">
+                            <div class="slider-headding">
+                                <h3 class="mobile-view">Frame</h3>
+                                <p class="headding-pragarph mobile-view">How will you provide your prescription?</p>
+                            </div>
+                            <div class="frame-item">
+                                <h4 class="frame-headding">Frame</h4>
+                                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                    <ul class="list-inline">
+
+                                        <li class="list-inline-item">@ViewBag.colorname</li>
+                                        <li class="list-inline-item">@ViewBag.size</li>
+                                    </ul>
+                                    @{int price = Convert.ToInt32(@Model.Price);}
+                                    <h4>$ @price.ToString("0.00")</h4>
+                                </div>
+                                <div id="no_prescription_content">
+                                    <h4>Your prescription</h4>
+                                    <div class="table-aria">
+                                        <table class="table table-bordered text-center">
+                                            <tbody id="tblprescriptiondetails">
+                                                <tr class="table-headding">
+                                                    <td></td>
+                                                    <td>SPH</td>
+                                                    <td>CYL</td>
+                                                    <td>AXIS</td>
+                                                    <td>ADD</td>
+                                                    <td>PD</td>
+                                                </tr>
+                                                <tr id="leftrow">
+                                                    <td>Left</td>
+                                                    <td id="lsph"></td>
+                                                    <td id="lcyl"></td>
+                                                    <td id="laxis"></td>
+                                                    <td id="ladd"></td>
+                                                    <td id="tpd" rowspan="2" class="alinment" style="padding-top:30px !important"></td>
+                                                </tr>
+                                                <tr class="table-bg" id="rightrow">
+                                                    <td>Right</td>
+                                                    <td id="rsph"></td>
+                                                    <td id="rcyl"></td>
+                                                    <td id="raxis"></td>
+                                                    <td id="radd"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                                <ul class="prescription-list" id="addtocartproducts">
+                                </ul>
+                                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                    <h3>Subtotal</h3>
+                                    <h3 id="Subtotal">$42.95</h3>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center flex-wrap" id="PDRXImage">
+
+                                    <div class="subtotal-blog" id="divimgpd" >
+                                        <img style="" id="imgpd" src="/assets/img/placeholder.jpg" alt="img">
+                                        <h5>PD Image</h5>
+                                    </div>
+
+                                    <div class="subtotal-blog" id="divimgrx">
+                                        <img style="" id="imgrx" class="img-fluid" src="/assets/img/placeholder.jpg" alt="img">
+                                        <h5>Prescription Image</h5>
+                                    </div>
+
+                                </div>
+
+                                <div class="subtotal-chakbox" id="subtotal-chakbox">
+                                    <label class="container">
+                                        I confirm that the prescription I entered is correct.
+                                        <input type="checkbox" id="ConfirmID" checked>
+                                        <input type="text" id="txtConfirmID" value="true" hidden>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <button id="AddtoCart"  style="width:100% !important;" type="button" class="cart-button d-block text-center" onclick="Addtocart()">add to cart</button>
+                                @*<div style="height:50px">
+                                </div>*@
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@*</form>
+    }*@
+<!-- ::::proccessing end:::::: -->
+<script src="~/assets/js/jquery-3.5.1.js"></script>
+<script type="text/javascript">
+    $('#ConfirmID').click(function() {
+        $('#txtConfirmID').val($(this).is(':checked'));
+  
+            });
+    function showrightleftpd() {
+        var chkdualpd = document.getElementById('chkdualpd');
+        if (chkdualpd.checked) {
+            document.getElementById('simplepd').style.display = "none";
+            document.getElementById('divduappd').style.display = "block";
+        }
+        else {
+            document.getElementById('simplepd').style.display = "block";
+            document.getElementById('divduappd').style.display = "none";
+        }
+    }
+
+    function clearvalues() {
+
+        $("#ddlrsph").val("+8.00");
+        $("#ddlrcyl").val("0.00");
+        $("#txtraxis").val("");
+        $("#ddlradd").val("0.00");
+
+        $("#ddllsph").val("+8.00");
+        $("#ddllcyl").val("0.00");
+        $("#txtlaxis").val("");
+        $("#ddlladd").val("0.00");
+
+        $("#ddllPD").val("0");
+
+        $("#name").val("");
+        $("#lname").val("");
+        $("#prescription").val("");
+
+        $("#presctiptiondate").val("");
+        /*$("#presctiptiondate").trigger("change");*/
+
+        document.getElementById("ImagePath").src = "/assets/img/placeholder.jpg";
+        $("#ImagePath").val("");
+
+        document.getElementById("ImagePDPath").src = "/assets/img/placeholder.jpg";
+        $("#ImagePDPath").val("");
+
+
+        document.getElementById("imgrx").src = "/assets/img/placeholder.jpg";
+        document.getElementById("imgpd").src = "/assets/img/placeholder.jpg";
+        $("#ddloldprescriptionvalue").val("0");
+        $("#pdimage").val("");
+        $("#pdprescriptionimage").val("");
+        document.getElementById('simplepd').style.display = "block";
+        document.getElementById('divduappd').style.display = "none";
+
+        document.getElementById("chkdualpd").checked = false;
+    }
+
+
+    function loadprescriptiondetail(Dualpd,Rightpd, Segmentheight, PrescriptionID, ProductID, OrderID, r_sph, r_cyl, r_axis, r_add,
+        l_sph, l_cyl, l_axis, l_add, lensType, quantity, Fname, Lname, prescription, prescriptionDate,
+        PD, UserID, PDImage, PrescriptionImage) {
+
+
+        $("#ddlrsph").val(r_sph);
+        $("#ddlrcyl").val(r_cyl);
+        $("#txtraxis").val(r_axis);
+        $("#ddlradd").val(r_add);
+
+        $("#ddllsph").val(l_sph);
+        $("#ddllcyl").val(l_cyl);
+        $("#txtlaxis").val(l_axis);
+        $("#ddlladd").val(l_add);
+
+        $("#ddllPD").val(PD);
+
+        $("#name").val(Fname);
+        $("#lname").val(Lname);
+        $("#prescription").val(prescription);
+
+        $("#presctiptiondate").val(prescriptionDate);
+        $("#presctiptiondate").trigger("change");
+
+        document.getElementById("ImagePath").src = PrescriptionImage;
+        $("#ImagePath").val(PrescriptionImage);
+
+        document.getElementById("ImagePDPath").src = PDImage;
+        $("#ImagePDPath").val(PDImage);
+
+
+        $("#pdimage").val(PDImage);
+        $("#pdprescriptionimage").val(PrescriptionImage);
+
+        $("#ddlSegmentheight").val(Segmentheight);
+
+        document.getElementById("imgrx").src = PrescriptionImage;
+        document.getElementById("imgpd").src = PDImage;
+
+        $("#ddloldprescriptionvalue").val(PrescriptionID);
+
+        if (Dualpd != 0) {
+            document.getElementById('simplepd').style.display = "none";
+            document.getElementById('divduappd').style.display = "block";
+            $("#ddlleftPD").val(PD);
+            $("#ddlrightPD").val(Rightpd);
+            document.getElementById("chkdualpd").checked = true;
+        }
+        else
+        {
+            $("#ddllPD").val(PD);
+            document.getElementById('simplepd').style.display = "block";
+            document.getElementById('divduappd').style.display = "none";
+            document.getElementById("chkdualpd").checked = false;
+        }
+    }
+
+
+
+    document.addEventListener("click", function (evt) {
+
+        var flyoutElement = document.getElementById('cameramodalcontent'),
+            targetElement = evt.target;  // clicked element
+
+        do {
+            if (targetElement == flyoutElement) {
+
+                return;
+            }
+            // Go up the DOM
+            targetElement = targetElement.parentNode;
+        } while (targetElement);
+
+        /*alert("Clicked outside!");*/
+        /*document.getElementById('ImagePDPath').src = "/assets/img/placeholder.jpg";*/
+        const video = document.querySelector('video');
+
+        // A video's MediaStream object is available through its srcObject attribute
+        const mediaStream = video.srcObject;
+
+        // Through the MediaStream, you can get the MediaStreamTracks with getTracks():
+        const tracks = mediaStream.getTracks();
+
+        // Tracks are returned as an array, so if you know you only have one, you can stop it with:
+        tracks[0].stop();
+    });
+
+
+    const container = document.getElementById("video-div");
+    async function startVideo() {
+        $("#video-div video").remove();
+        const track = await Twilio.Video.createLocalVideoTrack();
+        container.append(track.attach());
+        video = document.getElementsByTagName("video")[0];
+
+
+    }
+    document.addEventListener("DOMContentLoaded", function (event) {
+        //startVideo();
+
+
+    });
+
+
+    //function loadpresriptionvalue(r_sph, r_cyl, r_axis, r_add, l_sph, l_cyl, l_axis, l_add, PD, Fname, Lname, prescription, prescriptionDate, PDImage, PrescriptionImage) {
+    //    alert(r_sph);
+    //    $("#ddlrsph").val(r_sph);
+    //}
+
+    $(document).ready(function () {
+        //$('.slick-slider').slick('unslick');
+        
+        $('.slick-dots li:nth-child(2)').addClass("disable-click");
+        $('.slick-dots li:nth-child(3)').addClass("disable-click");
+        $('.slick-dots li:nth-child(4)').addClass("disable-click");
+        $('.slick-dots li:nth-child(5)').addClass("disable-click");
+        $('.slick-dots li:nth-child(6)').addClass("disable-click");
+    });
+
+    function Retake() {
+
+        $("#video-camera-section").fadeIn();
+        $("#Uploaded-Image-Section").fadeOut();
+
+        document.getElementById('ImagePDPath').src = "/assets/img/placeholder.jpg";
+    }
+
+    function Submit() {
+        $("#videocameramodal").modal("hide");
+        const video = document.querySelector('video');
+
+        // A video's MediaStream object is available through its srcObject attribute
+        const mediaStream = video.srcObject;
+
+        // Through the MediaStream, you can get the MediaStreamTracks with getTracks():
+        const tracks = mediaStream.getTracks();
+
+        // Tracks are returned as an array, so if you know you only have one, you can stop it with:
+        tracks[0].stop();
+
+    }
+
+    var picTaken = false;
+    var width = 320; // We will scale the photo width to this
+    var height = 0; // This will be computed based on the input stream
+    var streaming = false;
+    var video = null;
+    var canvas = null;
+    var photo = null;
+    var startbutton = null;
+
+
+
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+
+    function CaptureImage() {
+        var context = canvas.getContext('2d');
+        width = 320;
+        height = width / (4 / 3);
+        if ($(window).width() < 460) {
+            height = 400;
+        }
+        if (width && height) {
+            canvas.width = width;
+            canvas.height = height;
+
+            context.translate(width, 0);
+            context.scale(-1, 1);
+
+            context.drawImage(video, 0, 0, width, height);
+
+            var data = canvas.toDataURL('image/png');
+            img = document.getElementById('uploaded-image');
+            img.src = data;
+            img.classList.remove('hide');
+            document.getElementById('uploaded-image').src = data;
+            document.getElementById('ImagePDPath').src = data;
+            document.getElementById("imgrx").src = data;
+            $("#pdimage").val(data);
+        }
+
+        $("#video-camera-section").fadeOut();
+        $("#Uploaded-Image-Section").fadeIn();
+
+
+    }
+
+
+    function AddExtrcharges() {
+        $("#Extracharges").val(15);
+
+
+
+
+
+        $("#ValidationModal").modal("hide");
+        document.getElementById("prescriptionerrormessage").innerHTML = "";
+    }
+    function HideValidatioModal() {
+        $("#ValidationModal").modal("hide");
+    }
+
+
+    function opencamera() {
+        $("#cameramodal").modal("hide");
+        $("#videocameramodal").modal("show");
+
+        $("#Uploaded-Image-Section").fadeOut();
+        $("#video-camera-section").fadeIn();
+        startVideo();
+
+
+    }
+
+
+    function closevideocamera() {
+        $("#videocameramodal").modal("hide");
+        $("#cameramodal").modal("hide");
+        /*$("#cameramodal").modal("show");*/
+
+        const video = document.querySelector('video');
+
+        // A video's MediaStream object is available through its srcObject attribute
+        const mediaStream = video.srcObject;
+
+        // Through the MediaStream, you can get the MediaStreamTracks with getTracks():
+        const tracks = mediaStream.getTracks();
+
+        // Tracks are returned as an array, so if you know you only have one, you can stop it with:
+        tracks[0].stop();
+    }
+
+
+    function show(input) {
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#ImagePath').attr('src', e.target.result);
+
+
+                document.getElementById("imgpd").src = e.target.result;
+                $("#pdprescriptionimage").val(e.target.result);
+
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+<script>
+
+            function opencameramodal() {
+                $("#cameramodal").modal("show");
+
+
+
+            }
+
+
+    function openmeasuremodal() {
+        $("#measuremodal").modal("show");
+    }
+
+    function opensegmentmodal() {
+        $("#segmentheightmodel").modal("show");
+    }
+
+    
+
+    function getback() {
+        var fromwhichtype = $("#fromwhichtype").val();
+        var stage = $("#stage").val();
+
+        /*Back step*/
+        if (fromwhichtype == "nop") {
+            if (stage == "4") {
+                if ($("#noprescriptionstatus").val() != 0) {
+                    //$("#one").fadeIn();
+                    //$("#four").fadeOut();
+                    $("#fromwhichtype").val("");
+                    $("#stage").val("");
+           
+                  
+                }
+                else if ($("#noprescriptionstatus").val() == 0) {
+                    //$("#two1").fadeIn();
+                    //$("#four").fadeOut();
+                    $("#fromwhichtype").val("");
+                    $("#stage").val("3");
+                    $("#fromwhichtype").val("SavePrescription");
+                }
+
+            }
+        }
+        /*Back step*/
+        else if (fromwhichtype == "Standardlens" || fromwhichtype == "Enhancedlens") {
+
+            $("#LensType").val("");
+            if (stage == "5") {
+
+                if ($("#noprescriptionstatus").val() != 0) {
+                    //$("#four").fadeIn();
+                    //$("#five").fadeOut();
+                    $("#fromwhichtype").val("nop");
+                    $("#stage").val("4");
+                    $("#price").val(0);
+                    /*$("#noprescriptionstatus").val(0);*/
+                }
+
+                if ($("#noprescriptionstatus").val() == 0) {
+                    //$("#four").fadeIn();
+                    //$("#five").fadeOut();
+                    $("#fromwhichtype").val("PrescriptionList");
+                    $("#stage").val("4");
+                    $("#price").val(0);
+                    $("#noprescriptionstatus").val(0);
+                }
+
+
+            }
+        }
+        /*Back step*/
+        else if (fromwhichtype == "UVProtection") {
+            $("#TotalAmount").val(0);
+            if (stage == "6") {
+                //$("#five").fadeIn();
+                //$("#six").fadeOut();
+                $("#fromwhichtype").val("Standardlens");
+                $("#stage").val("5");
+                $("#UVProtection").val(0);
+
+                $("#addtocartproducts #liextracharges").remove();
+            }
+
+
+        }
+        /*Back step*/
+        else if (fromwhichtype == "Skip") {
+            if (stage == "6") {
+                //$("#five").fadeIn();
+                //$("#six").fadeOut();
+                $("#fromwhichtype").val("Standardlens");
+                $("#stage").val("5");
+                $("#UVProtection").val(0);
+
+            }
+        }
+        /*Back step*/
+        else if (fromwhichtype == "Reading" || fromwhichtype == "Distance") {
+            $("#VisionType").val(" ");
+            if (stage == "2") {
+                //$("#one").fadeIn();
+                //$("#two").fadeOut();
+                $("#fromwhichtype").val("");
+                $("#stage").val("");
+                $("#noprescriptionstatus").val("0");
+            }
+        }
+        else if (fromwhichtype == "enterprescription") {
+            if (stage == "3") {
+                //$("#two").fadeIn();
+                //$("#three").fadeOut();
+                $("#fromwhichtype").val("Reading");
+                $("#stage").val("2");
+
+                $("#pdimage").val("");
+                $("#pdprescriptionimage").val("");
+
+                document.getElementById("ImagePath").src = "/assets/img/placeholder.jpg";
+                document.getElementById("ImagePDPath").src = "/assets/img/placeholder.jpg";
+
+            }
+            $("#txtenterprescription").val("0");
+
+            $("#Extracharges").val(0);
+            $("#addtocartproducts #liextracharges").remove();
+            document.getElementById("prescriptionerrormessage").innerHTML = "";
+        }
+        /*Back step*/
+        else if (fromwhichtype == "confirmnow") {
+
+            //$("#three").fadeIn();
+            //$("#four").fadeOut();
+            $("#fromwhichtype").val("enterprescription");
+            $("#stage").val("3");
+
+
+        }
+        /*Back step*/
+        else if (fromwhichtype == "SavePrescription") {
+
+
+            //$("#two1").fadeOut();
+            //$("#two").fadeIn();
+
+            $("#fromwhichtype").val("Reading");
+            $("#stage").val(2);
+            $("#noprescriptionstatus").val("0");
+            $("#isusedsaveprescription").val("0");
+
+            $("#pd").val("0");
+            $("#pdimage").val("");
+            $("#pdprescriptionimage").val("");
+
+
+            $("#Extracharges").val(0);
+            $("#addtocartproducts #liextracharges").remove();
+
+        }
+
+        /*Back step*/
+        else if (fromwhichtype == "PrescriptionList") {
+
+            if ($("#txtenterprescription").val() == "1") {
+                //$("#three").fadeIn();
+                //$("#four").fadeOut();
+
+                $("#fromwhichtype").val("confirmnow");
+                $("#stage").val(3);
+                $("#noprescriptionstatus").val("0");
+
+            }
+            else {
+                //$("#two1").fadeIn();
+                //$("#four").fadeOut();
+
+                $("#fromwhichtype").val("SavePrescription");
+                $("#stage").val(3);
+                $("#noprescriptionstatus").val("0");
+            }
+
+        }
+
+
+    }
+
+
+    function Yourprescription(type,r_sph, r_cyl, r_axis, r_add, l_sph, l_cyl, l_axis, l_add, PD, PDImage, PrescriptionImage) {
+
+
+        //if use saved prescriotion is selected
+        if (type = 'table') {
+
+
+            document.getElementById("imgpd").src = "/assets/img/placeholder.jpg";
+            document.getElementById("imgrx").src = "/assets/img/placeholder.jpg";
+
+
+            var FrameAWidth = $("#FrameAWidth").val();
+            var FrameDBBridger = $("#FrameDBBridger").val();
+            var FrameED = $("#FrameED").val();
+            var PDValidationResult = 0;
+            var PDValidationLeftResult = 0;
+            var PDValidationRightResult = 0;
+
+
+
+
+
+
+
+            /*PD Validation formulas*/
+
+
+            /*if both are right sph and left sph are postivie*/
+            if (parseFloat(l_sph) > 0 && parseFloat(r_sph) > 0) {
+
+                PDValidationResult = 0;
+                PDValidationResult = parseFloat(FrameAWidth) + parseFloat(FrameDBBridger) + parseFloat(FrameED) - parseFloat(65);
+
+                if (PD <= parseFloat(PDValidationResult) && parseInt($("#Extracharges").val()) == 0) {
+
+                    document.getElementById("saveprescriptionerrormessage").innerHTML = "The combination of your prescription and\
+                    PD value is not suitable for this product.Please select another product that supports a wider range of PD values";
+
+                    if ($("#Extracharges").val() == "" || parseInt($("#Extracharges").val()) == 0) {
+                        $("#ValidationModal").modal("show");
+                        return;
+                    }
+                }
+                else {
+                    document.getElementById("saveprescriptionerrormessage").innerHTML = "";
+                    $("#Extrcharges").val(0);
+                }
+            }
+            /*if both are right sph and left sph are negative*/
+            else if (parseFloat(l_sph) < 0 && parseFloat(r_sph) < 0) {
+                PDValidationResult = 0;
+                PDValidationResult = parseFloat(FrameAWidth) + parseFloat(FrameDBBridger) + parseFloat(FrameED) - parseFloat(75);
+
+                if (PD <= parseFloat(PDValidationResult) && parseInt($("#Extracharges").val()) == 0) {
+                    document.getElementById("saveprescriptionerrormessage").innerHTML = "The combination of your prescription and\
+                    PD value is not suitable for this product.Please select another product that supports a wider range of PD values";
+
+                    if ($("#Extracharges").val() == "" || parseInt($("#Extracharges").val()) == 0) {
+                        $("#ValidationModal").modal("show");
+                        return;
+                    }
+
+                }
+                else {
+                    document.getElementById("saveprescriptionerrormessage").innerHTML = "";
+                    $("#Extrcharges").val(0);
+                }
+
+            }
+            /*if  right sph postitive and left sph are negative*/
+            else if (parseFloat(l_sph) > 0 && parseFloat(r_sph) < 0) {
+                PDValidationResult = 0;
+                PDValidationLeftResult = 0;
+                PDValidationRightResult = 0;
+
+                PDValidationLeftResult = parseFloat(FrameAWidth) + parseFloat(FrameDBBridger) + parseFloat(FrameED) - parseFloat(65);
+                PDValidationRightResult = parseFloat(FrameAWidth) + parseFloat(FrameDBBridger) + parseFloat(FrameED) - parseFloat(75);
+
+                PDValidationResult = parseFloat(PDValidationLeftResult) + parseFloat(PDValidationRightResult);
+
+                if (PD <= parseFloat(PDValidationLeftResult) || pd <= parseFloat(PDValidationRightResult) && parseInt($("#Extracharges").val()) == 0) {
+                    document.getElementById("saveprescriptionerrormessage").innerHTML = "The combination of your prescription and\
+                    PD value is not suitable for this product.Please select another product that supports a wider range of PD values";
+
+                    if ($("#Extracharges").val() == "" || parseInt($("#Extracharges").val()) == 0) {
+                        $("#ValidationModal").modal("show");
+
+                    }
+
+                }
+
+                else {
+                    document.getElementById("saveprescriptionerrormessage").innerHTML = "";
+                    $("#Extrcharges").val(0);
+                }
+            }
+            /*if  right sph negative and left sph are postitive*/
+            else if (parseFloat(l_sph) < 0 && parseFloat(r_sph) > 0) {
+                PDValidationResult = 0;
+                PDValidationLeftResult = 0;
+                PDValidationRightResult = 0;
+
+                PDValidationLeftResult = parseFloat(FrameAWidth) + parseFloat(FrameDBBridger) + parseFloat(FrameED) - parseFloat(75);
+                PDValidationRightResult = parseFloat(FrameAWidth) + parseFloat(FrameDBBridger) + parseFloat(FrameED) - parseFloat(65);
+
+                PDValidationResult = parseFloat(PDValidationLeftResult) + parseFloat(PDValidationRightResult);
+
+                if (PD <= parseFloat(PDValidationLeftResult) || pd <= parseFloat(PDValidationRightResult) && parseInt($("#Extracharges").val()) == 0) {
+                    document.getElementById("saveprescriptionerrormessage").innerHTML = "The combination of your prescription and\
+                    PD value is not suitable for this product.Please select another product that supports a wider range of PD values";
+
+                    if ($("#Extracharges").val() == "" || parseInt($("#Extracharges").val()) == 0) {
+                        $("#ValidationModal").modal("show");
+                        return;
+                    }
+
+                }
+                else {
+                    document.getElementById("saveprescriptionerrormessage").innerHTML = "";
+                    $("#Extrcharges").val(0);
+                }
+            }
+
+
+
+            document.getElementById("lsph").innerHTML = l_sph;
+            document.getElementById("lcyl").innerHTML = l_cyl;
+            document.getElementById("laxis").innerHTML = l_axis;
+            document.getElementById("ladd").innerHTML = l_add;
+            document.getElementById("rsph").innerHTML = r_sph;
+            document.getElementById("rcyl").innerHTML = r_cyl;
+            document.getElementById("raxis").innerHTML = r_axis;
+            document.getElementById("radd").innerHTML = r_add;
+            document.getElementById("tpd").innerHTML = PD;
+
+            $("#pd").val(PD);
+            $("#pdimage").val(PDImage);
+            $("#pdprescriptionimage").val(PrescriptionImage);
+
+            if (PDImage != "") {
+                document.getElementById("imgpd").src = PDImage;
+            }
+
+            if (PrescriptionImage != "") {
+                document.getElementById("imgrx").src = PrescriptionImage;
+            }
+
+
+
+
+            // $("#two1").fadeOut();
+            //$("#four").fadeIn();
+
+            $("#fromwhichtype").val('PrescriptionList');
+            $("#stage").val(4);
+            $("#noprescriptionstatus").val("0");
+
+        }
+
+
+
+
+
+
+
+    }
+        function slidersteps(fromwhichtype) {
+
+
+        /*$("#slick-dots li slick-active ")*/
+        //$(".slick-dots li ").removeClass("slick-active");
+        //$(".slick-dots li:nth-child(4)").addClass("slick-active");
+
+
+        /*No Prescription proceeding steps*/
+    /*if click on first slide*/
+
+            /*Forward step*/
+        if (fromwhichtype == "PrescriptionList") {
+
+
+
+
+            $('.slick-dots  li').removeClass('slick-active');
+            $('.slick-track  div').removeClass('slick-current');
+            $('.slick-track  div').removeClass('slick-active');
+            $('.slick-track .proccessing-item').attr('aria-hidden', 'true');
+            $('.slick-track .proccessing-item').attr('tabindex', '-1');
+
+            $('.slick-dots li:nth-child(4)').addClass("slick-active");
+            $('.slick-dots li:nth-child(4)').removeClass("disable-click");
+
+            $(".slick-dots li:nth-child(4)").trigger('click');
+
+            $('#slick-slide03').addClass("slick-current");
+            $('#slick-slide03').addClass("slick-active");
+
+            document.getElementById('slick-slide03').setAttribute('aria-hidden', 'false');
+            $('#slick-slide03').attr('tabindex', '0');
+            /*document.getElementsByClassName('slick-track').style. = "translate3d(-1416px, 0px, 0px)";*/
+            document.getElementsByClassName("slick-track")[0].style.transform = "translate3d(-2832px, 0px, 0px)";
+
+
+            //$("#two1").fadeOut();
+            //$("#four").fadeIn();
+
+            //$("#fromwhichtype").val(fromwhichtype);
+            //$("#stage").val(4);
+            //$("#noprescriptionstatus").val("0");
+            }
+        /*Forward step*/
+        if (fromwhichtype == "SavePrescription") {
+
+            document.getElementById('saveprescriptiondivborder').style.border = "2px solid #009B95";
+            document.getElementById('enterprescriptiondivborder').style.border = "0px solid #009B95";
+
+            //$('.slick-dots  li').removeClass('slick-active');
+            //$('.slick-track  div').removeClass('slick-current');
+            //$('.slick-track  div').removeClass('slick-active');
+            //$('.slick-track .proccessing-item').attr('aria-hidden', 'true');
+            //$('.slick-track .proccessing-item').attr('tabindex', '-1');
+
+            //$('.slick-dots li:nth-child(3)').addClass("slick-active");
+            //$('.slick-dots li:nth-child(3)').removeClass("disable-click");
+
+
+            document.getElementById("saveprescriptiondiv").style.display = "block";
+            document.getElementById("enterprescriptiondiv").style.display = "none";
+            $(".slick-dots li:nth-child(3)").trigger('click');
+            //$('#slick-slide02').addClass("slick-current");
+            //$('#slick-slide02').addClass("slick-active");
+
+            //document.getElementById('slick-slide02').setAttribute('aria-hidden', 'false');
+            //$('#slick-slide02').attr('tabindex', '0');
+            //document.getElementsByClassName("slick-track")[0].style.transform = "translate3d(-2124px, 0px, 0px)";
+            /*$("#enterprescriptiondiv").fadeOut();*/
+            //document.getElementById("enterprescriptiondiv").style.display = "none";
+            //$("#saveprescriptiondiv").fadeIn();
+
+
+
+
+            //$("#two").fadeOut();
+            //$("#two1").fadeIn();
+
+            $("#fromwhichtype").val(fromwhichtype);
+            $("#stage").val(3);
+            $("#noprescriptionstatus").val("0");
+
+            $("#isusedsaveprescription").val("1");
+        }
+        /*Forward step*/
+            if (fromwhichtype == "confirmnow") {
+
+            /*Prescription Calculation formula*/
+            var lsph = 0;
+            var lcyl = 0;
+            var laxis = 0
+            var ladd = 0
+            var rsph = 0
+            var rcyl = 0
+            var raxis = 0
+            var radd = 0
+            var pd = 0;
+            var pdimage = "";
+            var pdprescriptionimage = "";
+
+            var Fname = $("#name").val();
+            var lname = $("#lname").val();
+            var prescription = $("#prescription").val();
+            var presctiptiondate = $("#presctiptiondate").val();
+
+            var FrameAWidth = $("#FrameAWidth").val();
+            var FrameDBBridger = $("#FrameDBBridger").val();
+            var FrameED = $("#FrameED").val();
+            var PDValidationResult = 0;
+            var PDValidationLeftResult = 0;
+            var PDValidationRightResult = 0;
+
+            var pdprescriptionimage = "";
+            var pdimage = "";
+
+
+            lsph = $("#ddllsph").val();
+            lcyl = $("#ddllcyl").val();
+            laxis = $("#txtlaxis").val();
+            ladd = $("#ddlladd").val();
+            rsph= $("#ddlrsph").val();
+            rcyl = $("#ddlrcyl").val();
+            raxis = $("#txtraxis").val();
+            radd = $("#ddlradd").val();
+            pd = $("#ddllPD").val();
+
+
+            pdprescriptionimage = $("#pdprescriptionimage").val();
+            pdimage = $("#pdimage").val();
+
+            /*Right eye validation*/
+            if (parseFloat(rsph) == 0) {
+                document.getElementById("prescriptionerrormessage").innerHTML = "Select Right Eye SPH";
+                $(".slick-dots li:nth-child(2)").trigger('click');
+                return;
+            }
+            //else if (parseFloat(rcyl) == 0) {
+            //    document.getElementById("prescriptionerrormessage").innerHTML = "Select Right Eye CYL";
+            //    return;
+            //}
+            //else if (raxis == "") {
+            //    document.getElementById("prescriptionerrormessage").innerHTML = "Enter Right Eye AXIS";
+            //    return;
+            //}
+            //else if (parseFloat(radd) == 0) {
+            //    document.getElementById("prescriptionerrormessage").innerHTML = "Select Right Eye Add";
+            //    return;
+            //}
+            /*Left eye validation*/
+            if (parseFloat(lsph) == 0) {
+                document.getElementById("prescriptionerrormessage").innerHTML = "Select Left Eye SPH";
+                $(".slick-dots li:nth-child(2)").trigger('click');
+                return;
+            }
+            //else if (parseFloat(lcyl) == 0) {
+            //    document.getElementById("prescriptionerrormessage").innerHTML = "Select Left Eye CYL";
+            //    return;
+            //}
+            //else if (laxis == "") {
+            //    document.getElementById("prescriptionerrormessage").innerHTML = "Enter Left  Eye AXIS";
+            //    return;
+            //}
+            //else if (parseFloat(ladd) == 0) {
+            //    document.getElementById("prescriptionerrormessage").innerHTML = "Select Left Eye Add";
+            //    return;
+            //}
+            else if (parseFloat(pd) == 0) {
+
+                var chkdualpd = document.getElementById('chkdualpd');
+                if (chkdualpd.checked)
+                {
+
+                }
+                else {
+                    document.getElementById("prescriptionerrormessage").innerHTML = "Select Eye PD";
+                    $(".slick-dots li:nth-child(2)").trigger('click');
+                    return;
+                }
+
+            }
+
+
+            if (pdimage == "") {
+                document.getElementById("prescriptionerrormessage").innerHTML = "Upload PD Image";
+                $(".slick-dots li:nth-child(2)").trigger('click');
+                return;
+            }
+
+
+            /*PD Validation formulas start*/
+                var chkdualpd = document.getElementById('chkdualpd');
+                /*do nothing if dual pd is select*/
+                if (chkdualpd.checked)
+                {
+
+                }
+                /*if dual pd is not selected*/
+                else
+                {
+                    /*if both are right sph and left sph are postivie*/
+                    if (parseFloat(lsph) > 0 && parseFloat(rsph) > 0) {
+
+                        PDValidationResult = 0;
+                        PDValidationResult = parseFloat(FrameAWidth) + parseFloat(FrameDBBridger) + parseFloat(FrameED) - parseFloat(65);
+
+                        if (pd <= parseFloat(PDValidationResult) && parseInt($("#Extracharges").val()) == 0) {
+
+                            document.getElementById("prescriptionerrormessage").innerHTML = "The combination of your prescription and\
+                    PD value is not suitable for this product.Please select another product that supports a wider range of PD values";
+
+                            if ($("#Extracharges").val() == "" || parseInt($("#Extracharges").val()) == 0) {
+                                $("#ValidationModal").modal("show");
+                                $(".slick-dots li:nth-child(2)").trigger('click');
+                                return;
+                            }
+                        }
+                        else {
+                            document.getElementById("prescriptionerrormessage").innerHTML = "";
+                            $("#Extrcharges").val(0);
+                        }
+                    }
+                    /*if both are right sph and left sph are negative*/
+                    else if (parseFloat(lsph) < 0 && parseFloat(rsph) < 0) {
+                        PDValidationResult = 0;
+                        PDValidationResult = parseFloat(FrameAWidth) + parseFloat(FrameDBBridger) + parseFloat(FrameED) - parseFloat(75);
+
+                        if (pd <= parseFloat(PDValidationResult) && parseInt($("#Extracharges").val()) == 0) {
+                            document.getElementById("prescriptionerrormessage").innerHTML = "The combination of your prescription and\
+                    PD value is not suitable for this product.Please select another product that supports a wider range of PD values";
+
+                            if ($("#Extracharges").val() == "" || parseInt($("#Extracharges").val()) == 0) {
+                                $("#ValidationModal").modal("show");
+                                $(".slick-dots li:nth-child(2)").trigger('click');
+                                return;
+                            }
+
+                        }
+                        else {
+                            document.getElementById("prescriptionerrormessage").innerHTML = "";
+                            $("#Extrcharges").val(0);
+                        }
+
+                    }
+                    /*if  right sph postitive and left sph are negative*/
+                    else if (parseFloat(lsph) > 0 && parseFloat(rsph) < 0) {
+                        PDValidationResult = 0;
+                        PDValidationLeftResult = 0;
+                        PDValidationRightResult = 0;
+
+                        PDValidationLeftResult = parseFloat(FrameAWidth) + parseFloat(FrameDBBridger) + parseFloat(FrameED) - parseFloat(65);
+                        PDValidationRightResult = parseFloat(FrameAWidth) + parseFloat(FrameDBBridger) + parseFloat(FrameED) - parseFloat(75);
+
+                        PDValidationResult = parseFloat(PDValidationLeftResult) + parseFloat(PDValidationRightResult);
+
+                        if (pd <= parseFloat(PDValidationLeftResult) || pd <= parseFloat(PDValidationRightResult) && parseInt($("#Extracharges").val()) == 0) {
+                            document.getElementById("prescriptionerrormessage").innerHTML = "The combination of your prescription and\
+                    PD value is not suitable for this product.Please select another product that supports a wider range of PD values";
+
+                            if ($("#Extracharges").val() == "" || parseInt($("#Extracharges").val()) == 0) {
+                                $("#ValidationModal").modal("show");
+
+                            }
+
+                        }
+
+                        else {
+                            document.getElementById("prescriptionerrormessage").innerHTML = "";
+                            $("#Extrcharges").val(0);
+                        }
+                    }
+                    /*if  right sph negative and left sph are postitive*/
+                    else if (parseFloat(lsph) < 0 && parseFloat(rsph) > 0) {
+                        PDValidationResult = 0;
+                        PDValidationLeftResult = 0;
+                        PDValidationRightResult = 0;
+
+                        PDValidationLeftResult = parseFloat(FrameAWidth) + parseFloat(FrameDBBridger) + parseFloat(FrameED) - parseFloat(75);
+                        PDValidationRightResult = parseFloat(FrameAWidth) + parseFloat(FrameDBBridger) + parseFloat(FrameED) - parseFloat(65);
+
+                        PDValidationResult = parseFloat(PDValidationLeftResult) + parseFloat(PDValidationRightResult);
+
+                        if (pd <= parseFloat(PDValidationLeftResult) || pd <= parseFloat(PDValidationRightResult) && parseInt($("#Extracharges").val()) == 0) {
+                            document.getElementById("prescriptionerrormessage").innerHTML = "The combination of your prescription and\
+                    PD value is not suitable for this product.Please select another product that supports a wider range of PD values";
+
+                            if ($("#Extracharges").val() == "" || parseInt($("#Extracharges").val()) == 0) {
+                                $("#ValidationModal").modal("show");
+                                $(".slick-dots li:nth-child(2)").trigger('click');
+                                return;
+                            }
+
+                        }
+                        else {
+                            document.getElementById("prescriptionerrormessage").innerHTML = "";
+                            $("#Extrcharges").val(0);
+                        }
+                    }
+                }
+
+            /*PD Validation formulas End*/
+
+
+
+             if (Fname.trim() == "") {
+                document.getElementById("prescriptionerrormessage").innerHTML = "Enter First Name";
+                $("#name").focus();
+                 $(".slick-dots li:nth-child(2)").trigger('click');
+                return;
+            }
+            else if (lname == "") {
+                document.getElementById("prescriptionerrormessage").innerHTML = "Enter Last Name";
+                 $("#lname").focus();
+                 $(".slick-dots li:nth-child(2)").trigger('click');
+                return;
+            }
+            else if (prescription == "") {
+                document.getElementById("prescriptionerrormessage").innerHTML = "Enter Prescription Name";
+                 $("#prescription").focus();
+                 $(".slick-dots li:nth-child(2)").trigger('click');
+                return;
+            }
+             else if (presctiptiondate == "") {
+                 document.getElementById("prescriptionerrormessage").innerHTML = "Select Prescription Date";
+                 $("#prescription").focus();
+                 $(".slick-dots li:nth-child(2)").trigger('click');
+                 $(".slick-dots li:nth-child(2)").trigger('click');
+                 return;
+            }
+
+            if (pdprescriptionimage == "") {
+                document.getElementById("prescriptionerrormessage").innerHTML = "Upload PD Prescription";
+                $(".slick-dots li:nth-child(2)").trigger('click');
+                return;
+            }
+
+              
+
+
+
+            /*set prescription values */
+            document.getElementById("lsph").innerHTML = lsph;
+            document.getElementById("lcyl").innerHTML = lcyl;
+            document.getElementById("laxis").innerHTML = laxis;
+            document.getElementById("ladd").innerHTML = ladd;
+            document.getElementById("rsph").innerHTML = rsph;
+            document.getElementById("rcyl").innerHTML = rcyl;
+            document.getElementById("raxis").innerHTML = raxis;
+            document.getElementById("radd").innerHTML = radd;
+            /*document.getElementById("tpd").innerHTML = pd;*/
+
+            $("#pd").val(pd);
+
+            //$("#pdimage").val(PDImage);
+            //$("#pdprescriptionimage").val(PrescriptionImage);
+
+            //if (PDImage != "") {
+            //    $("#PDRXImage #divimgpd img").remove();
+            //    var img = document.createElement('img');
+            //    $("#PDRXImage #divimgpd ").append("<img id='imgpd' class='img-fluid' src='" + PDImage + "' alt='ig' />");
+            //}
+
+            //if (PrescriptionImage != "") {
+            //    $("#PDRXImage #divimgrx img").remove();
+            //    var img = document.createElement('img');
+            //    $("#PDRXImage #divimgrx").append("<img id='imgrx' class='img-fluid' src='" + PrescriptionImage + "' alt='ig' />");
+            //}
+
+
+            if (parseInt($("#Extracharges").val() > 0)) {
+                $("#addtocartproducts #uvprotection_cart_list").remove();
+                $("#addtocartproducts").append('<li id="uvprotection_cart_list" class="d-flex justify-content-between flex-wrap align-items-center">UV Protection<span> $20</span ></li >');
+            }
+
+            //$("#three").fadeOut();
+            //$("#four").fadeIn();
+            $("#fromwhichtype").val(fromwhichtype);
+            $("#stage").val(3);
+            $("#noprescriptionstatus").val("0");
+
+
+
+
+
+            $('.slick-dots  li').removeClass('slick-active');
+            $('.slick-track  div').removeClass('slick-current');
+            $('.slick-track  div').removeClass('slick-active');
+            $('.slick-track .proccessing-item').attr('aria-hidden', 'true');
+            $('.slick-track .proccessing-item').attr('tabindex', '-1');
+
+
+
+            $('.slick-dots li:nth-child(3)').addClass("slick-active");
+            $('.slick-dots li:nth-child(3)').removeClass("disable-click");
+            $('#slick-slide03').addClass("slick-current");
+            $('#slick-slide03').addClass("slick-active");
+
+            $(".slick-dots li:nth-child(3)").trigger('click');
+            document.getElementById('slick-slide03').setAttribute('aria-hidden', 'false');
+            $('#slick-slide03').attr('tabindex', '0');
+            /*document.getElementsByClassName('slick-track').style. = "translate3d(-1416px, 0px, 0px)";*/
+            document.getElementsByClassName("slick-track")[0].style.transform = "translate3d(-2124px, 0px, 0px)";
+
+
+                var chkdualpd = document.getElementById('chkdualpd');
+                var ddlleftPD = $("#ddlleftPD").val();
+                var ddlrightPD = $("#ddlrightPD").val();
+                if (chkdualpd.checked)
+                {
+                    $("#tblprescriptiondetails #leftrow #tpd").remove();
+                    $("#tblprescriptiondetails #leftrow #leftpd").remove();
+                    $("#tblprescriptiondetails #rightrow #rightpd").remove();
+
+                    var leftpd = "";
+                    leftpd = "<td id='leftpd'>"+ddlleftPD+"</td>";
+                    $("#tblprescriptiondetails #leftrow").append(leftpd);
+
+                    var rightpd = "";
+                    rightpd = "<td id='rightpd'>"+ddlrightPD+"</td>";
+                    $("#tblprescriptiondetails #rightrow").append(rightpd);
+                }
+                else
+                {
+                    $("#tblprescriptiondetails #leftrow #tpd").remove();
+                    $("#tblprescriptiondetails #leftrow #leftpd").remove();
+                    $("#tblprescriptiondetails #rightrow #rightpd").remove();
+
+                    var singlepd = "";
+                    singlepd = "<td id='tpd' rowspan='2' class='alinment' style='padding-top:30px!important'>"+pd+"</td>";
+                    $("#tblprescriptiondetails #leftrow").append(singlepd);
+
+                }
+
+
+            }
+        /*Forward step*/
+        if (fromwhichtype == "nop") {
+            //console.log("Clicked");
+           /*Remove and add class to specific list element*/
+            $('.slick-dots  li').removeClass('slick-active');
+            $('.slick-track  div').removeClass('slick-current');
+            $('.slick-track  div').removeClass('slick-active');
+
+            $('.slick-track .proccessing-item').attr('aria-hidden', 'true');
+            $('.slick-track .proccessing-item').attr('tabindex', '-1');
+
+            $('.slick-dots li:nth-child(3)').addClass("slick-active");
+            $('.slick-dots li:nth-child(3)').removeClass("disable-click");
+            $('.slick-dots li:nth-child(2)').addClass("disable-click");
+            $('.slick-dots li:nth-child(2)').addClass("disable-click");
+
+
+            $(".slick-dots li:nth-child(3)").trigger('click');
+            $('#slick-slide02').addClass("slick-current");
+            $('#slick-slide02').addClass("slick-active");
+
+            document.getElementById('slick-slide02').setAttribute('aria-hidden', 'false');
+            $('#slick-slide02').attr('tabindex', '0');
+            document.getElementsByClassName("slick-track")[0].style.transform = "translate3d(-2124px, 0px, 0px)";
+            document.getElementById('Noprescriptiondiv').style.border = "2px solid #009B95";
+            document.getElementById('readingsinglevisiondiv').style.border = "0px solid #009B95";
+            document.getElementById('readingdistancevisiondiv').style.border = "0px solid #009B95";
+        /*$(this).addClass('active');*/
+
+            //$("#one").fadeOut();
+            //$("#four").fadeIn();
+
+            $("#fromwhichtype").val(fromwhichtype);
+            $("#stage").val(3);
+            $("#noprescriptionstatus").val("1");
+
+            var x = document.querySelectorAll("#PDRXImage");
+            x[0].style.setProperty("display", "none", "important");
+        }
+        /*Forward step*/
+        /*if click on second slide*/
+        else if (fromwhichtype == "Standardlens") {
+
+            document.getElementById('standarddiv').style.border = "2px solid #009B95";
+            document.getElementById('enhanceddiv').style.border = "0px solid #009B95";
+
+
+            /*slider changes*/
+            $('.slick-dots  li').removeClass('slick-active');
+            $('.slick-track  div').removeClass('slick-current');
+            $('.slick-track  div').removeClass('slick-active');
+            $('.slick-track .proccessing-item').attr('aria-hidden', 'true');
+            $('.slick-track .proccessing-item').attr('tabindex', '-1');
+
+            $('.slick-dots li:nth-child(4)').addClass("slick-active");
+            $('.slick-dots li:nth-child(4)').removeClass("disable-click");
+            $('#slick-slide03').addClass("slick-current");
+            $('#slick-slide03').addClass("slick-active");
+            $(".slick-dots li:nth-child(4)").trigger('click');
+            document.getElementById('slick-slide03').setAttribute('aria-hidden', 'false');
+            $('#slick-slide03').attr('tabindex', '0');
+            /*document.getElementsByClassName('slick-track').style. = "translate3d(-1416px, 0px, 0px)";*/
+            document.getElementsByClassName("slick-track")[0].style.transform = "translate3d(-2832px, 0px, 0px)";
+
+
+            //$("#four").fadeOut();
+            //$("#five").fadeIn();
+
+            $("#fromwhichtype").val(fromwhichtype);
+            $("#stage").val(4);
+            $("#price").val(39);
+            $("#addtocartproducts li").remove();
+            $("#addtocartproducts").append('<li class="d-flex justify-content-between flex-wrap align-items-center">Standard Lens <span> $39</span ></li >');
+            $("#LensType").val("Standard");
+
+
+
+
+        }
+        /*Forward step*/
+        /*if click on second slide*/
+        else if (fromwhichtype == "Enhancedlens") {
+
+            document.getElementById('standarddiv').style.border = "0px solid #009B95";
+            document.getElementById('enhanceddiv').style.border = "2px solid #009B95";
+
+            /*slider changes*/
+            $('.slick-dots  li').removeClass('slick-active');
+            $('.slick-track  div').removeClass('slick-current');
+            $('.slick-track  div').removeClass('slick-active');
+            $('.slick-track .proccessing-item').attr('aria-hidden', 'true');
+            $('.slick-track .proccessing-item').attr('tabindex', '-1');
+
+            $('.slick-dots li:nth-child(4)').addClass("slick-active");
+            $('.slick-dots li:nth-child(4)').removeClass("disable-click");
+            $('#slick-slide03').addClass("slick-current");
+            $('#slick-slide03').addClass("slick-active");
+
+            $(".slick-dots li:nth-child(4)").trigger('click');
+
+            document.getElementById('slick-slide03').setAttribute('aria-hidden', 'false');
+            $('#slick-slide03').attr('tabindex', '0');
+            /*document.getElementsByClassName('slick-track').style. = "translate3d(-1416px, 0px, 0px)";*/
+            document.getElementsByClassName("slick-track")[0].style.transform = "translate3d(-2832px, 0px, 0px)";
+
+
+            //$("#four").fadeOut();
+            //$("#five").fadeIn();
+
+            $("#fromwhichtype").val(fromwhichtype);
+            $("#stage").val(4);
+            $("#price").val(49);
+            $("#addtocartproducts li").remove();
+            $("#addtocartproducts").append('<li  class="d-flex justify-content-between flex-wrap align-items-center">Enhanced Lens <span> $49</span ></li >');
+            $("#LensType").val("Enhanced");
+
+
+        }
+        /*Forward step*/
+        /*if click on fifth slide*/
+        else if (fromwhichtype == "UVProtection") {
+
+            //document.getElementById('uvprotectionborder').style.border = "2px solid #009B95";
+            //document.getElementById('skipborder').style.border = "0px solid black";
+            /*$("#addtocartproducts").remove();*/
+
+
+
+
+            /*slider changes*/
+            $('.slick-dots  li').removeClass('slick-active');
+            $('.slick-track  div').removeClass('slick-current');
+            $('.slick-track  div').removeClass('slick-active');
+            $('.slick-track .proccessing-item').attr('aria-hidden', 'true');
+            $('.slick-track .proccessing-item').attr('tabindex', '-1');
+
+            $('.slick-dots li:nth-child(5)').addClass("slick-active");
+            $('.slick-dots li:nth-child(5)').removeClass("disable-click");
+            $('#slick-slide04').addClass("slick-current");
+            $('#slick-slide04').addClass("slick-active");
+
+            $(".slick-dots li:nth-child(5)").trigger('click');
+
+            document.getElementById('slick-slide04').setAttribute('aria-hidden', 'false');
+            $('#slick-slide04').attr('tabindex', '0');
+            /*document.getElementsByClassName('slick-track').style. = "translate3d(-1416px, 0px, 0px)";*/
+            document.getElementsByClassName("slick-track")[0].style.transform = "translate3d(-3540px, 0px, 0px)";
+
+
+            //$("#five").fadeOut();
+            //$("#six").fadeIn();
+
+            if ($("#noprescriptionstatus").val() == "1") {
+
+                $("#no_prescription_content").fadeOut();
+                $("#subtotal-chakbox").fadeOut();
+              
+               
+            }
+            else if ($("#noprescriptionstatus").val() == "0") {
+                $("#subtotal-chakbox").fadeIn();
+            }
+            $("#fromwhichtype").val(fromwhichtype);
+            $("#stage").val(5);
+
+            $("#UVProtection").val(20);
+            var txtFirstNo = document.getElementById('price').value;
+            var txtSecondNo = document.getElementById('UVProtection').value;
+            var result = parseInt(txtFirstNo) + parseInt(txtSecondNo) + parseInt(@Model.Price);
+            var Extracharges = 15;
+
+
+            $("#addtocartproducts #uvprotection_cart_list").remove();
+            $("#addtocartproducts").append('<li id="uvprotection_cart_list" class="d-flex justify-content-between flex-wrap align-items-center">UV Protection<span> $20</span ></li >');
+
+            if (parseFloat($("#Extracharges").val()) > 0) {
+                $("#addtocartproducts #liextracharges").remove();
+                $("#addtocartproducts").append('<li id="liextracharges"  class="d-flex justify-content-between flex-wrap align-items-center">Extra Charges<span> $15</span ></li >');
+                result = parseInt(txtFirstNo) + parseInt(txtSecondNo) + parseInt(@Model.Price) + parseInt(15);
+            }
+            else {
+                $("#addtocartproducts #liextracharges").remove();
+                result = parseInt(txtFirstNo) + parseInt(txtSecondNo) + parseInt(@Model.Price);
+            }
+
+
+            if (!isNaN(result)) {
+                document.getElementById("Subtotal").innerHTML = "$" + result.toFixed(2);
+                $("#TotalAmount").val(result);
+            }
+
+
+        }
+        /*Forward step*/
+        else if (fromwhichtype == "Skip") {
+
+
+            //document.getElementById('skipborder').style.border = "2px solid #009B95";
+            //document.getElementById('uvprotectionborder').style.border = "0px solid black";
+
+            /*slider changes*/
+            $('.slick-dots  li').removeClass('slick-active');
+            $('.slick-track  div').removeClass('slick-current');
+            $('.slick-track  div').removeClass('slick-active');
+            $('.slick-track .proccessing-item').attr('aria-hidden', 'true');
+            $('.slick-track .proccessing-item').attr('tabindex', '-1');
+
+            $('.slick-dots li:nth-child(5)').addClass("slick-active");
+            $('.slick-dots li:nth-child(5)').removeClass("disable-click");
+            $('#slick-slide04').addClass("slick-current");
+            $('#slick-slide04').addClass("slick-active");
+
+            $(".slick-dots li:nth-child(5)").trigger('click');
+            document.getElementById('slick-slide04').setAttribute('aria-hidden', 'false');
+            $('#slick-slide04').attr('tabindex', '0');
+            /*document.getElementsByClassName('slick-track').style. = "translate3d(-1416px, 0px, 0px)";*/
+            document.getElementsByClassName("slick-track")[0].style.transform = "translate3d(-3540px, 0px, 0px)";
+
+            //$("#five").fadeOut();
+            //$("#six").fadeIn();
+            if ($("#noprescriptionstatus").val() == "1")
+            {
+                $("#no_prescription_content").fadeOut();
+                /*$("#PDRXImage").fadeIn();*/
+              
+
+                $("#subtotal-chakbox").fadeOut();
+            }
+            $("#fromwhichtype").val(fromwhichtype);
+            $("#stage").val(5);
+
+            $("#UVProtection").val(0);
+
+            var txtFirstNo = document.getElementById('price').value;
+            var txtSecondNo = document.getElementById('UVProtection').value;
+            var result = parseInt(txtFirstNo) + parseInt(txtSecondNo)+ parseInt(@Model.Price);
+            if (!isNaN(result)) {
+                document.getElementById("Subtotal").innerHTML = "$" + result.toFixed(2);
+                $("#TotalAmount").val(result);
+            }
+
+            $("#addtocartproducts  #uvprotection_cart_list").remove();
+
+        }
+
+
+        /*Reading/Distance proceeding steps*/
+        /*if click on first slide*/
+        /*Forward step*/
+        if (fromwhichtype == "Reading" || fromwhichtype == "Distance")  {
+            //$("#one").fadeOut();
+            //$("#two").fadeIn();
+
+
+
+            if (fromwhichtype == "Reading") {
+                document.getElementById('Noprescriptiondiv').style.border = "0px solid #009B95";
+                document.getElementById('readingsinglevisiondiv').style.border = "2px solid #009B95";
+                document.getElementById('readingdistancevisiondiv').style.border = "0px solid #009B95";
+
+            }
+            else if (fromwhichtype == "Distance") {
+                document.getElementById('Noprescriptiondiv').style.border = "0px solid #009B95";
+                document.getElementById('readingsinglevisiondiv').style.border = "0px solid #009B95";
+                document.getElementById('readingdistancevisiondiv').style.border = "2px solid #009B95";
+
+            }
+
+
+            $('.slick-dots li:nth-child(2)').removeClass("disable-click");
+            /*document.getElementById("saveprescriptiondiv").style.display = "none";*/
+            document.getElementById("enterprescriptiondiv").style.display = "block";
+
+            $(".slick-dots li:nth-child(2)").trigger('click');
+
+            /*slider changes*/
+            //$('.slick-dots  li').removeClass('slick-active');
+            //$('.slick-track  div').removeClass('slick-current');
+            //$('.slick-track  div').removeClass('slick-active');
+
+            //$('.slick-track .proccessing-item').attr('aria-hidden', 'true');
+            //$('.slick-track .proccessing-item').attr('tabindex', '-1');
+
+            //$('.slick-dots li:nth-child(2)').addClass("slick-active");
+            //$('.slick-dots li:nth-child(2)').removeClass("disable-click");
+            //$('#slick-slide01').addClass("slick-current");
+            //$('#slick-slide01').addClass("slick-active");
+
+            //$(".slick-dots li:nth-child(2)").trigger('click');
+            //document.getElementById('slick-slide01').setAttribute('aria-hidden', 'false');
+            //$('#slick-slide01').attr('tabindex', '0');
+            //document.getElementsByClassName("slick-track")[0].style.transform = "translate3d(-1416px, 0px, 0px)";
+
+
+
+            $("#fromwhichtype").val(fromwhichtype);
+            $("#stage").val(2);
+            $("#noprescriptionstatus").val("0");
+            $("#VisionType").val(fromwhichtype);
+
+            var x = document.querySelectorAll("#PDRXImage");
+            x[0].style.setProperty("display", "flex", "important");
+        }
+
+        /*Forward step*/
+        else if (fromwhichtype == "enterprescription") {
+            //$("#two").fadeOut();
+            //$("#three").fadeIn();
+
+            document.getElementById('enterprescriptiondivborder').style.border = "2px solid #009B95";
+            document.getElementById('saveprescriptiondivborder').style.border = "0px solid #009B95";
+
+            //$('.slick-dots  li').removeClass('slick-active');
+
+            //$('.slick-track  div').removeClass('slick-current');
+            //$('.slick-track  div').removeClass('slick-active');
+            //$('.slick-track .proccessing-item').attr('aria-hidden', 'true');
+            //$('.slick-track .proccessing-item').attr('tabindex', '-1');
+
+        /*$('.slick-dots li:nth-child(3)').addClass("slick-active");*/
+
+
+            $('.slick-dots li:nth-child(3)').removeClass("disable-click");
+            document.getElementById("saveprescriptiondiv").style.display = "none";
+            document.getElementById("enterprescriptiondiv").style.display = "block";
+
+            $(".slick-dots li:nth-child(3)").trigger('click');
+
+            //$('#slick-slide02').addClass("slick-current");
+            //$('#slick-slide02').addClass("slick-active");
+
+            //document.getElementById('slick-slide02').setAttribute('aria-hidden', 'false');
+            //$('#slick-slide02').attr('tabindex', '0');
+
+            //document.getElementsByClassName("slick-track")[0].style.transform = "translate3d(-2124px, 0px, 0px)";
+
+        /*$("#saveprescriptiondiv").fadeOut();*/
+
+
+
+
+            $("#fromwhichtype").val(fromwhichtype);
+            $("#stage").val(3);
+            $("#noprescriptionstatus").val("0");
+            $("#txtenterprescription").val("1");
+
+
+
+        }
+
+
+
+
+
+
+
+
+        //$(".slick-track div").removeClass("slick-active");
+        //$(".slick-track div:nth-child(1)").addClass("slick-active");
+        //$('#index').addClass('active');
+
+    }
+
+    function Addtocart() {
+
+        var UVProtection = $("#UVProtection").val();
+
+
+
+        if (UVProtection != "0" && UVProtection != "") {
+            UVProtection = "on"
+
+        }
+        else {
+
+            UVProtection = "off";
+        }
+
+        var VisionType = $("#VisionType").val();
+        if (VisionType == "") {
+            VisionType = " ";
+        }
+        var istrue = $('#txtConfirmID').val();
+
+  
+        if (istrue=="false") {
+            alert("Please confirm that the prescription you entered is correct.");
+            return;
+        }
+       
+        var lsph = 0;
+        var lcyl = 0;
+        var laxis =0
+        var ladd = 0
+        var rsph = 0
+        var rcyl = 0
+        var raxis =0
+        var radd = 0
+        var pd = 0;
+        var pdimage = "";
+        var pdprescriptionimage = "";
+
+        var name = "";
+        var lname = "";
+        var prescription = "";
+        var presctiptiondate = "";
+        var Extracharges = 0;
+        var issaveprescription = 0;
+        var ddloldprescriptionvalue = 0;
+        var Rightpd = 0;
+        var dualpd = 0;
+        var Segmentheight = "";
+        var noprescription = 0;
+    /*get prescription values */
+        if ($("#noprescriptionstatus").val() == "0") {
+
+            lsph = document.getElementById("lsph").innerHTML;
+            lcyl = document.getElementById("lcyl").innerHTML;
+            laxis = document.getElementById("laxis").innerHTML;
+            ladd = document.getElementById("ladd").innerHTML;
+            rsph = document.getElementById("rsph").innerHTML;
+            rcyl = document.getElementById("rcyl").innerHTML;
+            raxis = document.getElementById("raxis").innerHTML;
+            radd = document.getElementById("radd").innerHTML;
+            pd = $("#pd").val();
+            //pdimage = $("#pdimage").val();
+            //pdprescriptionimage = $("#pdprescriptionimage").val();
+
+            //pdimage = document.getElementById("ImagePath");
+            //pdprescriptionimage = document.getElementById("ImagePDPath");
+
+
+            //var canvas = document.createElement("canvas");
+            //canvas.width = pdimage.width;
+            //canvas.height = pdimage.height;
+            //var ctx = canvas.getContext("2d");
+            //ctx.drawImage(pdimage, 0, 0);
+            //var dataURL = canvas.toDataURL("image/png");
+            //pdimage = dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+
+            pdimage = $("#pdimage").val();
+            pdimage = pdimage.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
+
+            //canvas.width = pdprescriptionimage.width;
+            //canvas.height = pdprescriptionimage.height;
+            //ctx = canvas.getContext("2d");
+            //ctx.drawImage(pdprescriptionimage, 0, 0);
+            //dataURL = canvas.toDataURL("image/png");
+            //pdprescriptionimage = dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+
+            pdprescriptionimage = $("#pdprescriptionimage").val();
+            pdprescriptionimage = pdprescriptionimage.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
+            /*issaveprescription = $("#prescription").val();*/
+
+            issaveprescription = $("#ddloldprescription").val();
+
+            if (issaveprescription == "Yes") {
+                issaveprescription = 1;
+            }
+            else if (issaveprescription == "No") {
+                issaveprescription = 0;
+            }
+
+            var chkdualpd = document.getElementById('chkdualpd');
+            if (chkdualpd.checked) {
+                pd = $("#ddlleftPD").val();
+                Rightpd = $("#ddlrightPD").val();
+                dualpd = 1;
+            }
+
+            ddloldprescriptionvalue = $("#ddloldprescriptionvalue").val();
+            Segmentheight = $("#ddlSegmentheight").val();
+        }
+        else
+        {
+            noprescription = 1;
+        }
+
+
+
+
+
+
+
+
+         var model = {
+             GlassID: $("#GlassID").val(),
+             Variationid: $("#Variationid").val(),
+             Quantity: $("#Quantity").val(),
+             LensType: $("#LensType").val(),
+             VisionType: VisionType,
+             UVProtection: UVProtection,
+             TotalAmount: $("#TotalAmount").val(),
+             Userid: $("#Userid").val(),
+             r_sph: rsph,
+             r_cyl: rcyl,
+             r_axis: raxis,
+             r_add: radd,
+             l_sph: lsph,
+             l_cyl: lcyl,
+             l_axis: laxis,
+             l_add: ladd,
+             lensType1: '',
+             PD: pd,
+             PDImage: pdimage,
+             PrescriptionImage: pdprescriptionimage,
+             Title: $("#Title").val(),
+             shape: $("#Shape").val(),
+             Colour: $("#Colour").val(),
+             Price: $("#Productprice").val(),
+             ProductImagePath: $("#ProductImagePath").val(),
+             Size: $("#Size").val(),
+             Productcategory: $("#Productcategory").val(),
+             isusedsaveprescription: issaveprescription,
+             Fname : $("#name").val(),
+             Lname : $("#lname").val(),
+             prescription : $("#prescription").val(),
+             prescriptionDate : $("#presctiptiondate").val(),
+             Extracharges : $("#Extracharges").val(),
+             Actioncalltype: 1,
+             Prescriptionid: ddloldprescriptionvalue,
+             Rightpd: Rightpd,
+             Segmentheight: Segmentheight,
+             Dualpd: dualpd,
+             noprescription: noprescription,
+             Shippingamount:9
+        };
+
+
+          $.ajax({
+            type: "POST",
+            url: '@Url.Action("OrderprocessingAddtoCart", "Products")',
+              data: JSON.stringify(model),
+              contentType: "application/json; charset=utf-8",
+              dataType: "json",
+            success: function (result) {
+
+                    window.location.href = result.url;
+
+            }
+        });
+    }
+
+</script>

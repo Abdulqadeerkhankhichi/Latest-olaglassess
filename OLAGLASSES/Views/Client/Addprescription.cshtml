@@ -1,0 +1,450 @@
+﻿@using Olaglasses.Models;
+@model Olaglasses.Models.tblUserPrescription
+@{
+    ViewBag.Title = "PrescriptionList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{string UserID = "";}
+@{string UserName = "";}
+@{string UserImage = "";}
+@{string CoverImage = "";}
+@if (@Context.Request.Cookies["_UserID"].Value != null && @Context.Request.Cookies["_UserID"].Value != "")
+{
+    UserID = @Context.Request.Cookies["_UserID"].Value;
+}
+@if (Session["UserID"] != null)
+{
+    UserID = Session["UserID"].ToString();
+}
+@if (@Context.Request.Cookies["_UserImage"].Value != null && @Context.Request.Cookies["_UserImage"].Value != "")
+{
+    UserImage = @Context.Request.Cookies["_UserImage"].Value;
+}
+
+@if (Session["UserImage"] != null)
+{
+    UserImage = Session["UserImage"].ToString();
+}
+@if (@Context.Request.Cookies["_UserName"].Value != null && @Context.Request.Cookies["_UserName"].Value != "")
+{
+    UserName = @Context.Request.Cookies["_UserName"].Value;
+}
+@if (Session["userName"] != null)
+{
+    UserName = Session["userName"].ToString();
+}
+@if (@Context.Request.Cookies["_CoverImagecookie"].Value != null && @Context.Request.Cookies["_CoverImagecookie"].Value != "")
+{
+    CoverImage = @Context.Request.Cookies["_CoverImagecookie"].Value;
+}
+
+@if (Session["CoverPhoto"] != null)
+{
+    CoverImage = Session["CoverPhoto"].ToString();
+}
+<head>
+    <style>
+        .bg-success-light {
+            background-color: rgba(15, 183, 107,0.12) !important;
+            color: #26af48 !important;
+        }
+
+        @@media(min-width: 768px) {
+            .client-menu {
+                width: 26%;
+            }
+        }
+
+        @@media(max-width: 768px) {
+            .detail-section {
+                padding-top: 10px;
+            }
+        }
+    </style>
+</head>
+<!-- ::::protfolio-hero-aria start:::::: -->
+<section class="protfolio-hero-aria protfolio-banner custum-mg">
+    <div class="protfolio-banner bg-img-content" style="background:url(@CoverImage)">
+        <h1 class="d-none"> none</h1>
+    </div>
+</section>
+<!-- ::::protfolio-hero- ariaend:::::: -->
+
+<section class="protfolio-system">
+    <div class="has-bg">
+        <div class="has-bg-1">
+            <img src="~/assets/img/protfolio-bg-left.png" alt="img">
+        </div>
+        <div class="has-bg-2">
+            <img src="~/assets/img/protfolio-bg-right.png" alt="img">
+        </div>
+    </div>
+
+    <div class="container custum-pd2">
+        <div class="d-flex flex-wrap justify-content-between align-items-center">
+            <div class="protfolio-img d-flex align-items-center ">
+                <div class="img">
+                    <img src="@UserImage" alt="img">
+                </div>
+                <div class="brooklyn">
+                    <h2>@UserName</h2>
+                    <p></p>
+                </div>
+            </div>
+            <div class="icon">
+                <ul class="list-inline">
+                    <a href="https://www.facebook.com/olaglasses" target="_blank"> <li class="list-inline-item"><i class="fab fa-facebook-f"></i></li></a>
+                    <a href="https://twitter.com/olaglasses" target="_blank"><li class="list-inline-item active"><i class="fab fa-twitter"></i></li></a>
+                    <a href="https://www.instagram.com/" target="_blank"><li class="list-inline-item"><i class="fab fa-instagram"></i></li></a>
+                    <a href="https://printess.com/" target="_blank"><li class="list-inline-item"><i class="fab fa-pinterest-p"></i></li></a>
+                </ul>
+            </div>
+        </div>
+        <div class="row pt-5">
+            <div class="col-lg-4 col-md-4 client-menu">
+                <div class="acount-bg">
+                    <h2>My Account</h2>
+                    <h4>My orders</h4>
+                    <p>
+                        <a id="orderlist" style="color:black" href="@Url.Action("Orders","client",new { id = Convert.ToInt32(UserID) })">
+
+                            <span>Order List</span>
+                        </a>
+                    </p>
+                    <h4>Account Settings</h4>
+                    <ul>
+                        <li> <a id="PersonalInfo" href="@Url.Action("PersonalInfo","Client",new { id=Convert.ToInt32(UserID)})">Personal Info</a> </li>
+                        <li><a id="addressmanagement" href="@Url.Action("addressmanagement","Client",new { id=Convert.ToInt32(UserID)})">Address management</a> </li>
+                        <li><a id="clientchangepassword" href="@Url.Action("changepassword","Client")">Change Password</a> </li>
+                        <li><a id="emailSubscribed" href="@Url.Action("EmailSubscriptions","Client",new { id=Convert.ToInt32(UserID)})">E-Mail Subscription</a> </li>
+                        <li><a id="PrescriptionList" href="@Url.Action("PrescriptionList","Client",new { id=Convert.ToInt32(UserID)})">My Prescription </a> </li>
+                    </ul>
+                    <h4>others</h4>
+                    <p>
+                        <a style="color:black" target="_blank" href="@Url.Action("Favourites","Dashboard",new { id = Convert.ToInt32(UserID) })">
+
+                            <span>My Favourite</span>
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+            <div class="col-lg-7 offset-md-1 col-md-7 pescription detail-section">
+                <h2 class="Prescription_details">Prescription Detail</h2>
+
+
+                @using (Html.BeginForm("Updateprescriotion", "Client", FormMethod.Post))
+                {
+                    <input hidden name="id" value="@Convert.ToInt32(UserID) " />
+                    <input hidden name="prescriptionid" value="@Model.PrescriptionID" />
+
+                    <input hidden name="ProductID" value="@Model.ProductID" />
+                    <input hidden name="OrderID" value="@Model.OrderID" />
+                    <input hidden name="lensType" value="@Model.lensType" />
+                    <input hidden name="quantity" value="@Model.quantity" />
+                    <input hidden name="UserID" value="@UserID" />
+                    <input hidden name="PDImage" value="@Model.PDImage" />
+                    <input hidden name="PrescriptionImage" value="@Model.PrescriptionImage" />
+                    <input hidden name="CreatedDate" value="@DateTime.Now" />
+                    <input hidden name="Segmentheight" value="@Model.Segmentheight" />
+                    <div class="row mb-4 edit_pescription">
+                        <div class="col-lg-2">
+                            <div class="form-group" style="margin-top: 25%;">
+                                <h5>Left Eye</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label>SPH</label>
+                                <select class="form-control select edit_pescription" name="l_sph">
+                                    @foreach (var item in ViewBag.SPH)
+                                    {
+                                        if (Model.l_sph == item.TypeValue)
+                                        {
+                                            <option selected>@item.TypeValue</option>
+                                        }
+                                        else
+                                        {
+                                            <option> @item.TypeValue</option>
+                                        }
+
+                                    }
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <label>CYL</label>
+                            <div class="form-group">
+
+                                <select class="form-control select edit_pescription" name="l_cyl">
+                                    @foreach (var item in ViewBag.CYL)
+                                    {
+                                        if (Model.l_cyl == item.TypeValue)
+                                        {
+                                            <option selected>@item.TypeValue</option>
+                                        }
+                                        else
+                                        {
+                                            <option> @item.TypeValue</option>
+                                        }
+
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label>AXIS</label>
+
+                                <input class="form-control edit_pescription" type="text" name="l_axis" id="l_axis" value="@Model.l_axis">
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label>ADD</label>
+                                <select class="form-control select edit_pescription" name="l_add">
+                                    @foreach (var item in ViewBag.ADD)
+                                    {
+                                        if (Model.l_add == item.TypeValue)
+                                        {
+                                            <option selected>@item.TypeValue</option>
+                                        }
+                                        else
+                                        {
+                                            <option> @item.TypeValue</option>
+                                        }
+
+                                    }
+                                </select>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row mb-4 edit_pescription">
+                        <div class="col-lg-2">
+                            <div class="form-group" style="margin-top: 25%;">
+                                <h5>Right Eye</h5>
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label>SPH</label>
+                                <select class="form-control select edit_pescription" name="r_sph">
+                                    @foreach (var item in ViewBag.SPH)
+                                    {
+                                        if (Model.r_sph == item.TypeValue)
+                                        {
+                                            <option selected>@item.TypeValue</option>
+                                        }
+                                        else
+                                        {
+                                            <option> @item.TypeValue</option>
+                                        }
+
+                                    }
+                                </select>
+
+                                @*<input disabled class="form-control edit_pescription" type="text" name="l_axis" id="l_axis" value="@Model.r_sph" />*@
+
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label>CYL</label>
+                                <select class="form-control select edit_pescription" name="r_cyl">
+                                    @foreach (var item in ViewBag.CYL)
+                                    {
+                                        if (Model.r_cyl == item.TypeValue)
+                                        {
+                                            <option selected>@item.TypeValue</option>
+                                        }
+                                        else
+                                        {
+                                            <option> @item.TypeValue</option>
+                                        }
+
+                                    }
+                                </select>
+
+                                @*<input disabled class="form-control edit_pescription" type="text" name="l_axis" id="l_axis" value="@Model.r_cyl" />*@
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label>AXIS</label>
+
+                                <input class="form-control edit_pescription" type="text" name="r_axis" id="r_axis" value="@Model.r_axis">
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label>ADD</label>
+                                <select class="form-control select edit_pescription" name="r_add">
+                                    @foreach (var item in ViewBag.ADD)
+                                    {
+                                        if (Model.r_add == item.TypeValue)
+                                        {
+                                            <option selected>@item.TypeValue</option>
+                                        }
+                                        else
+                                        {
+                                            <option> @item.TypeValue</option>
+                                        }
+
+                                    }
+                                </select>
+
+                                @*<input disabled class="form-control edit_pescription" type="text" name="l_axis" id="l_axis" value="@Model.r_add" />*@
+                            </div>
+                        </div>
+
+                    </div>
+                    @*if dual pd is not selected*@
+
+                    <div class="row mb-4 edit_pescription">
+                        <div class="col-lg-2">
+                            <div class="form-group" style="margin-top: 25%;">
+                                <h5>Pupillary Distance (PD) </h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label id="lblleftpd">PD</label>
+
+                                <select class="form-control select edit_pescription" name="PD">
+                                    @foreach (var item in ViewBag.PD)
+                                    {
+                                        if (Model.PD == Convert.ToDouble(item.TypeValue))
+                                        {
+                                            <option selected>@item.TypeValue</option>
+                                        }
+                                        else
+                                        {
+                                            <option> @item.TypeValue</option>
+                                        }
+
+                                    }
+                                </select>
+
+                            </div> <br />
+                            <input onclick="fndualpd()" type="checkbox" id="chktwopd" /> Two PD numbers
+                            <input value="0" name="Dualpd" id="txtdualpd" hidden />
+                        </div>
+
+                        <div class="col-lg-2" style="display:none" id="divrightpd">
+                            <div class="form-group">
+                                <label>Right PD</label>
+                                <select class="form-control select edit_pescription" name="Rightpd">
+                                    @foreach (var item in ViewBag.PD)
+                                    {
+                                        if (Model.Rightpd == Convert.ToDouble(item.TypeValue))
+                                        {
+                                            <option selected>@item.TypeValue</option>
+                                        }
+                                        else
+                                        {
+                                            <option> @item.TypeValue</option>
+                                        }
+
+                                    }
+                                </select>
+                            </div>
+                            <input hidden value="1" name="Dualpd" />
+
+                        </div>
+                    </div>
+
+
+                    <div class="row mb-4 edit_pescription">
+                        <div class="col-lg-2">
+                            <div class="form-group" style="margin-top: 25%;">
+                                <h5>Who is the prescription for?</h5>
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label>First Name<span class="text-danger">*</span></label>
+
+                                <input class="form-control edit_pescription" type="text" name="Fname" id="Fname" value="@Model.Fname" required="">
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="form-group">
+                                <label>Last Name<span class="text-danger">*</span></label>
+
+                                <input class="form-control edit_pescription" type="text" name="Lname" id="Lname" value="@Model.Lname" required="">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Prescription  Name<span class="text-danger">*</span></label>
+
+                                <input class="form-control edit_pescription" type="text" name="prescription" id="prescription" value="@Model.prescription" required="">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Date of Prescription<span class="text-danger">*</span></label>
+
+                                @if (@Model.prescriptionDate != null)
+                                {
+                                    <input class="form-control edit_pescription" type="date" name="prescriptionDate" id="prescriptionDate" value="@Model.prescriptionDate.Value.ToString("yyyy-MM-dd")" required="">
+                                }
+                                else
+                                {
+                                    <input class="form-control edit_pescription" type="date" name="prescriptionDate" id="prescriptionDate" value="" required="">
+                                }
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <button class="btn btn-primary submit-btn" type="submit" name="form_submit" value="submit">Submit</button>
+
+                }
+
+            </div>
+
+
+
+        </div>
+    </div>
+</section>
+
+
+<script src="~/assets/js/jquery-1.12.4.min.js"></script>
+<script>
+
+
+    function fndualpd() {
+        var chkBox = document.getElementById('chktwopd');
+        if (chkBox.checked) {
+            $("#divrightpd").fadeIn();
+            document.getElementById("lblleftpd").innerHTML = "Left PD";
+            $("#txtdualpd").val("1");
+        }
+        else {
+            document.getElementById("lblleftpd").innerHTML = "PD";
+            $("#divrightpd").fadeOut();
+            $("#txtdualpd").val("0");
+        }
+    }
+
+    $(document).ready(function () {
+        $("ul li a").removeClass("active");
+        $('#PrescriptionList').addClass('active');
+        $("#LinkCopy").fadeOut(8000);
+    });
+
+</script>
+

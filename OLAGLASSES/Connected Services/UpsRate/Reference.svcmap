@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="0be7bf09-ba24-43ca-b713-99bf14699130" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="F:\Clients\eye clinic frames data\Revision Document\Phase 2\Rates_Pkg_Gnd\RatingPACKAGE\PACKAGEWebServices\SCHEMA-WSDLs\RateWS.wsdl" Protocol="file" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="RateWS.wsdl" MetadataType="Wsdl" ID="313d6bf9-a08f-42c8-8ee4-332d095d9fd1" SourceId="1" SourceUrl="file:///F:/Clients/eye clinic frames data/Revision Document/Phase 2/Rates_Pkg_Gnd/RatingPACKAGE/PACKAGEWebServices/SCHEMA-WSDLs/RateWS.wsdl" />
+    <MetadataFile FileName="UPSSecurity.xsd" MetadataType="Schema" ID="6d40c7b1-6383-4ba4-8403-48b2ab9c9497" SourceId="1" SourceUrl="file:///F:/Clients/eye clinic frames data/Revision Document/Phase 2/Rates_Pkg_Gnd/RatingPACKAGE/PACKAGEWebServices/SCHEMA-WSDLs/UPSSecurity.xsd" />
+    <MetadataFile FileName="RateWebServiceSchema.xsd" MetadataType="Schema" ID="46489b54-e9f7-40e4-b4bf-924546179f5d" SourceId="1" SourceUrl="file:///F:/Clients/eye clinic frames data/Revision Document/Phase 2/Rates_Pkg_Gnd/RatingPACKAGE/PACKAGEWebServices/SCHEMA-WSDLs/RateWebServiceSchema.xsd" />
+    <MetadataFile FileName="Error1.xsd" MetadataType="Schema" ID="e8b25004-37da-4817-92db-ea21f6cc5452" SourceId="1" SourceUrl="file:///F:/Clients/eye clinic frames data/Revision Document/Phase 2/Rates_Pkg_Gnd/RatingPACKAGE/PACKAGEWebServices/SCHEMA-WSDLs/Error1.1.xsd" />
+    <MetadataFile FileName="common.xsd" MetadataType="Schema" ID="e149c603-a91e-45dd-a60f-e6000476340a" SourceId="1" SourceUrl="file:///F:/Clients/eye clinic frames data/Revision Document/Phase 2/Rates_Pkg_Gnd/RatingPACKAGE/PACKAGEWebServices/SCHEMA-WSDLs/common.xsd" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

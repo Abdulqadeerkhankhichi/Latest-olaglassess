@@ -1,0 +1,137 @@
+﻿@using Olaglasses.Models;
+@{
+    List<spgetorderDetails_Result1> spgetorderDetails = (List<spgetorderDetails_Result1>)ViewBag.OrderDetails;
+    Layout = null;
+}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ola Optical</title>
+    <link rel="shortcut icon" href="~/assets/img/fav-ivon.jpg" type="image/x-icon">
+    <!-- <link rel="shortcut icon" href="~/assets/img/Abner 2.png" type="image/x-icon"> -->
+    <!-- css -->
+    <link rel="stylesheet" href="~/assets/css/slick.css">
+    <link rel="stylesheet" href="~/assets/css/all.min.css">
+    <link rel="stylesheet" href="~/assets/css/aos.css">
+    <link rel="stylesheet" href="~/assets/css/venobox.css">
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <link href="~/assets/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/assets/css/responsive.css">
+    <!-- css -->
+    <style>
+        .user-order-item {
+            height: auto !important;
+        }
+        hr.new2 {
+            border-top: 1px dashed red;
+        }
+        #borderimg1 {
+            border: 10px solid transparent;
+            padding: 15px;
+            border-image: url(/assets/img/border.png) 30 round;
+        }
+
+    </style>
+</head>
+<body>
+
+    <section class="user-area">
+        <br>
+        <div class="has-bg has-bg2">
+            <div class="has-bg-user-left">
+                <img src="~/assets/img/user-information-left-bg.png" alt="">
+            </div>
+            <div class="has-bg-user-right">
+                <img src="~/assets/img/user-information-right-bg.png" alt="">
+            </div>
+        </div>
+        <div class="container-fluid custum-pd ">
+            <!-- <div class="my-cart-section"> -->
+            <div class=" row user-bg d-flex  flex-wrap" >
+                <div class="col-md-3">
+                    </div>
+                <div class="col-md-4" id="section">
+                  
+                    <div id="borderimg1" class="customer-details" style=" height:auto!important;width:100% !important ">
+                        <!--<div class="customer-details-heading d-flex justify-content-between align-items-center" >
+        <a class="print-btn" style="float:right;margin-left:80%" id="PrintBtn">Print</a>-->
+                        @*<h4>Shipping Label</h4>*@
+
+                        <!--</div>-->
+                        <img class="img-fluid d-lg-block" src="/assets/img/Logo.png" alt="log">
+                        <div>
+                            <br />   <br />
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <h5><strong style="color:orange;">FROM:</strong></h5>
+                                </div>
+                                <div class="col-md-10">
+                                    <h6> OPTICAL GLASSES</h6>
+                                    <h6>34 W Kawailani St,<br>Hilo, HI 96720</h6>
+                                </div>
+
+                            </div>
+                           
+                            <hr class="new2">
+                            <br />
+                            @foreach (var item in spgetorderDetails)
+                            {
+
+                                <div class="row">
+
+                                    <div class="col-md-2">
+                                        <h5><strong style="color:orange;">To:</strong></h5>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h6> @item.SFname  @item.SLname</h6>
+                                        <h6>@item.SAddress @item.SCity @item.SState, <br> @item.SCountry (@item.SPostalCode)</h6>
+                                    </div>
+                                </div>
+
+                                @*<div class="row">
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-md-2">
+                    <h5><strong style="color:orange;float: right;">Return:</strong></h5>
+                </div>
+                <div class="col-md-3">
+                    <h5> OPTICAL GLASSES</h5>
+                    <h5>34 W Kawailani St,<br>Hilo, HI 96720</h5>
+                </div>
+            </div>*@
+
+                                break;
+                            }
+                            <br /><br />
+                        </div>
+                        <img class="img-fluid d-lg-block" src="/assets/img/barcode.gif" alt="log">
+
+                    </div>
+                </div>
+                </div>
+            </div>
+    </section>
+    <script src="~/assets/js/jquery-1.12.4.min.js"></script>
+    <script src="~/assets/js/venobox.min.js"></script>
+    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/js/slick.min.js"></script>
+    <script src="~/assets/js/aos.js"></script>
+    <script src="~/assets/js/script.js"></script>
+    <script>
+        $('#PrintBtn').click(function () {
+            $("#PrintBtn").css({ display: 'none' });
+            var myDiv = document.getElementById("section").innerHTML;
+            console.log(myDiv);
+            document.body.innerHTML =
+                "<html><head><title></title></head><body><div class='row'><div class='col-md-4'>" +
+            myDiv + "</div></div></body>";
+
+           
+          
+            
+           
+    });
+    </script>
+</body>

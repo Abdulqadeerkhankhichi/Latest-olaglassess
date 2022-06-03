@@ -1,0 +1,173 @@
+﻿
+@{
+    ViewBag.Title = "Contact";
+}
+<head>
+    <style>
+        .mobile-view {
+            display: flex;
+            flex-flow: column;
+        }
+        @@media(max-width: 768px) {
+            .submit-now {
+                text-align: center;
+            }
+            .a {
+                margin-top: 20px;
+                order: 2;
+                
+            }
+            .frame-size-left {
+                background-color: #f8f8f8;
+                padding:30px;
+            }
+            .b {
+                order: 1;
+            }
+        }
+        
+    </style>
+</head>
+<!-- :::: contact-hero aria start:::::: -->
+<section class="contact-hero-aria contact-banner custum-mg">
+    <div class="container-fluid custum-pd">
+        <div class="contact-sc contact-banner">
+            <h1>Contact us</h1>
+        </div>
+    </div>
+</section>
+<!-- :::: contact-hero aria end:::::: -->
+<!-- :::: frame-size start:::::: -->
+
+<section class="frame-size">
+    <!--  -->
+    <!--  -->
+    <div class="has-bg">
+        <div class="has-bg-3">
+            <img src="~/assets/img/bg-3.png" alt="img">
+        </div>
+        <div class="has-bg-4">
+            <img src="~/assets/img/bg-4.png" alt="img">
+        </div>
+    </div>
+
+    <!--  -->
+    <!--  -->
+    <div class="container mobile-view">
+        <div class="row">
+            <div class="col-lg-6 col-sm-12 col-xs-12 a" >
+                <div class="frame-size-left">
+                    <h3>Find your frame size.</h3>
+                    <p>
+                        Questions? Concerns? Feedback? Need some advice? We’d <br>
+                        love to hear from you! Use the
+                        form on
+                        the right to send <br> us a lil’ note.
+                    </p>
+                    <span>Call us: 1-800-430-EYES</span>
+                    <h5>Hours: </h5>
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            Mon – Sun:
+                        </li>
+                        <li class="list-inline-item">
+                            9am – 9pm EST
+                        </li>
+                    </ul>
+                    <h4>live chat support</h4>
+                    <p>
+                        Chat online with our expert customer service team. <a class="text-primary" href="#">
+                            Chat
+                            Now
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+            <div class="col-lg-6 col-sm-12 col-xs-12 b">
+                <div class="frame-size-right">
+                    @if (ViewBag.message != "")
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="padding-right:0 !important" id="LinkCopy">
+                            @ViewBag.message
+                          
+                        </div>
+                    }
+                    @using (Html.BeginForm("Contact", "Home", FormMethod.Post))
+                    {
+                        <form>
+                            <div class="row">
+                                <div class="col-sm-6 ">
+                                    <label for="fname">First name</label> <br>
+                                    <input class="input form-control" type="text" placeholder="Enter First Name"
+                                           id="fname" `name="fname" required>
+                                </div>
+                                <div class="col-sm-6 ">
+                                    <label for="lname">Last Name</label> <br>
+                                    <input class="input form-control" type="text" placeholder="Enter Last Name"
+                                           id="lname" name="lname" required>
+                                </div>
+                                <div class="col-sm-6 ">
+                                    <label for="email">Email Address</label> <br>
+                                    <input class="input form-control" type="email" placeholder="Enter Email" id="email" name="email" required>
+                                </div>
+                                <div class="col-sm-6 ">
+                                    <label for="phone">Phone Number</label> <br>
+                                    <input class="input form-control" type="text" placeholder="Enter Phone Number"
+                                           id="phone" name="phone">
+                                </div>
+                                <div class="col-sm-6 ">
+                                    <label for="subject">Subject</label> <br>
+                                    <input class="input form-control" type="text" placeholder="Write Your Subject"
+                                           id="subject" name="subject" required>
+                                </div>
+                                <div class="col-sm-6 ">
+                                    <div class="selected">
+                                        <label for="ability">Ability</label> <br>
+                                        <select name="ability" id="ability" class="form-control">
+                                            <option value="Red">Select Here</option>
+                                            <option value="Red">Ability-1</option>
+                                            <option value="Red">Ability-2</option>
+                                            <option value="Red">Ability-3</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 submit-now">
+
+                                    <p>Please enter your question</p>
+                                    <textarea placeholder="Write Your Question Here" required name="message"></textarea>
+                                    <button class="contact-btn" type="submit">Submit Now</button>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    }
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- :::: frame-size end:::::: -->
+<!-- ::::  has-radious:::::: -->
+@*<div class="has-radious">
+        <div class="radious-one">
+            <a href="#">
+
+                <img src="~/assets/img/chat.svg" alt="chat">
+            </a>
+        </div>
+    </div>*@
+
+
+<script src="~/assets/js/jquery-1.12.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("ul li a").removeClass("active");
+        $('#Contact').addClass('active');
+    });
+</script>

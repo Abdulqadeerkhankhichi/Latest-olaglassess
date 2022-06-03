@@ -1,0 +1,346 @@
+﻿@using Olaglasses.Models;
+@{
+    List<tblOrder> orders = (List<tblOrder>)ViewBag.OrderList;
+    List<tblcart> cart = (List<tblcart>)ViewBag.cart;
+}
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string Billingaddress = "";
+}
+
+<head>
+    <style>
+        h4 {
+            padding-bottom: 0px !important;
+        }
+
+        p {
+            padding-bottom: 0px !important;
+        }
+    </style>
+</head>
+<section class="products-wishlist-hero-aria">
+</section>
+<!-- ::::products-hero-aria  end:::::: -->
+
+
+
+
+
+<section class="user-area">
+    <div class="has-bg">
+        <div class="has-bg-user-left">
+            <img src="~/assets/img/user-information-left-bg.png" alt="">
+        </div>
+        <div class="has-bg-user-right">
+            <img src="~/assets/img/user-information-right-bg.png" alt="">
+        </div>
+    </div>
+    <div class="container-fluid custum-pd ">
+
+        <div class="user-bg d-flex justify-content-between flex-wrap">
+            <div class="user-item" style="width:60% !important">
+                <h2>Previous Orders</h2>
+                <a class="shopping-btn" href="@Url.Action("Checkout", "PaymentProcess", new { id = @ViewBag.UserID, OlderID = 0 })">
+                    <button style="width:50% !important " type="button" class="confirm-btn">Next</button>
+                </a>
+                <hr>
+                <div class="Cardholder input-area">
+
+
+                    <!-- <div class="my-cart-section"> -->
+                    @foreach (var item in orders)
+                    {
+
+
+                        if (Billingaddress != item.BAddress)
+                        {
+                            Billingaddress = item.BAddress;
+                            <div class="row">
+                                <div class="col-md">
+                                    <h4> Billing </h4>
+                                    <p>
+                                        @item.BFname @item.BLname,<br> @item.BAddress, <br>@item.Bcity, @item.BState, <br>@item.BCountry (@item.BPostalCode)
+                                        <br>@item.BPhone
+                                        <br>@item.BEmail
+                                    </p>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <h4>Shipping </h4>
+                                    <p>
+                                        @item.SFname @item.SLname,<br> @item.SAddress,<br> @item.Scity, @item.SState,<br> @item.SCountry (@item.SPostalCode)
+                                        <br>@item.SPhone
+                                        <br>@item.SEmail
+                                    </p>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <a style="width:50% !important " class="shopping-btn" href="@Url.Action("Checkout", "PaymentProcess", new { id = item.userID, OlderID = item.OrderID })">
+                                        <button type="button" class="confirm-btn" onclick="Next()">Use to Fill Data</button>
+                                    </a>
+                                </div>
+                            </div>
+
+
+                            <hr>
+                        }
+
+
+
+                    }
+
+                </div>
+            </div>
+
+            <div class="user-order-item">
+                <h4>Order Summary</h4>
+                <div class="frame">
+                    @{ double subtotal = 0;}
+                    @foreach (var item in cart)
+                    {
+
+
+                        <div class="row">
+                            <div class="col-md-3"><img style="width:214px;height:75px" src="@item.ProductImagePath" /> </div>
+                            <div class="col-md-3">
+                                <strong>@item.Title</strong> <br />
+                                <strong>Size: </strong> @item.Size <br />
+                                @if (item.VisionType != null || item.VisionType != "")
+                                {
+                                    <strong>Vision: </strong> @item.VisionType <br />
+                                }
+
+                                @if (item.LensType != null || item.LensType != "")
+                                {
+                                    <strong>Lens Type: </strong> @item.LensType <br />
+                                }
+                                @if (item.UVProtection == "on")
+                                {
+                                    <strong>UV Protection: </strong> @item.UVProtection <br />
+                                }
+                            </div>
+                            <div class="col-md-3"><Strong>QTY</Strong> <br /> @item.Quantity</div>
+                            <div class="col-md-3"><Strong>Sub Total </Strong>  <br />$@item.TotalAmount</div>
+
+                        </div>
+
+                        @*<ul>
+                        <li>@item.Title X @item.Quantity</li>
+                        <li>$@item.TotalAmount</li>
+                    </ul>*@
+                        @*if (item.LensType != null)
+                    {
+                        <ul>
+                            <li>@item.LensType</li>
+                            @if (item.LensType == "Standard")
+                            {
+                                <li>$39</li>
+                            }
+
+                            @if (item.LensType == "Enhanced")
+                            {
+                                <li>$49</li>
+                            }
+                        </ul>
+                    }*@
+                        @*if (item.UVProtection == "on")
+                    {
+                        <ul>
+                            <li>UV Protection</li>
+                            <li>$20</li>
+                        </ul>
+                    }*@
+                        subtotal = subtotal + item.TotalAmount;
+                    }
+                </div>
+                <div class="Subtotal">
+                    <ul class="active">
+                        <li>Subtotal</li>
+                        <li>$@subtotal</li>
+                    </ul>
+                    <ul>
+                        <li>Shipping</li>
+                        <li>$9.00</li>
+                    </ul>
+                    @if (@ViewBag.txtdiscountamount != null && @ViewBag.txtdiscountamount > 0)
+                    {
+                        <ul>
+                            <li>Discount (@ViewBag.txtdiscountpercentage%)</li>
+                            <li>$@ViewBag.txtdiscountamount</li>
+                        </ul>
+                    }
+
+                    <ul>
+                        <li>tax</li>
+                        <li>$@ViewBag.tax</li>
+                    </ul>
+                </div>
+                <div class="total-order">
+                    <h6>order Total</h6>
+                    <h6>$@ViewBag.GrandAmount</h6>
+                </div>
+
+            </div>
+
+            <div class="custum-mg">
+                <!-- <div class="my-cart-section"> -->
+                <div class="user-bg d-flex justify-content-between flex-wrap">
+                    <div class="user-item">
+                        <h2>Previous Orders</h2>
+                        <div class="Previous_order_sec">
+                            <div class="billing">
+                                <h4>Billing</h4>
+                                <ul>
+                                    <li>34 w kawailaai St. </li>
+                                    <li>Hillo, Hi</li>
+                                    <li>United States (96720)</li>
+                                    <li>6823213702</li>
+                                    <li>Raghav@eyecarehi.com</li>
+                                </ul>
+                            </div>
+                            <div class="shipping">
+                                <h4>Shipping</h4>
+                                <ul>
+                                    <li>34 w kawailaai St. </li>
+                                    <li>Hillo, Hi</li>
+                                    <li>United States (96720)</li>
+                                    <li>6823213702</li>
+                                    <li>Raghav@eyecarehi.com</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="Previous_order_total_btn">
+                            <a href="" class="btn btn primary blue">Add new address</a>
+                            <a href="" class="btn btn warning yellow">Select this address</a>
+                        </div>
+                    </div>
+                    <div class="my-cart-area user-order-item">
+                        <h4>order Summery</h4>
+                        <div class="my-cart-bg">
+                            <div class="my-cart-item heading">
+                                <div class="my-cart-bg-product d-flex flex-wrap">
+                                    <div class="product-img ">
+                                        <img src="https://i.postimg.cc/Rhwk48GQ/Stiles-4.png" alt="img">
+                                    </div>
+                                    <div class="product-details">
+                                        <h4>Aelani</h4>
+                                        <div class="siz-flex">
+                                            <ul>
+                                                <li>Size : Small</li>
+                                                <li>Vision : Reading</li>
+                                                <li>Lens Type : Standard</li>
+                                                <li>UV Protection : No</li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="my-cart-item qty">
+                                <h4>Qty</h4>
+                                <div class="Quality_qty">
+                                    <h5>01</h5>
+                                </div>
+                            </div>
+                            <div class="my-cart-item total">
+                                <h4>Sub Total</h4>
+                                <div class="unit_unit">
+                                    <h5>
+                                        $999.00
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="my-cart-bg">
+
+                            <div class="my-cart-item heading">
+                                <div class="my-cart-bg-product d-flex flex-wrap">
+                                    <div class="product-img ">
+                                        <img src="https://i.postimg.cc/fLrFcsqv/Callen-1.png" alt="img">
+                                    </div>
+                                    <div class="product-details">
+                                        <h4>Ola Optical</h4>
+                                        <div class="siz-flex">
+                                            <ul>
+                                                <li>Size : Small</li>
+                                                <li>Vision : Reading</li>
+                                                <li>Lens Type : Standard</li>
+                                                <li>UV Protection : No</li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="my-cart-item qty">
+                                <h4>Qty</h4>
+                                <div class="Quality_qty">
+                                    <h5>01</h5>
+                                </div>
+                            </div>
+                            <div class="my-cart-item total">
+                                <h4>Sub Total</h4>
+                                <div class="unit_unit">
+                                    <h5>
+                                        $999.00
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="my-cart-bg">
+
+                            <div class="my-cart-item heading">
+                                <div class="my-cart-bg-product d-flex flex-wrap">
+                                    <div class="product-img ">
+                                        <img src="https://i.postimg.cc/qRvVcjJp/lens-cleaning-kit-product-sample-1.png" alt="img">
+                                    </div>
+                                    <div class="product-details">
+                                        <h4>Lens Clear</h4>
+                                        <div class="siz-flex">
+                                            <ul>
+                                                <li>Size : Small</li>
+                                                <li>Vision : Reading</li>
+                                                <li>Lens Type : Standard</li>
+                                                <li>UV Protection : No</li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="my-cart-item qty">
+                                <h4>Qty</h4>
+                                <div class="Quality_qty">
+                                    <h5>01</h5>
+                                </div>
+                            </div>
+                            <div class="my-cart-item total">
+                                <h4>Sub Total</h4>
+                                <div class="unit_unit">
+                                    <h5>
+                                        $50.00
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="total_price">
+                            <div class="price_text"><h5>Total Price</h5></div>
+                            <div class="price_nmbr"><h5>$1850</h5></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- </div> -->
+
+
+
+        </div>
+    </div>
+</section>
+

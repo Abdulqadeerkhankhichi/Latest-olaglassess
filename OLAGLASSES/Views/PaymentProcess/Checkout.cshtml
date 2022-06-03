@@ -1,0 +1,826 @@
+﻿@using Olaglasses.Models;
+@model Olaglasses.Models.tblAddress
+@{
+
+    List<tblcart> cart = (List<tblcart>)ViewBag.cart;
+}
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <style>
+        .user-area .user-item .user-area-input {
+            text-transform: initial;
+        }
+    </style>
+</head>
+<section class="products-wishlist-hero-aria">
+</section>
+<!-- ::::products-hero-aria  end:::::: -->
+<section class="user-area">
+    <div class="has-bg">
+        <div class="has-bg-user-left">
+            <img src="~/assets/img/user-information-left-bg.png" alt="">
+        </div>
+        <div class="has-bg-user-right">
+            <img src="~/assets/img/user-information-right-bg.png" alt="">
+        </div>
+    </div>
+    <div class="container-fluid custum-pd ">
+        @*<form method="post" action="@Url.Action("Index","PaymentProcess")">*@
+
+        <div class="user-bg user-info-new">
+            <div class="custum-mg">
+                <div class="user-bg user-info-new d-flex justify-content-between flex-wrap">
+                    <div class="user-item">
+                        <input type="text" id="userID" value="@ViewBag.UserID" name="userID" hidden>
+                        <input type="text" value="@ViewBag.GrandAmount" id="amount" name="amount" hidden>
+                        <div id="Checkout" class="Checkout">
+                            <h2>Check Out</h2>
+                            @if (ViewBag.message != null && ViewBag.message != "")
+                            {
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="padding-right:0 !important" id="LinkCopy">
+                                    @ViewBag.message
+
+                                </div>
+                            }
+                            <div class="Cardholder input-area">
+                                <h3>Billing Information</h3>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="fname">First Name*</label> <br>
+                                        <input class="user-area-input form-control" type="text" name="BFname" id="BFname" required value="@Model.BFname">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">Last Name*</label> <br>
+                                        <input class="user-area-input form-control" type="text" name="BLname" id="BLname" value="@Model.BLname" required>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="fname">Address*</label> <br>
+                                        <input class="user-area-input form-control" type="text" name="BAddress" id="BAddress" value="@Model.BAddress" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">City*</label> <br>
+                                        <input class="user-area-input form-control" type="text" name="Bcity" id="Bcity" value="@Model.Bcity" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">State*</label> <br>
+                                        <input class="user-area-input form-control" type="text" name="BState" id="BState" value="@Model.BState" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">Postal Code*</label> <br>
+                                        <input class="user-area-input form-control" type="text" name="BPostalCode" id="BPostalCode" value="@Model.BPostalCode" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">Country*</label> <br>
+                                        <input class="user-area-input form-control" type="text" name="BCountry" id="BCountry" value="@Model.BCountry" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">Phone*</label> <br>
+                                        <input class="user-area-input form-control" type="text" name="BPhone" id="BPhone" value="@Model.BPhone" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">Email*</label> <br>
+                                        <input class="user-area-input form-control" type="email" name="BEmail" id="BEmail" value="@Model.BEmail" required>
+                                        <small style="color:red !important;font-weight:bold;font-size:14px !important " id="ErrorAccessMessagesubscribeNowEmail"> </small>
+                                    </div>
+                                    @*<div class="col-md-6">
+                                            <label for="fname">Weight* <small id="lblinvalidweight" style="display:none;color:red">Weight must be between 1-150</small> </label>  <br>
+                                            <input class="user-area-input form-control" type="number" name="Weight" id="BWeight" required value="0">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="fname">Monetary Value*</label> <br>
+                                            <input class="user-area-input form-control" type="number" readonly disabled name="Monetary" id="Monetary" required>
+                                        </div>*@
+                                    <div class="col-md-12">
+                                        <label for="fname">Order Comment</label> <br>
+                                        <textarea class="user-area-input form-control" type="text" name="OrderComments" value=""></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="user-checkbox ">
+                                <label class="user-contant expire-p">
+                                    My Shipping Address is same as Billing Address
+                                    <input type="checkbox" id="IsSame" name="IsSame" onchange="valueChanged()" checked class="IsSame">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="Cardholder input-area Shipping" id="Shipping">
+                                <h3>Shipping Information</h3>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="fname">First Name*</label> <br>
+                                        <input class="user-area-input form-control" type="text" name="SFname" id="SFname" value="@Model.SFname">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">Last Name*</label> <br>
+                                        <input class="user-area-input form-control" type="text" name="SLname" id="SLname" value="@Model.SLname">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="fname">Address*</label> <br>
+                                        <input class="user-area-input form-control" type="text" name="SAddress" id="SAddress" value="@Model.SAddress">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">City*</label> <br>
+                                        <input class="user-area-input form-control" type="text" name="Scity" id="Scity" value="@Model.Scity">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">State*</label> <br>
+                                        <input class="user-area-input form-control" type="text" name="SState" id="SState" value="@Model.SState">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">Postal Code*</label> <br>
+                                        <input class="user-area-input form-control" type="text" name="SPostalCode" id="SPostalCode" value="@Model.SPostalCode">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">Country*</label> <br>
+                                        <input class="user-area-input form-control" type="text" name="SCountry" id="SCountry" value="@Model.SCountry">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">Phone*</label> <br>
+                                        <input class="user-area-input form-control" type="text" name="SPhone" id="SPhone" value="@Model.SPhone">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">Email*</label> <br>
+                                        <input class="user-area-input form-control" type="text" name="SEmail" id="SEmail" value="@Model.SEmail">
+                                        <small style="color:red !important;font-weight:bold;font-size:14px !important " id="ErrorAccessMessagesubscribeNowEmailS"> </small>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <p id="Upsapiresponse" style="color:red;display:none">Invalid Address information</p>
+                            <button id="btnnext" type="button" class="confirm-btn" onclick="Next()">Next</button>
+
+                        </div>
+                        <div class="Cardholder input-area Payment" id="Payment" style="display:none">
+
+                            <small>Payment information  <small id="Mainerrormessage" style="color:red;display:none"></small></small>
+
+
+                            <label for="fname">Cardholder Name* <small id="lblcarholdername" style="color:red;display:none">Enter card holder name</small></label>
+                            @*<button type="button" onclick="showbilinginfo()" class="btn btn-primary" style="float:right;background-color:#00B0DC !important;border:1px solid #00B0DC">Billing info</button>
+                                <br>*@
+                            <input style="margin-top:26px" class="user-area-input form-control" type="text" placeholder="Cardholder name" id="txtcarholdername" name="cardname" required>
+                            <label for="fname">
+                                Card Number* <small id="lblcarholdernumber" style="color:red;display:none">Enter card number</small>
+                                <small id="lblcarholdernumberlength" style="color:red;display:none">Enter 16 digit number</small>
+                                <small id="errormessage" style="color:red;display:none"></small>
+                            </label> <br>
+                            <input min="14" class="user-area-input form-control" type="text" placeholder="XXXX XXXX XXXX XXXX" id="txtcarholdernumber" name="cardNumber" required>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <div class="input-item">
+                                        <label for="fname">Expire Date* <small id="lblexpirydate" style="color:red;display:none">Select expiry date</small> </label> <br>
+                                        <input value="@DateTime.Now.ToString("yyyy-MM-dd")" class="user-area-input form-control" type="date" id="txtexpirydate" name="expirydate" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="input-item">
+                                        <label for="fname">CVC Number* <small id="lblcvcnumber" style="color:red;display:none">Enter cvc  number</small></label> <br>
+                                        <input class="user-area-input form-control" type="text"
+                                               id="txtcvcnumber" placeholder="Enter CVC Number" name="CVCNumber" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="user-checkbox ">
+                                <label class="user-contant expire-p">
+                                    Continue to buy with terms & conditions
+                                    <input type="checkbox" checked="checked" required>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <br />
+
+                            @*<button type="submit" class="confirm-btn">confirm now</button>*@
+                            <button id="btncheckout" onclick="checkout()" type="button" class="confirm-btn"> confirm now</button>
+                        </div>
+
+
+
+
+
+
+
+
+                    </div>
+
+
+
+
+
+
+                    <div class="my-cart-area user-order-item">
+                        <h4 class="heading_user_item">order Summary</h4>
+
+                        @{ double subtotal = 0, tax=0;}
+                        @foreach (var item in cart)
+                        {
+
+
+                            <div class="my-cart-bg">
+                                <div class="product-img">
+                                    <img src="@item.ProductImagePath" alt="img">
+                                </div>
+                                <div class="product-details">
+                                    <h4>@item.Title</h4>
+                                    <div class="siz-flex">
+                                        <ul>
+                                            <li>Size : @item.Size</li>
+
+                                            @if (item.VisionType != null && item.VisionType != "")
+                                            {
+                                                <li>Vision : @item.VisionType</li>
+
+                                            }
+
+                                            @if (item.LensType != null && item.LensType != "")
+                                            {
+                                                <li>Lens Type : @item.LensType</li>
+                                            }
+                                            @if (item.UVProtection == "on")
+                                            {
+                                                <li>UV Protection :    @item.UVProtection</li>
+                                            }
+
+
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="my-cart-item qty">
+                                    <h4>Qty</h4>
+                                    <div class="Quality_qty">
+                                        <h5>@item.Quantity</h5>
+                                    </div>
+                                </div>
+                                <div class="my-cart-item total">
+                                    <h4>Sub Total</h4>
+                                    <div class="unit_unit">
+                                        <h5>
+                                            $@item.TotalAmount
+                                        </h5>
+                                    </div>
+                                </div>
+
+                            </div>
+                            subtotal = subtotal + item.TotalAmount;
+                            tax = Convert.ToDouble(item.TaxAmount);
+                        }
+
+                    <div>
+                        <div class="total_price">
+                            <div class="price_text"><h5>Sub Price</h5></div>
+                            <div class="price_nmbr"><h5>$@subtotal</h5></div>
+                        </div>
+                        <div class="total_price">
+                            <div class="price_text"><h5>Shipping</h5></div>
+                            <div class="price_nmbr"><h5>$9.00</h5></div>
+                        </div>
+                        <div class="total_price">
+                            <div class="price_text"><h5>Tax</h5></div>
+                            <div class="price_nmbr"><h5>$@tax</h5></div>
+                        </div>
+                    </div>
+                        @if (@ViewBag.txtdiscountamount != null && @ViewBag.txtdiscountamount > 0)
+                        {
+                    <div class="total_price">
+                        @if (@ViewBag.txtdiscountpercentage > 0)
+                        {
+                            <div class="price_text"><h5>Discount (@ViewBag.txtdiscountpercentage%)</h5></div>
+                        }
+                        else
+                        {
+                            <div class="price_text"><h5>Discount</h5></div>
+                        }
+                        <div class="price_nmbr"><h5>$@ViewBag.txtdiscountamount</h5></div>
+                    </div>
+
+                        }
+                        @foreach (var item in cart)
+                        {
+                            <div class="total_price" style="display:none">
+                                <div class="price_text"><h5>Tax</h5></div>
+                                <div class="price_nmbr"><h5>$@item.TaxAmount</h5></div>
+                            </div>
+                            break;
+                        }
+
+                        <div class="total_price">
+                            <div class="price_text"><h5>Total </h5></div>
+                            <div class="price_nmbr"><h5>$@ViewBag.GrandAmount</h5></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        @*</form>*@
+    </div>
+
+
+</section>
+<script src="~/assets/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+
+    function showbilinginfo() {
+        $(".Checkout").show();
+
+        $(".Payment").hide();
+    }
+    $(document).ready(function () {
+        if ($('.IsSame').is(":checked"))
+            $(".Shipping").hide();
+        else
+            $(".Shipping").show();
+
+    });
+    function valueChanged() {
+
+        if ($('.IsSame').is(":checked"))
+            $(".Shipping").hide();
+        else
+            $(".Shipping").show();
+    }
+    function Next() {
+
+        var BEmail = $("#BEmail").val();
+        var BFname = $("#BFname").val();
+        var BLname = $("#BLname").val();
+        var BAddress = $("#BAddress").val();
+        var BState = $("#BState").val();
+        var Bcity = $("#Bcity").val();
+        var BPostalCode = $("#BPostalCode").val();
+        var BCountry = $("#BCountry").val();
+        var BPhone = $("#BPhone").val();
+        var BWeight = $("#BWeight").val();
+
+        if (BFname == "") {
+            document.getElementById("BFname").style.borderColor = "red";
+            document.getElementById("BFname").placeholder = "Type First Name here..";
+
+            return;
+
+        }
+
+        else {
+            document.getElementById("BFname").style.borderColor = "#818181";
+        }
+
+        if (BLname == "") {
+            document.getElementById("BLname").style.borderColor = "red";
+            document.getElementById("BLname").placeholder = "Type Last Name here..";
+
+            return;
+
+        }
+        else {
+            document.getElementById("BLname").style.borderColor = "#818181";
+        }
+
+
+        if (BAddress == "") {
+            document.getElementById("BAddress").style.borderColor = "red";
+            document.getElementById("BAddress").placeholder = "Type Address here..";
+
+            return;
+
+        }
+        else {
+            document.getElementById("BAddress").style.borderColor = "#818181";
+        }
+
+
+        if (BState == "") {
+            document.getElementById("BState").style.borderColor = "red";
+            document.getElementById("BState").placeholder = "Type Sate here..";
+
+            return;
+
+        }
+        else {
+            document.getElementById("BState").style.borderColor = "#818181";
+        }
+
+        if (Bcity == "") {
+            document.getElementById("Bcity").style.borderColor = "red";
+            document.getElementById("Bcity").placeholder = "Type City here..";
+
+            return;
+
+        }
+        else {
+            document.getElementById("Bcity").style.borderColor = "#818181";
+        }
+
+
+        if (BPostalCode == "") {
+            document.getElementById("BPostalCode").style.borderColor = "red";
+            document.getElementById("BPostalCode").placeholder = "Type PostalCode here..";
+
+            return;
+
+        }
+        else {
+            document.getElementById("BPostalCode").style.borderColor = "#818181";
+        }
+
+
+
+        if (BCountry == "") {
+            document.getElementById("BCountry").style.borderColor = "red";
+            document.getElementById("BCountry").placeholder = "Type Country here..";
+
+            return;
+
+        }
+
+        else {
+            document.getElementById("BCountry").style.borderColor = "#818181";
+        }
+
+        if (BPhone == "") {
+            document.getElementById("BPhone").style.borderColor = "red";
+            document.getElementById("BPhone").placeholder = "Type Phone Number here..";
+
+            return;
+
+        }
+        else {
+            document.getElementById("BPhone").style.borderColor = "#818181";
+        }
+
+
+        if (BEmail == "") {
+            document.getElementById("BEmail").style.borderColor = "red";
+            document.getElementById("BEmail").placeholder = "Type Email here..";
+
+            return;
+
+        }
+        var expr = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        if (!expr.test(BEmail)) {
+
+
+            document.getElementById("ErrorAccessMessagesubscribeNowEmail").innerHTML = "Invalid Email Address.";
+            document.getElementById("BEmail").style.borderColor = "Red";
+            $("#ErrorAccessMessagesubscribeNowEmail").fadeIn();
+            return;
+        }
+        else {
+            document.getElementById("BEmail").style.borderColor = "#818181";
+        }
+
+
+        //if (BWeight == 0 | BWeight=="") {
+        //    $("#lblinvalidweight").fadeIn();
+        //    document.getElementById("BWeight").style.borderColor = "red";
+        //    document.getElementById("BWeight").placeholder = "Type Weight here..";
+        //    return;
+        //}
+        //else if (BWeight < 0 || BWeight >150 )
+        //{
+        //    $("#lblinvalidweight").fadeIn();
+        //    document.getElementById("BWeight").style.borderColor = "red";
+        //    document.getElementById("BWeight").placeholder = "Invaid weight ";
+        //    return;
+        //}
+        //else {
+        //    $("#lblinvalidweight").fadeOut();
+        //    document.getElementById("BWeight").style.borderColor = "#818181";
+        //}
+
+
+
+
+
+        /*ajax call to verify address and get rate */
+        var model = {
+            City: Bcity,
+            PostalCode: BPostalCode,
+            StateProvinceCode: BState,
+            CountryCode: BCountry,
+            weight: BWeight
+        };
+
+        //document.getElementById("btnnext").innerHTML = " <img id='LoginLoader' style='Width: 34px!important; height: 30px!important' src='/assets/img/loader.gif' /> &nbsp;  Please Wait.......";
+        //document.getElementById("btnnext").style.backgroundColor = 'black';
+        //document.getElementById("btnnext").style.borderColor = "black";
+        //document.getElementById("btnnext").disabled = true;
+
+        //$.ajax({
+        //    type: "POST",
+        //    url: "/upsapi/Index",
+        //    data: JSON.stringify(model),
+        //    contentType: "application/json; charset=utf-8",
+        //    dataType: "json",
+        //    success: function (data) {
+        //        if (data.Exception == "1")
+        //        {
+        //            document.getElementById("btnnext").innerHTML = "Next";
+        //            document.getElementById("btnnext").style.backgroundColor = '#00B0DC';
+        //            document.getElementById("btnnext").style.borderColor = "#00B0DC";
+        //            document.getElementById("btnnext").disabled = false;
+        //            $("#Monetary").val(data.MonetaryValue);
+        //            $("#Upsapiresponse").fadeOut();
+        //            return;
+        //        }
+        //        else {
+        //        /*alert("error" + data.Exception);*/
+        //            console.log(data.Exception);
+        //            /*document.getElementById("Upsapiresponse").innerHTML = "error" + data.Exception;*/
+
+        //            document.getElementById("btnnext").innerHTML = "Next";
+        //            document.getElementById("btnnext").style.backgroundColor = '#00B0DC';
+        //            document.getElementById("btnnext").style.borderColor = "#00B0DC";
+        //            document.getElementById("btnnext").disabled = false;
+
+        //            $("#Upsapiresponse").fadeIn();
+        //            return;
+        //        }
+        //    }
+
+        //});
+
+
+
+        if ($('.IsSame').is(":checked")) {
+
+
+            $(".Checkout").hide();
+
+            $(".Payment").show();
+        }
+        else {
+            var SEmail = $("#SEmail").val();
+            var SFname = $("#SFname").val();
+            var SLname = $("#SLname").val();
+            var SAddress = $("#SAddress").val();
+            var SState = $("#SState").val();
+            var Scity = $("#Scity").val();
+            var SPostalCode = $("#SPostalCode").val();
+            var SCountry = $("#SCountry").val();
+            var SPhone = $("#SPhone").val();
+
+            if (SFname == "") {
+                document.getElementById("SFname").style.borderColor = "red";
+                document.getElementById("SFname").placeholder = "Type First Name here..";
+
+                return;
+
+            }
+            if (SLname == "") {
+                document.getElementById("SLname").style.borderColor = "red";
+                document.getElementById("SLname").placeholder = "Type Last Name here..";
+
+                return;
+
+            }
+            if (SAddress == "") {
+                document.getElementById("SAddress").style.borderColor = "red";
+                document.getElementById("SAddress").placeholder = "Type Address here..";
+
+                return;
+
+            }
+            if (SState == "") {
+                document.getElementById("SState").style.borderColor = "red";
+                document.getElementById("SState").placeholder = "Type State here..";
+
+                return;
+
+            }
+            if (Scity == "") {
+                document.getElementById("Scity").style.borderColor = "red";
+                document.getElementById("Scity").placeholder = "Type City here..";
+
+                return;
+
+            }
+            if (SPostalCode == "") {
+                document.getElementById("SPostalCode").style.borderColor = "red";
+                document.getElementById("SPostalCode").placeholder = "Type Postal Code here..";
+
+                return;
+
+            }
+            if (SCountry == "") {
+                document.getElementById("SCountry").style.borderColor = "red";
+                document.getElementById("SCountry").placeholder = "Type Country here..";
+
+                return;
+
+            }
+            if (SPhone == "") {
+                document.getElementById("SPhone").style.borderColor = "red";
+                document.getElementById("SPhone").placeholder = "Type Phone Number here..";
+
+                return;
+
+            }
+            if (SEmail == "") {
+                document.getElementById("SEmail").style.borderColor = "red";
+                document.getElementById("SEmail").placeholder = "Type Email here..";
+
+                return;
+
+            }
+            var expr = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+            if (!expr.test(SEmail)) {
+
+
+                document.getElementById("ErrorAccessMessagesubscribeNowEmailS").innerHTML = "Invalid Email Address.";
+                document.getElementById("SEmail").style.borderColor = "Red";
+                $("#ErrorAccessMessagesubscribeNowEmailS").fadeIn();
+                return;
+            }
+        }
+
+        $(".Checkout").hide();
+
+        $(".Payment").show();
+    }
+
+
+    function checkout() {
+
+
+
+        var issame = $('.IsSame').is(":checked");
+        if (issame == true) {
+            issame = "on";
+        }
+        else {
+            issame = "off";
+        }
+
+
+
+        var cardname = $("#txtcarholdername").val();
+        var cardNumber = $("#txtcarholdernumber").val();
+        var expirydate = $("#txtexpirydate").val();
+        var CVCNumber = $("#txtcvcnumber").val();
+        var userID = $("#userID").val();
+        var amount = $("#amount").val();
+        var BFname = $("#BFname").val();
+        var BLname = $("#BLname").val();
+
+        var BAddress = $("#BAddress").val();
+        var Bcity = $("#Bcity").val();
+        var BState = $("#BState").val();
+        var BPostalCode = $("#BPostalCode").val();
+        var BCountry = $("#BCountry").val();
+        var BPhone = $("#BPhone").val();
+        var BEmail = $("#BEmail").val();
+
+
+        var SFname = $("#SFname").val();
+        var SLname = $("#SLname").val();
+        var SAddress = $("#SAddress").val();
+        var Scity = $("#Scity").val();
+        var SState = $("#SState").val();
+        var SPostalCode = $("#SPostalCode").val();
+        var SCountry = $("#SCountry").val();
+        var SPhone = $("#SPhone").val();
+        var SEmail = $("#SEmail").val();
+
+
+        if (cardname == "") {
+            $("#lblcarholdername").fadeIn();
+            $("#txtcarholdername").focus();
+            return;
+        }
+        else {
+            $("#lblcarholdername").fadeOut();
+
+        }
+
+        if (cardNumber == "") {
+            $("#lblcarholdernumber").fadeIn();
+            $("#lblcarholdernumber").focus();
+            return;
+        }
+        else {
+            $("#lblcarholdernumber").fadeOut();
+
+        }
+
+
+        if (cardNumber.length < 14) {
+            $("#lblcarholdernumberlength").fadeIn();
+            $("#lblcarholdernumberlength").focus();
+            return;
+        }
+        else {
+            $("#lblcarholdernumberlength").fadeOut();
+
+        }
+
+        if (expirydate == "") {
+            $("#lblexpirydate").fadeIn();
+            $("#lblexpirydate").focus();
+            return;
+        }
+        else {
+            $("#lblexpirydate").fadeOut();
+
+        }
+
+        if (CVCNumber == "") {
+            $("#lblcvcnumber").fadeIn();
+            $("#lblcvcnumber").focus();
+            return;
+        }
+        else {
+            $("#lblcvcnumber").fadeOut();
+
+        }
+
+
+
+
+        var orderHead = new Array();
+        var orderlist = {};
+
+        orderlist.BFname = BFname;
+        orderlist.BLname = BLname;
+        orderlist.UserAddress = BAddress;
+        orderlist.BAddress = BAddress;
+        orderlist.Bcity = Bcity;
+        orderlist.BState = BState;
+        orderlist.BPostalCode = BPostalCode;
+        orderlist.BCountry = BCountry;
+        orderlist.BPhone = BPhone;
+        orderlist.BEmail = BEmail;
+
+        orderlist.SFname = SFname;
+        orderlist.SLname = SLname;
+        orderlist.SAddress = SAddress;
+        orderlist.Scity = Scity;
+        orderlist.SState = SState;
+        orderlist.SPostalCode = SPostalCode;
+        orderlist.SCountry = SCountry;
+        orderlist.SPhone = SPhone;
+        orderlist.SEmail = SEmail;
+        orderHead.push(orderlist);
+
+        var model = {
+            orders: orderHead,
+            cardname: cardname,
+            cardNumber: cardNumber,
+            expirydate: expirydate,
+            CVCNumber: CVCNumber,
+            userID: userID,
+            IsSame: issame,
+            amount: amount
+        };
+        document.getElementById("btncheckout").innerHTML = " <img id='LoginLoader' style='Width: 34px!important; height: 30px!important' src='/assets/img/loader.gif' /> &nbsp;  Please Wait.......";
+        document.getElementById("btncheckout").style.backgroundColor = 'black';
+        document.getElementById("btncheckout").style.borderColor = "black";
+        document.getElementById("btncheckout").disabled = true;
+
+        //Send the JSON array to Controller using AJAX.
+        $.ajax({
+            type: "POST",
+            url: "/PaymentProcess/Index",
+            data: JSON.stringify(model),
+            //data: JSON.stringify(formData),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                $("#errormessage").fadeOut();
+                document.getElementById("errormessage").innerHTML = "";
+
+                $("#Mainerrormessage").fadeOut();
+                document.getElementById("Mainerrormessage").innerHTML = "";
+
+                document.getElementById("btncheckout").innerHTML = "confirm now";
+                document.getElementById("btncheckout").style.backgroundColor = '#00B0DC';
+                document.getElementById("btncheckout").style.borderColor = "#00B0DC";
+                document.getElementById("btncheckout").disabled = false;
+
+                /*status "1" means transaction successfull*/
+                if (data.status == "1") {
+                    window.location.href = data.url;
+                }
+                /*status "0" means transaction failed stripe error may be card number is invalid*/
+                else if (data.status == "0") {
+                    document.getElementById("errormessage").innerHTML = data.error;
+                    $("#errormessage").fadeIn();
+                }
+                /*status "-1" means transaction not successfully done*/
+                else if (data.status == "-1" || data.status == "Exception") {
+
+                    console.log("exception");
+                    document.getElementById("Mainerrormessage").innerHTML = data.error;
+                    $("#Mainerrormessage").fadeIn();
+                }
+            }
+        });
+
+    }
+</script>

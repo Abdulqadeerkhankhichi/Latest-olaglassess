@@ -1,0 +1,35 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        Testing UPS API Shipping
+    </div>
+
+    <p>@ViewBag.Error</p>
+    @*@if (Model.Response != null)
+    {
+        foreach (var item in Model.Response.RatedShipment)
+        {
+            <p>Service Code: @item.Service.Code</p>
+            <p>Total Charges Code: @item.TotalCharges.MonetaryValue</p>
+        }
+
+    }*@
+
+    <p>Service code: @ViewBag.Code </p>
+    <p>Monetary code: @ViewBag.MonetaryValue </p>
+
+
+
+</body>
+</html>

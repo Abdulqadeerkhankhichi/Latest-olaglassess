@@ -1,0 +1,197 @@
+﻿@using Olaglasses.Models;
+@{
+    List<tblAddress> orders = (List<tblAddress>)ViewBag.OrderList;
+    List<tblcart> cart = (List<tblcart>)ViewBag.cart;
+}
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string Billingaddress = "";
+    double subtotal = 0;
+}
+
+<head>
+    <style>
+        h4 {
+            padding-bottom: 0px !important;
+        }
+
+        p {
+            padding-bottom: 0px !important;
+        }
+    </style>
+</head>
+<section class="products-wishlist-hero-aria">
+</section>
+<!-- ::::products-hero-aria  end:::::: -->
+
+
+
+
+
+<section class="user-area">
+    <div class="has-bg">
+        <div class="has-bg-user-left">
+            <img src="~/assets/img/user-information-left-bg.png" alt="">
+        </div>
+        <div class="has-bg-user-right">
+            <img src="~/assets/img/user-information-right-bg.png" alt="">
+        </div>
+    </div>
+    <div class="container-fluid custum-pd ">
+
+        <div class="user-bg user-info-new">
+            
+
+            <div class="custum-mg">
+                <!-- <div class="my-cart-section"> -->
+                <div class="user-bg d-flex justify-content-between flex-wrap">
+
+
+                    <div class="user-item">
+                        <h2>Previous Orders</h2>
+
+
+                        @foreach (var item in orders)
+                        {
+
+
+                            if (Billingaddress != item.BAddress)
+                            {
+                                Billingaddress = item.BAddress;<div class="Previous_order_sec">
+                                    <div class="billing">
+                                        <h4>Billing</h4>
+
+                                        <ul>
+                                            <li>@item.BFname @item.BLname,<br> @item.BAddress, <br>@item.Bcity, @item.BState, <br>@item.BCountry (@item.BPostalCode) </li>
+                                            <li>@item.BPhone</li>
+                                            <li>@item.BEmail</li>
+
+                                        </ul>
+                                    </div>
+                                    <div class="shipping">
+                                        <h4>Shipping</h4>
+                                        <ul>
+
+                                            <li> @item.SFname @item.SLname,<br> @item.SAddress,<br> @item.Scity, @item.SState,<br> @item.SCountry (@item.SPostalCode) </li>
+                                            <li>@item.SPhone</li>
+                                            <li>@item.SEmail</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="Previous_order_total_btn">
+                                    <a href="@Url.Action("Checkout", "PaymentProcess", new {OlderID = 0 })" class="btn btn primary blue">Add new address</a>
+                                    <a href="@Url.Action("Checkout", "PaymentProcess", new {OlderID = item.AddressID })" class="btn btn warning yellow">Select this address</a>
+                                </div>
+
+                            }
+                        }
+
+                    </div>
+
+
+
+
+
+                    <div class="my-cart-area user-order-item">
+                        <h4 class="heading_user_item">order Summary</h4>
+
+
+                        @foreach (var item in cart)
+                        {
+                            <div class="my-cart-bg">
+                                <div class="product-img">
+                                    <img src="@item.ProductImagePath" alt="img">
+                                </div>
+                                <div class="product-details">
+                                    <h4>@item.Title</h4>
+                                    <div class="siz-flex">
+                                        <ul>
+                                            <li>Size : @item.Size</li>
+
+                                            @if (item.VisionType != null && item.VisionType != "")
+                                            {
+                                                <li>Vision : @item.VisionType</li>
+
+                                            }
+
+                                            @if (item.LensType != null && item.LensType != "")
+                                            {
+                                                <li>Lens Type : @item.LensType</li>
+                                            }
+                                            @if (item.UVProtection == "on")
+                                            {
+                                                <li>UV Protection :    @item.UVProtection</li>
+                                            }
+
+
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="my-cart-item qty">
+                                    <h4>Qty</h4>
+                                    <div class="Quality_qty">
+                                        <h5>@item.Quantity</h5>
+                                    </div>
+                                </div>
+                                <div class="my-cart-item total">
+                                    <h4>Total Price</h4>
+                                    <div class="unit_unit">
+                                        <h5>
+                                            $@item.TotalAmount
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+
+                    <div>
+                        <div class="total_price">
+                            <div class="price_text"><h5>Sub Price</h5></div>
+                            <div class="price_nmbr"><h5>$@ViewBag.txtsubtotal</h5></div>
+                        </div>
+                        <div class="total_price">
+                            <div class="price_text"><h5>Shipping</h5></div>
+                            <div class="price_nmbr"><h5>$9.00</h5></div>
+                        </div>
+
+                        <div class="total_price">
+                            <div class="price_text"><h5>Tax</h5></div>
+                            <div class="price_nmbr"><h5>$@ViewBag.tax</h5></div>
+                        </div>
+                        @if (@ViewBag.txtdiscountamount != null && @ViewBag.txtdiscountamount > 0)
+                        {
+                    <div class="total_price">
+                        @if (@ViewBag.txtdiscountpercentage > 0)
+                        {
+                            <div class="price_text"><h5>Discount (@ViewBag.txtdiscountpercentage%)</h5></div>
+                        }
+                        else
+                        {
+                            <div class="price_text"><h5>Discount</h5></div>
+                        }
+                        <div class="price_nmbr"><h5>$@ViewBag.txtdiscountamount</h5></div>
+                    </div>
+
+                        }
+                        
+                    </div>
+                       
+                        <div class="total_price">
+                            <div class="price_text"><h5>Total Price</h5></div>
+                            <div class="price_nmbr"><h5>$@ViewBag.GrandAmount</h5></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- </div> -->
+
+
+
+        </div>
+    </div>
+</section>
+

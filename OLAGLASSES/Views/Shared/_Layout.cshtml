@@ -1,0 +1,1629 @@
+﻿<!DOCTYPE html>
+<html>
+@using Olaglasses.Models;
+@{
+    List<Sp_Get_Product_List_Result> products = (List<Sp_Get_Product_List_Result>)ViewBag.ProductVirtualList;
+
+}
+@{string UserID = "";}
+@{string UserEmail = "";}
+@{string UserName = "";}
+@{string UserImage = "";}
+@{string UserRole = "";}
+
+
+
+@if (@Context.Request.Cookies["_UserEmail"].Value != null && @Context.Request.Cookies["_UserEmail"].Value != "")
+{
+    UserEmail = @Context.Request.Cookies["_UserEmail"].Value;
+    Session["Email"] = UserEmail;
+}
+@if (Session["Email"] != null)
+{
+    UserEmail = Session["Email"].ToString();
+}
+
+
+@if (@Context.Request.Cookies["_UserID"].Value != null && @Context.Request.Cookies["_UserID"].Value != "")
+{
+    UserID = @Context.Request.Cookies["_UserID"].Value;
+    Session["UserID"] = UserID;
+}
+@if (Session["UserID"] != null)
+{
+    UserID = Session["UserID"].ToString();
+}
+
+
+@if (@Context.Request.Cookies["_UserName"].Value != null && @Context.Request.Cookies["_UserName"].Value != "")
+{
+    UserName = @Context.Request.Cookies["_UserName"].Value;
+    Session["userName"] = UserName;
+}
+@if (Session["userName"] != null)
+{
+    UserName = Session["userName"].ToString();
+}
+
+@if (@Context.Request.Cookies["_UserImage"].Value != null && @Context.Request.Cookies["_UserImage"].Value != "")
+{
+    UserImage = @Context.Request.Cookies["_UserImage"].Value;
+    Session["UserImage"] = UserImage;
+}
+
+@if (Session["UserImage"] != null)
+{
+    UserImage = Session["UserImage"].ToString();
+}
+
+
+@if (@Context.Request.Cookies["_UserRole"].Value != null && @Context.Request.Cookies["_UserRole"].Value != "")
+{
+    UserRole = @Context.Request.Cookies["_UserRole"].Value;
+    Session["Role"] = UserRole;
+}
+@if (Session["Role"] != null && Session["Role"] != "")
+{
+    UserRole = Session["Role"].ToString();
+}
+
+<head>
+
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    @*Mortgage Project*@
+    @*<meta name="google-signin-client_id" content="372276855844-jfkvmcm9ms39mp2ic2ho2bkb4h928p9n.apps.googleusercontent.com">*@
+
+
+    @*ola glasses local*@
+    <meta name="google-signin-client_id" content="53198261843-a0b0piqcbhlal6n841ufprc7t5io7tf5.apps.googleusercontent.com">
+
+
+    @*  <meta name="google-signin-client_id" content="809669338168-lggnujcepkfs7uo839donb3r2q546s8v.apps.googleusercontent.com">*@
+
+    <title>Ola Optical</title>
+    <link rel="shortcut icon" href="~/assets/img/fav-ivon.jpg" type="image/x-icon">
+
+    <link rel="stylesheet" href="~/assets/css/slick.css">
+    <link rel="stylesheet" href="~/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/assets/css/owl.theme.default.css">
+    <link rel="stylesheet" href="~/assets/css/all.min.css">
+    <link rel="stylesheet" href="~/assets/css/aos.css">
+    <link rel="stylesheet" href="~/assets/css/venobox.css">
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <link href="~/assets/css/style.css?var=2.2" rel="stylesheet" />
+    <link href="~/assets/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/assets/css/responsive.css?var=2.1">
+
+    <style>
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            opacity: 1 !important;
+        }
+
+            .tooltip .tooltiptext {
+                visibility: hidden;
+                width: 300px;
+                background-color: #555;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px 0;
+                position: absolute;
+                z-index: 1;
+                bottom: 75%;
+                left: 50%;
+                margin-left: -150px;
+                opacity: 0;
+                transition: opacity 0.3s;
+            }
+
+                .tooltip .tooltiptext::after {
+                    content: "";
+                    position: absolute;
+                    top: 100%;
+                    left: 50%;
+                    margin-left: -5px;
+                    border-width: 5px;
+                    border-style: solid;
+                    border-color: #555 transparent transparent transparent;
+                }
+
+            .tooltip:hover .tooltiptext {
+                visibility: visible;
+                opacity: 1;
+            }
+    
+        .page {
+            background-color: #0068AB !important;
+            color: white !important;
+        }
+
+        @@media(max-width: 768px) {
+            footer {
+                text-align: center;
+            }
+        }
+        .carousel-inner img {
+            width: 100%;
+            height: 300px !important;
+        }
+        .banner-title{
+            margin-bottom:1% !important;
+            margin-left:1% !important;
+        }
+        button.navbar-toggler {
+            background-color: #009B95;
+            border-radius: 75%;
+            width: 40px;
+            height: 40px;
+            color: white;
+            padding: 0px;
+        }
+
+        #filter {
+            padding-right: 0rem !important;
+            padding-left: 0rem !important;
+            margin-top: var(--bs-gutter-y);
+        }
+
+
+        .dropdown-menu {
+            min-width: 150% !important;
+        }
+
+        .products .prooduct-design li {
+            display: inline-block;
+            /* padding: 5px 7px; */
+            margin-right: 12px;
+            background-color: var(--Gary2);
+            color: var(--Gary);
+            margin-bottom: 0px !important;
+            transition: .4s;
+            cursor: pointer;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+            padding: 4px 8px;
+            height: 34px;
+            text-align: center;
+            font-size: 20px;
+            line-height: 130%;
+            text-align: center;
+            text-transform: capitalize;
+        }
+
+        .products .prooduct-design {
+            margin-top: 0px !important;
+        }
+
+        .product-details .product-details-list {
+            justify-content: none !important;
+        }
+
+        .select2-container {
+            width: 100% !important;
+        }
+
+        .product-details ul .product-details-item {
+            /*width: 20.7% !important;*/
+            margin-right: 0px;
+        }
+
+        .products .product-details .product-details-item span {
+            color: var(--black);
+            font-size: 20px;
+            letter-spacing: 0;
+            line-height: 100% !important;
+            text-transform: capitalize;
+            font-weight: 400;
+        }
+
+        dl, ol, ul {
+            margin-top: 0;
+            margin-bottom: 0rem !important;
+        }
+
+        .sawyer .sawyer-right .product-button {
+            margin-bottom: 0px !important;
+        }
+
+
+        .abcRioButton .abcRioButtonLightBlue {
+            width: 70% !important;
+        }
+
+        .abcRioButtonContents {
+            font-size: 21px !important;
+        }
+
+        svg {
+            width: 100%
+        }
+
+
+        #fitmixContainer {
+            width: 100%;
+            height: 100%
+        }
+
+        #popupContainer {
+            /*position: absolute;*/
+            left: 10px;
+            top: 20px;
+            /*width: 0px;*/
+            height: 400px;
+            display: none;
+        }
+
+        #popupClose {
+            text-align: center;
+            background: rgb(200,200,200);
+            padding: 4px;
+        }
+
+        /*button {
+            display: block;
+            margin: 4px;
+        }*/
+
+        .color_list {
+            display: inline-block;
+            border-radius: 50%;
+            margin-top: 18px;
+            cursor: pointer;
+            margin-right: 4px;
+            width: 20px;
+            height: 20px;
+        }
+
+        .color_list_transform {
+            display: inline-block;
+            border-radius: 50%;
+            margin-top: 18px;
+            cursor: pointer;
+            margin-right: 4px;
+            width: 20px;
+            height: 20px;
+            transform: scale(1.2, 1.3);
+        }
+
+        @@media(min-width: 300px) and (max-width: 992.98px) {
+            .logiimage {
+                width: 100% !important;
+                text-align: center !important;
+            }
+
+            .products .product-item .details {
+                padding: 10px;
+            }
+
+            #UserImage {
+                width: 247px;
+                height: 263px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- start preloader -->
+    <div id="preloader">
+        <div class="preloader">
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+    @*end preloader*@
+    <!-- ::::navigation start:::::: -->
+    <div class="navigation">
+
+
+        @if (@Context.Request.Cookies["_promotionColor"].Value != "" && @Context.Request.Cookies["_promotionColor"].Value != null)
+        {
+            <!-- <div class="mb-15 col-md-12" style="background-color:@Context.Request.Cookies["_promotionColor"].Value">
+
+
+
+
+                <p style="margin-left:3%; margin-right:3%">@Context.Request.Cookies["_promotionText"].Value </p>
+
+            </div> -->
+
+            <div class="custom_alert alert alert-warning alert-dismissible fade show" role="alert">
+                <div class="container">
+                     <div class="text-top">
+                          <p>Time to pick your pick! Buy 1Get 1FREE + 20% off Any lens upgrade</p>
+                          <span><a href="#">Shop Now</a></span>
+                      </div>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                </div>
+             
+            </div>
+
+
+        }
+
+
+        <!-- ::::has-bg:::::: -->
+        <div class="has-bg shape">
+            <img class="has-bg-1" src="~/assets/img/navigation-bg2.png" alt="bg1">
+            <img class="has-bg-2" src="~/assets/img/navigationbg-1.png" alt="bg1">
+        </div>
+        <!-- ::::has-bg end:::::: -->
+        <!-- ::::navbar:::::: -->
+        <nav class="navbar navbar-expand-lg menu">
+            <div class="container-fluid custum-pd  ">
+                <!-- ::::navbar-logo:::::: -->
+                <a class="navbar-brand logiimage" href="@Url.Action("Index","Home")">
+                    <img class="img-fluid d-none d-lg-block" src="/assets/img/Logo.png" alt="log">
+                    <img class="img-fluid d-lg-none" src="~/assets/img/mobile-logo.png" alt="log">
+                </a>
+
+                <!-- ::::navbar-logo end:::::: -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- ::::navbar menu-list:::::: -->
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a id="index" class="nav-link active" aria-current="page" href="@Url.Action("index","Home")">
+                                Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="Eyeglassess" class="nav-link" aria-current="page" href="@Url.Action("eyeglassess","Home")">
+                                eyeglassess
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="Sunglassess" class="nav-link" href="@Url.Action("Sunglassess","Home")">Sunglassess</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="Accessories" class="nav-link" href="@Url.Action("Accessories","Home")">Accessories</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="OurStory" class="nav-link" href="@Url.Action("OurStory","Home")">Our Story</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="News" class="nav-link" href="@Url.Action("News","Home")">News</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a id="About" class="nav-link" href="@Url.Action("About","Home")">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="Contact" class="nav-link" href="@Url.Action("Contact","Home")">Contact Us</a>
+                        </li>
+                    </ul>
+                    <!-- ::::navbar menu-list end:::::: -->
+                    <!-- ::::navbarnav-rightt:::::: -->
+                    <!-- ::::navbarnav-rightt end:::::: -->
+                </div>
+                <div class="nav-right d-flex flex-end">
+                    <ul class="list-inline nav">
+
+
+                        @*@if (Session["Email"] != null)*@
+                        @if (UserEmail != null && UserEmail != "" && UserID != "")
+                        {
+                            <li class="list-inline-item" id="fav">
+                                <a data-toggle="tooltip" title="Favourite" href="@Url.Action("Favourites","Dashboard",new { id = Convert.ToInt32(UserID) })">
+                                    <img class="peple-icon" src="~/assets/img/heart-like.svg"
+                                         alt="">
+                                </a>
+                            </li>
+
+                            if (UserRole == "admin")
+                            {
+                                <li class="list-inline-item" id="user">
+                                    <a href="@Url.Action("Index","Dashboard")" data-toggle="tooltip" title="Account">
+                                        <img class="peple-icon" src="~/assets/img/pepole-icon.svg"
+                                             alt="img">
+                                    </a>
+                                </li>
+                            }
+                            else if (UserRole == "Candidate")
+                            {
+                                <li class="list-inline-item" id="user">
+                                    <a href="@Url.Action("dashboard","Client")" data-toggle="tooltip" title="Account">
+                                        <img class="peple-icon" src="~/assets/img/pepole-icon.svg"
+                                             alt="img">
+                                    </a>
+                                </li>
+                            }
+
+
+
+                            <li class="list-inline-item" id="user">
+                                <a href="@Url.Action("Logout", "Account")" data-toggle="tooltip" title="Logout">
+                                    <img class="peple-icon" src="~/assets/img/logout.svg"
+                                         alt="img">
+                                </a>
+
+
+                            </li>
+                            <li class="list-inline-item " id="cart">
+                                <a onclick="MovetoOrdercart()" data-toggle="tooltip" title="Cart" href="@Url.Action("MovetoOrdercart","Products", new { id=Convert.ToInt32(UserID)})">
+                                    <img class="cart-icon" src="~/assets/img/cart-icon.svg" alt="img">
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="list-inline-item" id="fav">
+                                <a data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <img class="peple-icon" src="~/assets/img/heart-icon.svg"
+                                         alt="">
+                                </a>
+                            </li>
+                            <li class="list-inline-item" id="user">
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" data-toggle="tooltip" title="Login">
+                                    <img class="peple-icon" src="~/assets/img/pepole-icon.svg"
+                                         alt="img">
+                                </a>
+                            </li>
+                            <li class="list-inline-item " id="cart">
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"> <img class="cart-icon" src="~/assets/img/cart-icon.svg" alt="img"></a>
+                            </li>
+                        }
+
+
+                    </ul>
+                    @*<button class="virtual-btn" onclick="selectFrame('');showhidevirtualtry('A')">
+                            <img src="~/assets/img/virtual-icon.svg" alt="img">
+                            Virtual Try
+                        </button>*@
+                </div>
+            </div>
+        </nav>
+
+        <div class="virtual-model">
+            <div class="virtual-x position-absolute">
+                <img class="logo-resize" src="~/assets/img/Logo-sm.png" alt="img">
+                <img onclick="closecamera()" class="icon" src="~/assets/img/clos.png" alt="img">
+            </div>
+            <div class="container virtual-container">
+
+
+                <div class="virtual-bg">
+                    <div class="row ">
+                        <div class="col-md-8">
+                            <div class="play-btn img-aria position-relative">
+                                <div class="img-area-main">
+
+                                    @*<div id="popupContainer" style="width:100% !important;">
+
+                                            <div id="fitmixContainer"></div>
+                                        </div>*@
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4 pdl-0 bg-full">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <a class="venobox" href="image01-big.jpg"><img src="image01-small.jpg" alt="image alt"/> adsfasfd</a> -->
+        <!-- ::::navbar end:::::: -->
+
+
+
+        <div class="modal fade" id="videotrymodal" aria-hidden="true" tabindex="-1" style="border-radius:5px !important">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content" style="border-radius:20px !important">
+                    <div class="modal-header">
+                        <img style="" class="img-fluid" src="/assets/img/Logo.png" alt="log">
+
+                        <p id="cameraloadgif" style="display:none"> <img style="width:24px" src="~/assets/img/loader.gif" /> </p>
+                        <a onclick="closemodal()">
+                            <img class="icon" src="/assets/img/clos.png" alt="img" style=" background: var(--Secondery-color); height: 50px; width: 50px; border-radius: 50%; padding: 9px; float: right;">
+                        </a>
+
+                    </div>
+                    <div class="modal-body" style="min-height:500px !important">
+
+                        <div class="row">
+                            <div class="col-md-7">
+
+
+                                <div id="popupContainer">
+
+                                    <div id="fitmixContainer"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-5">
+
+                                <div id="blog-aria" style=" border-radius: 10px; margin-bottom: 16px; /* border-radius: 10px; */ margin: 8px 14px; box-shadow: 0px 8px 40px rgb(0 0 0 / 8%), 0px 2px 8px rgb(0 0 0 / 4%), 0px 1px 3px rgb(0 0 0 / 3%); border: none; width: 90% !important; transition: .5s;">
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+
+    @RenderBody()
+
+    <!-- :::: ctl start:::::: -->
+    <section class="ctl">
+
+        <div class="container ">
+            <div class="cta-bg position-relative">
+                <div class="ctl-bg ">
+                    <div class="row justify-content-center align-items-center">
+                        <!-- :::: ctl single item:::::: -->
+                        <div class="col-lg-6">
+                            <div class="title">
+                                <h2>Newsletter</h2>
+                                @*<p>
+                                        At Direct Vision, we provide you with great glasses at affordable prices. We pride ourselves on quality frames and lenses
+                                        that are well-made, fashion-forward and original. We want you to express your unique personality
+                                        through your eyewear, so you can both see and be seen.
+                                    </p>*@
+                            </div>
+                        </div>
+                        <!-- :::: ctl single item:::::: -->
+                        <div class="col-lg-6">
+                            <form>
+                                <input type="email" class="form-control" placeholder="Email Address" id="subscribeNowEmail">
+                                <small style="color:red !important;font-weight:bold;font-size:14px !important " id="ErrorAccessMessagesubscribeNowEmail"> </small>
+                                <button type="button" id="subscribeNow" onclick="EmailSubscribe()">subscribe now</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- :::: ctl end:::::: -->
+    <footer>
+        <div class="has-bg">
+            <div class="has-bg-left">
+                <img src="~/assets/img/index-bg/left-8.png" alt="img">
+            </div>
+            <div class="has-bg-right">
+                <img src="~/assets/img/index-bg/right-8.png" alt="img">
+            </div>
+        </div>
+        <!-- :::: footer has-bg start:::::: -->
+        <div class="container-fluid custum-pd">
+            <div class="footer-bg">
+                <div class="container">
+                    <div class="row">
+                        <!-- :::: footer logo:::::: -->
+                        <div class="col-lg-6">
+                            <div class="logo">
+                                <a href="#"><img src="~/assets/img/footer-Logo.png" alt="img"></a>
+                                <h3>MISSION STATEMENT</h3>
+                                <h4>Quality Vision Should Never Be Out of Your Price Range</h4>
+                                <p>
+                                    At Direct Vision, we provide you with great glasses at affordable prices. We pride
+                                    <br>
+                                    ourselves on quality frames and lenses
+                                    that are well-made, fashion-forward and <br> original. We want you to express your
+                                    unique
+                                    personality
+                                    through your eyewear, <br> so you can both see and be seen.
+                                </p>
+                                <a href="#" class="details">© 2021 <strong>Olaglasses.</strong> All Rights Reserved.</a>
+                            </div>
+                        </div>
+                        <!-- :::: footer quick:::::: -->
+                        <div class="col-lg-3 col-md-6">
+                            <div class="quick">
+                                <h3>Quick Services</h3>
+                                <ul>
+                                    <li><a href="@Url.Action("About","Home")">About Us</a></li>
+                                    <li><a href="@Url.Action("Contact","Home")">Contact Us</a></li>
+                                    <li><a href="@Url.Action("termscondition","Home")">Terms & Conditions</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- :::: footer follow:::::: -->
+                        <div class="col-lg-3 col-md-6">
+                            <div class="follow follow2">
+                                <h3>Follow us</h3>
+                                <ul>
+                                    <li><i class="fab fa-facebook-f"></i></li>
+                                    <li class="active"><i class="fab fa-twitter"></i></li>
+                                    <li><i class="fab fa-instagram"></i></li>
+                                    <li><i class="fab fa-pinterest-p"></i></li>
+                                </ul>
+                                <h3>Payment With:</h3>
+                                <img src="~/assets/img/card.png" alt="img">
+                                <a class="follow-link " href="#">© 2021 Olaglasses. All Rights Reserved.</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    	
+        <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <div class="sign-in-area-bg">
+                            <img class="img-fluid" src="~/assets/img/Logo-sm.png" alt="img">
+
+                            <h4 class="seconheding">Create Account</h4>
+
+                            @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+                            {
+                                if (@ViewBag.Errorstatus == "1")
+                                {
+                                    <small style="color:red !important;font-weight:bold;font-size:14px !important " id="ErrorAccessMessageR"> </small>
+                                }
+                                else
+                                {
+                                    <small style="color:red !important;font-weight:bold;font-size:14px !important " id="ErrorAccessMessageR">@ViewBag.Error</small>
+                                }
+
+                                <br>
+                                <small style="color:red !important;font-weight:bold;font-size:14px !important " id="ErrorAccessMessageReg"> </small>
+                                <input name="Email" id="txtEmailRegister" required class="form-control input" type="email" placeholder="Enter  Email">
+
+                                <input name="Name" id="txtNameRegister" required class="form-control input" type="text" placeholder="Enter Name ">
+                                <input name="Password" id="txtPasswordRegister" autocomplete="on" required class="form-control input" type="password" placeholder="Password">
+                                <small style="color:red !important;font-weight:bold;font-size:14px !important " id="ErrorPasswordRegister"> </small>
+                                <button type="button" class="btn btn-primary" id="btnRegister" onclick="UserRegister()">
+                                    Sign Up
+                                </button>
+
+
+
+                                <h5 class="text-center">or fast log in with</h5>
+
+
+                                if (@ViewBag.Errorstatus == "1")
+                                {
+                                    <small style="color:green !important;font-weight:bold;font-size:14px !important " id="ErrorAccessMessageG"> </small>
+                                }
+                                else
+                                {
+                                    <small style="color:green !important;font-weight:bold;font-size:14px !important " id="ErrorAccessMessageG">@ViewBag.Error</small>
+                                }
+
+
+
+
+                                <ul class="sign-with-social g-signin2" data-onsuccess="onSignIn">
+                                    <li> <a class=""><img src="~/assets/img/google-logo.png" alt="img"></a></li>
+                                </ul>
+                                <br>
+                                <p>
+                                    Already Have An Account. <a href="#" class="text-warning d-inline" ctype="button"
+                                                                data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        Sign In Now
+                                    </a>
+                                </p>
+                            }
+                            @*<p>Already Have An Account. <a href="#">Sign In Now</a></p>*@
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <div class="sign-in-area-bg">
+                            <img class="img-fluid" src="~/assets/img/Logo-sm.png" alt="img">
+
+                            <h4>Sign in</h4>
+
+                            @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+                            {
+
+                                if (@ViewBag.Errorstatus == "1")
+                                {
+                                    <small style="color:red !important;font-weight:bold;font-size:14px !important " id="ErrorAccessMessage"> </small>
+                                }
+                                else
+                                {
+                                    <small style="color:red !important;font-weight:bold;font-size:14px !important " id="ErrorAccessMessage">@ViewBag.Error </small>
+                                }
+
+
+                                <small style="color:red !important;font-weight:bold;font-size:14px !important " id="ErrorAccessMessage"> </small>
+                                <input name="useremail" id="txtEmail" required class="form-control input" type="email" placeholder="Enter Email">
+                                <input autocomplete="on" name="userpassword" id="txtPassword" required class="form-control input" type="password" placeholder="Password">
+                                <ul class="checkbox">
+                                    <li> <input type="checkbox" id="chkrememberme"> Remember Me </li>
+                                    <li> <a class="text-warning d-inline" href="@Url.Action("Forgetpassword","Account")">Forgot Password?</a> </li>
+                                </ul>
+
+                                <button type="button" class="btn btn-primary" onclick="UserLogin()" id="btnLogin">
+                                    Sign in
+                                </button>
+
+                                @*<button type="submit" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#sign-in">
+                Sign in
+            </button>*@
+                                @*<h6 style="float:right !important">
+                I am new here. <a href="@Url.Action("Register","Account")" class="text-warning d-inline">
+                    Create an
+                    Account
+                </a>
+            </h6> <br />*@
+                                <h5 class="text-center">or fast log in with</h5>
+
+                                if (@ViewBag.Errorstatus == "1")
+                                {
+                                    <small style="color:green !important;font-weight:bold;font-size:14px !important " id="ErrorAccessMessageG1"> </small>
+                                }
+                                else
+                                {
+                                    <small style="color:green !important;font-weight:bold;font-size:14px !important " id="ErrorAccessMessageG1">@ViewBag.Error</small>
+                                }
+
+
+
+
+                                <ul class="sign-with-social g-signin2" data-onsuccess="onSignIn">
+                                    <li> <a class=""><img src="~/assets/img/google-logo.png" alt="img"></a></li>
+                                </ul>
+                                <br>
+                                <p>
+                                    I am new here. <a href="#" class="text-warning d-inline" ctype="button"
+                                                      data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                                        Create an
+                                        Account
+                                    </a>
+                                </p>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    
+
+
+
+    <!-- :::: footer start:::::: -->
+    <div class="olaglasses-model-item">
+        <!--::::::olaglasses modal::::: -->
+        <div class="modal fade" id="ReviewsModal" aria-hidden="true"
+             tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="modal-item">
+                            <div id="UserImage">
+                                @*<img alt="img" style="width:333px; height:480px">*@
+                            </div>
+
+                            <div class="details">
+                                <div class="img">
+                                    
+                                    <img id="Userreviewimage" src="~/assets/img/model-img-gls.png" alt="img">
+                                    <span style="border-bottom:0px !important" id="product-name"></span>
+                                </div>
+                                <span id="Product-price"></span>
+                                <ul id="AverageReviewList">
+
+                                    <li id="Totalreviews"></li>
+                                </ul>
+                                <p id="UserReviews">
+
+                                </p>
+                                <div>
+                                    <a target="_blank" id="shopnow" class="btn" href="#">Shop now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ::::  has-radious:::::: -->
+    @*<div class="has-radious">
+            <div class="radious-one">
+                <a href="#">
+
+                    <img src="~/assets/img/chat.svg" alt="chat">
+                </a>
+            </div>
+        </div>*@
+    <!-- js -->
+    <script src="~/assets/js/jquery-1.12.4.min.js"></script>
+    <script src="~/assets/js/venobox.min.js"></script>
+    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/js/slick.min.js"></script>
+    <script src="~/assets/js/owl.carousel.min.js"></script>
+    <script src="~/assets/js/aos.js"></script>
+    <script src="~/assets/js/script.js"></script>
+    <script src="~/assets/js/select2.min.js"></script>
+    <script src="~/assets/js/api_client.js"></script>
+    <script src="~/assets/js/platform.js" async defer></script>
+    <script src="~/assets/js/render.acd930074e27198d61a1.js" async></script>
+    <script src="~/assets/js/fitmix.js" type="text/javascript"></script>
+    <!-- js -->
+    <!--  -->
+    <script>
+
+    </script>
+    <script>
+        function closemodal() {
+            $("#videotrymodal").modal("hide");
+			 location.reload();
+        }
+
+        function closecamera() {
+
+            const video = document.querySelector('#fitmixContainer');
+            localStream.getVideoTracks()[0].stop();
+            video.src = '';
+        }
+
+        function showhidevirtualtry(type, productid) {
+
+            $("#videotrymodal").modal("show");
+            if (type == "S") {
+             $('#blog-aria div').not("#single-product").hide();
+                $("#blog-aria img").hide();
+
+             var model = {
+                productid: productid
+
+            };
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Virtualtryproducts", "Products")',
+                data: JSON.stringify(model),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    $('#blog-aria #single-product').remove();
+                    var Duplicatecheck = 0;
+                    var section = "";
+
+                    for (var i = 0; i < result.length; i++) {
+                        if (parseInt(Duplicatecheck) != parseInt(result[i].GlassID)) {
+
+                            section +='<div  id="single-product">'
+                            section += "<img onclick=selectFrame('"+result[i].SKUNumber+"') id='"+result[i].GlassID+"-image-virtual-color' class='img img-fluid' src='"+result[i].ImagePath+"' alt='ig' style='width:100%; height:109px' />"
+                            section += '<div class="color" id="maincolordiv">'
+                            section += ' <ul style="margin-left:5%">'
+
+                            for (var j = 0; j < result.length; j++) {
+                                Duplicatecheck = parseInt(result[i].GlassID);
+
+                                if (result[i].GlassID == result[j].GlassID) {
+                                    section += "<li class='color_list' ID='"+result[j].GlassID+"-virtualcolorli' style='background-color:" + result[j].ColorCode + "' onclick=Changevirtualcolour('" + result[j].GlassID + "-image-virtual-color','" + result[j].ImagePath + "');selectFrame('" + result[j].SKUNumber +"')></li>"
+                                }
+                            }
+                            section += " </ul>"
+                            section += "</div>"
+                            section += "<div class='tex active d-flex justify-content-between'>"
+                            section += "    <div class='left-text'>"
+                            section += '<a  href="/Products/Product_Details/?Productid=' + result[i].GlassID + '"><h4>' + result[i].Title + '</h4> </a>'
+                            section += '<span>$' + result[i].Price + '</span>'
+                            section += "</div>"
+                            section += '<a class="box-btn" href="/Products/Product_Details/?Productid=' + result[i].GlassID + '")">More Info</a>'
+                            section += "</div>"
+                            section += "</div>"
+
+                        }
+                    }
+
+
+                    $("#blog-aria").append(section);
+                }
+
+            });
+
+           }
+            else if (type == "A") {
+               $('#blog-aria div').not("#single-product").show();
+                $("#blog-aria img").show();
+                $('#blog-aria #single-product').remove();
+            }
+        }
+
+        function showproducts(productid) {
+
+            var model = {
+                productid: productid
+
+            };
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Virtualtryproducts", "Products")',
+                data: JSON.stringify(model),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    $("#blog-aria div").remove();
+                    var Duplicatecheck = 0;
+                    var section = "";
+                    //section += '<div class="slick-list draggable">';
+                    //section += '<div class="slick-track">'
+                    for (var i = 0; i < result.length; i++) {
+                        if (parseInt(Duplicatecheck) != parseInt(result[i].GlassID)) {
+
+                            section +='<div class="blog" >'
+                            section += "<img onclick=selectFrame('"+result[i].SKUNumber+"') id='"+result[i].GlassID+"-image-virtual-color' class='img img-fluid' src='"+result[i].ImagePath+"' alt='ig' style='width:100%; height:109px' />"
+                            section += '<div class="color" id="maincolordiv">'
+                            section += ' <ul style="margin-left:5%">'
+
+                            for (var j = 0; j < result.length; j++) {
+                                Duplicatecheck = parseInt(result[i].GlassID);
+
+                                if (result[i].GlassID == result[j].GlassID) {
+                                    section += "<li class='color_list' ID='"+result[j].GlassID+"-virtualcolorli' style='background-color:" + result[j].ColorCode + "' onclick=Changevirtualcolour('" + result[j].GlassID + "-image-virtual-color','" + result[j].ImagePath + "');selectFrame('" + result[j].SKUNumber +"')></li>"
+                                }
+                            }
+                            section += " </ul>"
+                            section += "</div>"
+                            section += "<div class='tex active d-flex justify-content-between'>"
+                            section += "    <div class='left-text'>"
+                            section += '<a  href="/Products/Product_Details/?Productid=' + result[i].GlassID + '"><h4>' + result[i].Title + '</h4> </a>'
+                            section += '<span>$' + result[i].Price + '</span>'
+                            section += "</div>"
+                            section += '<a class="box-btn" href="/Products/Product_Details/?Productid=' + result[i].GlassID + '")">More Info</a>'
+                            section += "</div>"
+                            section += "</div>"
+
+                        }
+                    }
+                    //section += "<img class='next slick-arrow' src='/assets/img/model-slider-icon.png' style='display: inline;>"
+                    //section += "</div>"
+                    //section += "</div>"
+
+                    $("#blog-aria").append(section);
+                }
+
+            @*@{ int Duplicatecheck = 0; }*@
+                @*@foreach(var item in products)
+            {
+
+                if (Duplicatecheck != @item.GlassID)
+                {
+                    <div class="blog">
+                        <img onclick="selectFrame('@item.SKUNumber')" id="@item.GlassID-image-virtual-color" class="img-fluid" src="@item.ImagePath" alt="ig" style="width:100%; height:109px" />
+                        <div class="color" id="maincolordiv">
+                            <ul style="margin-left:5%">
+
+                                @foreach (var colors in products)
+                                                        {
+                                    Duplicatecheck = Convert.ToInt32(@item.GlassID);
+                                                            if (item.GlassID == colors.GlassID)
+                                                            {
+
+
+                                    <li class="color_list" ID='@colors.GlassID-virtualcolorli' onclick="Changevirtualcolour('@colors.GlassID-image-virtual-color', '@colors.ImagePath');selectFrame('@colors.SKUNumber')" style="background-color: @colors.ColorCode"></li>
+                                }
+       }
+  </ul>
+                        </div>
+                        <div class="tex active d-flex justify-content-between ">
+                            <div class="left-text ">
+                                <h4><a href="@Url.Action(" Product_Details", "Products", new {Productid = @item.GlassID })">@item.Title </a></h4>
+                            <span>$@item.Price</span>
+
+                        </div>
+
+                        <a class="box-btn" href="@Url.Action(" Product_Details","Products",new {Productid =@item.GlassID })">More Info</a>
+
+
+
+
+
+
+                                                </div >
+
+
+
+                                            </div >
+                                        }
+            }*@
+            });
+        }
+
+
+        function Changevirtualcolour(colorid, imgurl) {
+
+            /*        $("#Product_Items img").remove();*/
+            /*var img = document.createElement('img');*/
+            /*img.src = "/assets/img/index-bg/prouduct-7.png";*/
+            /*$("#Product_Items .img").append("<img class='img-fluid' src='" + img.src + "' alt='ig' />");*/
+            document.getElementById(colorid).src = imgurl;
+        }
+        /*apiKey: 'TBVAcXitApiZPVH791yxdHbAc8AKzBwtCnjtv6Xn',*/
+        var params = {
+
+            apiKey: '8vRQ2lPFc4Y75D78jzrmzfCzu0spL8EKIPrqfbth',
+
+
+        };
+
+        /*
+         There are 2 behavior possible when closing the popup.
+         Option 1: pauseStream / resumeStream
+         You can choose to pause the stream
+         This will keep the camera opened and make the resume faster.
+
+         Option 2: closeCamera / openCamera
+         You can choose to close the camera.
+         Camera access is released
+         User will be prompted access of the camera when calling openCamera on safari
+        */
+
+        // You can choose to hide the popup between 2 tryon
+        var hidePopup = function () {
+            document.getElementById('popupContainer').style.display = 'none';
+            myFitmixWidget.pauseStream(); // -> this stop the stream but keep the camera opened
+            //myFitmixWidget.closeCamera(); // -> this stop the camera completely
+        };
+
+        var selectFrame = function (frame, productid) {
+
+            var model = {
+                productid: productid
+
+            };
+            $("#cameraloadgif").fadeIn();
+
+             $.ajax({
+                type: "POST",
+                url: '@Url.Action("Virtualtryproducts", "Products")',
+                data: JSON.stringify(model),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    $('#blog-aria div').remove();
+                    var Duplicatecheck = 0;
+                    var section = "";
+
+                    for (var i = 0; i < result.length; i++) {
+                        if (parseInt(Duplicatecheck) != parseInt(result[i].GlassID)) {
+
+                            section += '<div class="" id="single-product">'
+                            section += "<img onclick=selectFrame('" + result[i].SKUNumber + "') id='" + result[i].GlassID + "-image-virtual-color' class='img img-fluid' src='" + result[i].ImagePath + "' alt='ig' style='padding: 25px 20px 12px 20px;background: #F9F9F9;border-radius: 10px 10px 0px 0px;width: 100 %;'/>"
+                            section += '<div class="color" id="maincolordiv">'
+                            section += ' <ul style="margin-left:5%">'
+
+                            for (var j = 0; j < result.length; j++) {
+                                Duplicatecheck = parseInt(result[i].GlassID);
+
+                                if (result[i].GlassID == result[j].GlassID) {
+                                    section += "<li class='color_list' ID='"+result[j].GlassID+"-virtualcolorli' style='background-color:" + result[j].ColorCode + "' onclick=Changevirtualcolour('" + result[j].GlassID + "-image-virtual-color','" + result[j].ImagePath + "');selectFrame('" + result[j].SKUNumber +"')></li>"
+                                }
+                            }
+                            section += " </ul>"
+                            section += "</div>"
+                            section += "<div class='tex active d-flex justify-content-between' style='background-color: var(--white);padding: 15px;align-items: center;border-radius: 0 0 10px 10px;'>"
+                            section += "    <div class='left-text'>"
+                            section += '<a  href="/Products/Product_Details/?Productid=' + result[i].GlassID + '"><h4>' + result[i].Title + '</h4> </a>'
+                            section += '<span>$' + result[i].Price + '</span>'
+                            section += "</div>"
+                            section += '<a class="box-btn" href="/Products/Product_Details/?Productid=' + result[i].GlassID + '" style="display: inline-block;background: #00B0DC; color: var(--white);width: 78px;height: 38px;text-align: center;line-height: 36px;border-radius: 28px;font-size: 13px!important;text-transform: uppercase;">More Info</a>'
+                            section += "</div>"
+                            section += "</div>"
+
+                        }
+                    }
+
+
+                    $("#blog-aria").append(section);
+                }
+
+            });
+
+
+            $("#videotrymodal").modal("show");
+
+            // show the popup
+            document.getElementById('popupContainer').style.display = 'block';
+
+
+            setTimeout(function delay() {
+
+
+                // init fitmix if this is the first selection
+                if (!window.myFitmixWidget) {
+                    // create fitmix only once
+                    myFitmixWidget = FitMix.createWidget('fitmixContainer', params, function () {
+                        // setFrame when FitMix is ready
+
+                        myFitmixWidget.setFrame(frame)
+                    });
+                } else {
+                    // set frame on FitMix
+                    myFitmixWidget.setFrame(frame)
+                    myFitmixWidget.resumeStream(); // -> resume the stream after a pauseStream
+                    //myFitmixWidget.openCamera(); // -> open the camera after a closeCamera, user on safari will be prompted again to allow camera access
+                }
+                $("#cameraloadgif").fadeOut();
+            }, 3000);
+
+
+
+
+        };
+
+
+        $("#txtNameRegister").change(function () {
+            
+            var Name = $("#txtNameRegister").val();
+            if (Name == "") {
+                document.getElementById("txtNameRegister").style.borderColor = "red";
+            }
+            else {
+                document.getElementById("txtNameRegister").style.borderColor = "#ced4da";
+            }
+        });
+        $("#txtEmailRegister").change(function () {
+            
+            var Name = $("#txtEmailRegister").val();
+            if (Name == "") {
+                document.getElementById("txtEmailRegister").style.borderColor = "red";
+            }
+            else {
+                document.getElementById("txtEmailRegister").style.borderColor = "#ced4da";
+            }
+        });
+        $("#txtPasswordRegister").change(function () {
+            
+            var Name = $("#txtPasswordRegister").val();
+            if (Name == "") {
+                document.getElementById("txtPasswordRegister").style.borderColor = "red";
+            }
+            if (Name > 6)
+            {
+                $("#ErrorPasswordRegister").fadeOut();
+                document.getElementById("txtPasswordRegister").style.borderColor = "Green";
+            }
+            else {
+                document.getElementById("txtPasswordRegister").style.borderColor = "#ced4da";
+            }
+        });
+        function UserRegister() {
+
+    var Email = $("#txtEmailRegister").val();
+            var Password = $("#txtPasswordRegister").val();
+            var Name = $("#txtNameRegister").val();
+    if (Email == "") {
+        document.getElementById("txtEmailRegister").style.borderColor = "red";
+        document.getElementById("txtEmailRegister").placeholder = "Type Email here..";
+
+    return;
+
+            }
+            if (Password == "") {
+                document.getElementById("txtPasswordRegister").style.borderColor = "red";
+                document.getElementById("txtPasswordRegister").placeholder = "Type Password here..";
+
+                return;
+
+            }
+            if (Name == "") {
+                document.getElementById("txtNameRegister").style.borderColor = "red";
+                document.getElementById("txtNameRegister").placeholder = "Type Name here..";
+
+                return;
+
+            }
+    else {
+
+                var email = document.getElementById("txtEmailRegister").value;
+
+
+    var expr = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (!expr.test(email)) {
+
+
+        document.getElementById("ErrorAccessMessageReg").innerHTML = "Invalid Email Address.";
+        document.getElementById("txtEmailRegister").style.borderColor = "Red";
+        $("#ErrorAccessMessageReg").fadeIn();
+    return;
+    }
+    else {
+        $("#ErrorAccessMessageReg").fadeOut();
+        document.getElementById("txtEmailRegister").style.borderColor = "Green";
+    }
+
+
+    }
+
+
+    if (Password == "") {
+        document.getElementById("txtPasswordRegister").style.borderColor = "red";
+
+        document.getElementById("txtPasswordRegister").placeholder = "Type Password here..";
+    return;
+
+            }
+            if (Password.length <= 6) {
+                document.getElementById("txtPasswordRegister").style.borderColor = "red";
+                document.getElementById("ErrorPasswordRegister").innerHTML = "Enter atleast 6 characters.";
+                $("#ErrorPasswordRegister").fadeIn();
+                return;
+            }
+    else
+            {
+                $("#ErrorPasswordRegister").fadeOut();
+        document.getElementById("txtPasswordRegister").style.borderColor = "Green";
+    }
+
+        var url = window.location.href;
+        var UserInfo = {};
+        UserInfo.UserEmail = Email;
+            UserInfo.Firstname = Name;
+            UserInfo.UserPass = Password;
+
+            document.getElementById("btnRegister").innerHTML = " <img id='LoginLoader' style='Width: 34px!important; height: 30px!important' src='/assets/img/loader.gif' /> &nbsp;  Please Wait.......";
+    /*document.getElementById("btnLogin").innerHTML = " <img id='LoginLoader' style='Width: 34px!important; height: 30px!important' src='/assets/img/loaders.gif' /> &nbsp; Please Wait...";*/
+
+
+            document.getElementById("btnRegister").style.backgroundColor = 'black';
+            document.getElementById("btnRegister").style.borderColor = "black";
+            document.getElementById("btnRegister").disabled = true;
+
+
+    $.ajax({
+    type: "POST",
+    url: '@Url.Action("Register", "Account")',
+    data: '{UserInformation: ' + JSON.stringify(UserInfo) + '}',
+    dataType: "json",
+    contentType: "application/json; charset=utf-8",
+        success: function (result) {
+            console.log(result.status);
+    if (result.status == "-1") {
+
+        document.getElementById("ErrorAccessMessageR").innerHTML = "User Already registered ";
+        document.getElementById("ErrorAccessMessageR").style.color = "#a94442";
+        document.getElementById("btnRegister").innerHTML = "Sign up";
+        document.getElementById("btnRegister").style.backgroundColor = '#009B95';
+        document.getElementById("btnRegister").style.borderColor = "#009B95";
+        document.getElementById("btnRegister").disabled = false;
+
+    }
+    else if (result.status == "1") {
+
+        window.location.href = url;
+
+    }
+
+
+
+
+    },
+    error: function (err) {
+
+    }
+    });
+        }
+
+
+
+        
+        $("#txtEmail").change(function () {
+           
+            var Name = $("#txtEmail").val();
+            if (Name == "") {
+                document.getElementById("txtEmail").style.borderColor = "red";
+            }
+            else {
+                document.getElementById("txtEmail").style.borderColor = "#ced4da";
+            }
+        });
+        $("#txtPassword").change(function () {
+            
+            var Name = $("#txtPassword").val();
+            if (Name == "") {
+                document.getElementById("txtPassword").style.borderColor = "red";
+            }
+            else {
+                document.getElementById("txtPassword").style.borderColor = "#ced4da";
+            }
+        });
+        function UserLogin() {
+
+    var Email = $("#txtEmail").val();
+    var Password = $("#txtPassword").val();
+            if (Password == "") {
+                document.getElementById("txtPassword").style.borderColor = "red";
+                document.getElementById("txtPassword").placeholder = "Type Password here..";
+
+                return;
+
+            }
+    if (Email == "") {
+    document.getElementById("txtEmail").style.borderColor = "red";
+    document.getElementById("txtEmail").placeholder = "Type Email here..";
+
+    return;
+
+    }
+    else {
+
+    var email = document.getElementById("txtEmail").value;
+
+
+    var expr = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (!expr.test(email)) {
+
+
+        document.getElementById("ErrorAccessMessage").innerHTML = "Invalid Email Address.";
+    document.getElementById("txtEmail").style.borderColor = "Red";
+        $("#ErrorAccessMessage").fadeIn();
+    return;
+    }
+    else {
+        $("#ErrorAccessMessage").fadeOut();
+    document.getElementById("txtEmail").style.borderColor = "Green";
+    }
+
+
+    }
+
+
+    if (Password == "") {
+    document.getElementById("txtPassword").style.borderColor = "red";
+
+    document.getElementById("txtPassword").placeholder = "Type Password here..";
+    return;
+
+    }
+    else
+    {
+    document.getElementById("txtPassword").style.borderColor = "Green";
+    }
+            var chkrememberme = $("#chkrememberme").is(':checked');
+        var url = window.location.href;
+        var UserInfo = {};
+        UserInfo.UserEmail = Email;
+            UserInfo.UserPass = Password;
+            rememberme= chkrememberme;
+
+            var model = {
+                UserInformation: UserInfo,
+                rememberme: chkrememberme
+
+            };
+        document.getElementById("btnLogin").innerHTML = " <img id='LoginLoader' style='Width: 34px!important; height: 30px!important' src='/assets/img/loader.gif' /> &nbsp;  Please Wait.......";
+    /*document.getElementById("btnLogin").innerHTML = " <img id='LoginLoader' style='Width: 34px!important; height: 30px!important' src='/assets/img/loaders.gif' /> &nbsp; Please Wait...";*/
+
+
+    document.getElementById("btnLogin").style.backgroundColor = 'black';
+    document.getElementById("btnLogin").style.borderColor = "black";
+    document.getElementById("btnLogin").disabled = true;
+
+
+
+
+    $.ajax({
+    type: "POST",
+    url: '@Url.Action("UserLogin", "Account")',
+        data: JSON.stringify(model),
+    dataType: "json",
+    contentType: "application/json; charset=utf-8",
+        success: function (result) {
+
+    if (result.status == "-1") {
+
+        document.getElementById("ErrorAccessMessage").innerHTML = "User not registered ";
+        document.getElementById("ErrorAccessMessage").style.color = "#a94442";
+        document.getElementById("btnLogin").innerHTML = "Sign in";
+        document.getElementById("btnLogin").style.backgroundColor = '#009B95';
+        document.getElementById("btnLogin").style.borderColor = "#009B95";
+        document.getElementById("btnLogin").disabled = false;
+
+    }
+    else if (result.status == "-2") {
+
+        document.getElementById("ErrorAccessMessage").innerHTML = "Incorrect password";
+        document.getElementById("ErrorAccessMessage").style.color = "#a94442";
+        document.getElementById("btnLogin").innerHTML = "Sign in";
+        document.getElementById("btnLogin").style.backgroundColor = '#009B95';
+        document.getElementById("btnLogin").style.borderColor = "#009B95";
+        document.getElementById("btnLogin").disabled = false;
+
+    }
+
+    else if (result.status == "-3") {
+
+        document.getElementById("ErrorAccessMessage").innerHTML = "User is not active";
+        document.getElementById("ErrorAccessMessage").style.color = "#a94442";
+        document.getElementById("btnLogin").innerHTML = "Sign in";
+        document.getElementById("btnLogin").style.backgroundColor = '#009B95';
+        document.getElementById("btnLogin").style.borderColor = "#009B95";
+        document.getElementById("btnLogin").disabled = false;
+    }
+
+
+    else if (result.status == "1") {
+
+    window.location.href = result.url;
+
+            }
+    else if (result.status == "2") {
+        /*alert("Successfully Login");*/
+        window.location.href = url;
+
+      /*  window.location.href = result.url;*/
+
+    }
+    },
+    error: function (err) {
+
+    }
+    });
+        }
+    </script>
+
+
+
+    <script>
+        window.onbeforeunload = function (e) {
+            gapi.auth2.getAuthInstance().signOut();
+        };
+        function onSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile();
+            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+            console.log('Name: ' + profile.getName());
+            console.log('Image URL: ' + profile.getImageUrl());
+            console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+            //console.log(profile);
+            //return;
+            var url = window.location.href;
+            var UserInfo = {};
+            UserInfo.UserEmail = profile.getEmail();
+            UserInfo.Firstname = profile.getName();
+            UserInfo.UserImage = profile.getImageUrl();
+            UserInfo.UserPass = "";
+
+            $.ajax({
+            type: "POST",
+            url: '@Url.Action("RegisterGoogle", "Account")',
+            data: '{UserInformation: ' + JSON.stringify(UserInfo) + '}',
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+            console.log(result.status);
+
+
+            if (result.status == "1") {
+                document.getElementById("ErrorAccessMessageG1").innerHTML = "User successfully login. Please refresh your page.";
+                document.getElementById("ErrorAccessMessageG").innerHTML = "User successfully login. Please refresh your page.";
+                document.getElementById("ErrorAccessMessageG").style.color = "green";
+
+            }
+
+                window.location.href = result.url;
+            /*location.reload();*/
+            /*window.location.href = url;*/
+
+    },
+    error: function (err) {
+
+    }
+    });
+        }
+
+
+        function signOut() {
+            var url = window.location.href;
+
+            var auth2= gapi.auth2.getAuthInstance();
+            alert(auth2);
+            auth2.signOut().then(function () {
+                console.log('User signed out.');
+            });
+            window.location.href = url;
+        }
+
+
+
+
+        function EmailSubscribe()
+        {
+
+             var Email = $("#subscribeNowEmail").val();
+            var email=""
+             if (Email == "") {
+                 document.getElementById("subscribeNowEmail").style.borderColor = "red";
+                 document.getElementById("subscribeNowEmail").placeholder = "Type Email here..";
+
+                 return;
+
+             }
+
+             else {
+
+                  email = document.getElementById("subscribeNowEmail").value;
+
+
+                 var expr = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+                 if (!expr.test(email)) {
+
+
+                     document.getElementById("ErrorAccessMessagesubscribeNowEmail").innerHTML = "Invalid Email Address.";
+                     document.getElementById("subscribeNowEmail").style.borderColor = "Red";
+                     $("#ErrorAccessMessagesubscribeNowEmail").fadeIn();
+                     return;
+                 }
+                 else {
+                     $("#ErrorAccessMessagesubscribeNowEmail").fadeOut();
+                     document.getElementById("subscribeNowEmail").style.borderColor = "Green";
+                 }
+
+
+             }
+
+
+    $.ajax({
+    type: "POST",
+    url: '@Url.Action("Subscribe", "Account")',
+        data: '{email: ' + JSON.stringify(email) + '}',
+    dataType: "json",
+    contentType: "application/json; charset=utf-8",
+        success: function (result) {
+            console.log(result.status);
+    if (result.status == "1") {
+
+        document.getElementById("ErrorAccessMessagesubscribeNowEmail").innerHTML = "You have successfully subscribed";
+        document.getElementById("ErrorAccessMessagesubscribeNowEmail").style.color = "Green";
+        $("#ErrorAccessMessagesubscribeNowEmail").fadeIn();
+
+            }
+            if (result.status == "-1") {
+
+                document.getElementById("ErrorAccessMessagesubscribeNowEmail").innerHTML = "You have already subscribed";
+                document.getElementById("ErrorAccessMessagesubscribeNowEmail").style.color = "red";
+                $("#ErrorAccessMessagesubscribeNowEmail").fadeIn();
+
+            }
+    },
+    error: function (err) {
+
+    }
+    });
+        }
+    </script>
+</body>
+</html>

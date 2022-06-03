@@ -1,0 +1,1088 @@
+﻿<head>
+
+    <style>
+        .GenderActive {
+            color: #009B95 !important;
+        }
+
+        .GenderDeactive {
+            color: #0068AB !important;
+        }
+
+
+        .parentDiv {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .colorcheckbox {
+            font-size: 12px;
+            padding: 3px !important;
+            width: 1.2em;
+            height: 1.2em;
+            border-radius: 70%;
+            vertical-align: middle;
+            border: 2px solid #26abff;
+            -webkit-appearance: none;
+            outline: none;
+            cursor: pointer;
+        }
+      
+        .lblcolor {
+            font-size: 13px;
+        }
+
+        .glasses .dropdown-menu-list {
+            line-height: 22px;
+        }
+
+        .selectedcolorbox {
+            border: 2px solid #26abff;
+        }
+
+
+      /*  @@media(min-width: 300px) and (max-width: 992.98px) {
+            .row > * {
+                
+                max-width: 49%;
+            }
+        }*/
+    </style>
+</head>
+
+
+<!-- :::: hero aria start:::::: -->
+
+
+<section class="hero-aria hero-gradian">
+    <div class="container custum-pd-two">
+        <div class="priority">
+            <div class="hero-aria-bg">
+                <div class="hero-aria-item">
+                    <div class="banner-title" data-aos="fade-down" data-aos-duration="1500">
+                        <h1> <span>Buying Quality </span> <br> Glasses Should be Easy</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet, mauris iaculis</p>
+                        <a href="#glasses"><button type="button" class="btn btn-primary btn-sm">explore all </button></a>
+                    </div>
+                    <img class="d-lg-none img-fluid" src="~/assets/img/banner-img.png" alt="img">
+                </div>
+                <div class="hero-aria-item">
+                    <div class="banner-title">
+                        <h1> <span>Buying Quality </span> <br> Glasses Should be Easy</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit., Amet mauris iaculis</p>
+                        <a href="#glasses"><button type="button" class="btn btn-primary btn-sm">explore all </button></a>
+                    </div>
+                    <img class="d-lg-none img-fluid" src="~/assets/img/banner-img.png" alt="img">
+                </div>
+                <div class="hero-aria-item">
+                    <div class="banner-title">
+                        <h1> <span>Buying Quality </span> <br> Glasses Should be Easy</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit., Amet, mauris iaculis</p>
+                        <a href="#glasses"><button type="button" class="btn btn-primary btn-sm">explore all </button></a>
+                    </div>
+                    <img class="d-lg-none img-fluid" src="~/assets/img/banner-img.png" alt="img">
+                </div>
+            </div>
+            <!--::::::hero-aria-item:::::: -->
+        </div>
+        <!--::::::hero-aria-item end:::::: -->
+        <!--::::::hero-aria-item end:::::: -->
+    </div>
+
+</section>
+<!-- :::: glasses start:::::: -->
+<section class="glasses">
+    <!-- :::: glasses has-bg:::::: -->
+    <div class="has-bg">
+        <div class="has-bg-3">
+            <img src="~/assets/img/index-bg/right-1.png" alt="img">
+        </div>
+        <div class="has-bg-4">
+            <img src="~/assets/img/index-bg/left-1.png" alt="img">
+        </div>
+    </div>
+    <!-- :::: glasses has-bg end:::::: -->
+    <div class="container custum-pd-two">
+        <!-- :::: glasses title::::: -->
+        <div class="glasses-title">
+            <h2>Professional Stylish Glasses at <strong>Affordable Price</strong></h2>
+            <p>
+                we believe glasses shouldn't be expensive. <br>
+                Quality prescription eyeglasses and sunglasses, Virtual Try-on, 24/7 Live Chat, Worldwide
+                Shipping... <br>
+                From factory to your doorstep, we are here to meet all your optical needs.
+            </p>
+        </div>
+
+
+        <!-- :::: glasses title end::::: -->
+        <div class="row justify-content-between mx-auto color-filter  glasses-center g-4" data-aos="fade-up"
+             data-aos-duration="1500">
+            <!--::::::glasses single item:::::: -->
+            <div class="col-lg-2 col-sm-6 col-md-4 col-xs-6 col" id="filter">
+                <div class="glasses-item text-center" id="womenfilter">
+                    <div class="img">
+                        <img onclick="Applyproductfilter('Gender','Women','')" src="~/assets/img/glasses-one.png" alt="gls">
+                    </div>
+                    <input id="txtWomenvalue" value="" hidden />
+                    <h4 id="womenheading" class="women" onclick="Applyproductfilter('Gender','Women','')">Shop for women</h4>
+                </div>
+            </div>
+            <!--::::::glasses single item:::::: -->
+            <div class="col-lg-2 col-sm-6 col-md-4 col-xs-6 col" id="filter">
+                <div class="glasses-item text-center" id="menfilter">
+                    <div class="img">
+                        <img onclick="Applyproductfilter('Gender','Men','')" src="~/assets/img/glasses-two.png" alt="gls">
+                    </div>
+                    <input id="txtmenvalue" value="" hidden />
+                    <h4 id="menheading" class="men" onclick="Applyproductfilter('Gender','Men','')">Shop For Men</h4>
+                </div>
+            </div>
+            <!--::::::glasses single item:::::: -->
+            <div class="col-lg-2 col-sm-6 col-md-4 col-xs-6 col" id="filter">
+                <div class="glasses-item glasses-item-one  text-center">
+                    <div class="img">
+                        <img src="~/assets/img/glasses-three.png" alt="gls">
+                    </div>
+                    <div class="glasess-size ddl2">
+                        <h5 class="text-center click-aria">Shape<i class="fas fa-chevron-down"></i></h5>
+                        <ul class=" dropdown--menu dropdown--menu2  text-start click-show-bg">
+                            @foreach (var item in ViewBag.shape)
+                            {
+                                <li >
+                                    <div>
+                                    <input id="shape-@item" onclick="Applyproductfilter('Shape','@item','')" class="chkshape form-check-input" value="@item" type="checkbox">
+                                    <label class="lblcolor form-check-label"  for="shape-@item">@item</label>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--::::::glasses single item:::::: -->
+            <div class="col-lg-2 col-sm-6 col-md-4 col-xs-6 col" id="filter">
+                <div class="glasses-item glasses-item-tow text-center">
+                    <div class="img">
+                        <img src="~/assets/img/glasses-four.png" alt="gls">
+                    </div>
+                    <div class="glasess-size color ddl3">
+                        <h5 class="text-center click-aria2">Color<i class="fas fa-chevron-down"></i></h5>
+                        <ul class="dropdown--menu3 text-start">
+                            @foreach (var item in ViewBag.colour)
+                            {
+                                <li >
+                                    <input onclick="Applyproductfilter('Color','@item.hexacode','color-@item.hexacode')" name="color-@item.hexacode" id="color-@item.hexacode" style="background-color:@item.hexacode !important;border:3px solid grey" class="chkcolor colorcheckbox " value="@item.hexacode" type="checkbox">
+                                    <label class="lblcolor " style="font-size:15px !important" for="color-@item.hexacode">@item.colorname</label>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--::::::glasses single item:::::: -->
+            <div class="col-lg-2 col-sm-6 col-md-4 col-xs-6 col" id="filter">
+                <div class="glasses-item glasses-item-three text-center">
+                    <div class="img">
+                        <img src="~/assets/img/glasses-five.png" alt="gls">
+                    </div>
+                    <div class="glasess-size ddl4">
+                        <h5 class="text-center click-aria3">Material<i class="fas fa-chevron-down"></i></h5>
+                        <ul class="dropdown--menu4 text-start">
+                            @foreach (var item in ViewBag.Material)
+                            {
+                                <li >
+                                    <input id="material-@item" onclick="Applyproductfilter('Material','@item','')" class="chkmaterial form-check-input" value="@item" type="checkbox">
+                                    <label class="lblcolor form-check-label" style="font-size:14px !important" for="material-@item">@item</label>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--::::::glasses single item:::::: -->
+            <div class="col-lg-2 col-sm-6 col-md-4 col-xs-6 col" id="filter">
+                <div class="glasses-item text-center last-item">
+                    <div class="img">
+                        <img src="~/assets/img/glasses-six.png" alt="gls">
+                    </div>
+                    <div class="glasess-size ddl5">
+                        <h5 class="text-center click-aria5">Size<i class="fas fa-chevron-down"></i></h5>
+
+                        <ul class="dropdown--menu--5 text-start">
+                            @foreach (var item in ViewBag.AvailableSize)
+                            {
+                                <li >
+                                    <input id="size-@item" onclick="Applyproductfilter('Size','@item','')" class="chksize form-check-input" value="@item" type="checkbox">
+                                    <label class="lblcolor form-check-label" style="font-size:14px !important" for="size-@item">@item</label>
+                                </li>
+
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+<!-- :::: glasses end:::::: -->
+
+<br />
+<!-- :::: products start:::::: -->
+<section class="products product-bg-index custum-mg" id="glasses">
+    <!-- :::: products has-bg:::::: -->
+    <div class="has-bg">
+        <div class="has-bg-five">
+            <img src="~/assets/img/index-bg/left-2.png" alt="img">
+        </div>
+        <div class="has-bg-six">
+            <img src="~/assets/img/index-bg/right-2.png" alt="img">
+        </div>
+    </div>
+    <div class="has-bg has-bg2">
+        <div class="has-bg-five">
+            <img src="~/assets/img/index-bg/left-3.png" alt="img">
+        </div>
+        <div class="has-bg-six">
+            <img src="~/assets/img/index-bg/right-3.png" alt="img">
+        </div>
+    </div>
+
+
+    <!-- :::: products has-bg end:::::: -->
+    <div class="product-bg" id="products_detail">
+
+
+        <div class="container custum-pd-two">
+
+            <div class="parentDiv" id="parentDiv" style="display:none">
+                <img style="width:5% !important" src="~/assets/img/Ajax_loader_metal_512.gif">
+            </div>
+
+
+            <!-- :::: products products-title:::::: -->
+            <!-- :::: products products-title:::::: -->
+            <div class="products-title d-flex justify-content-between align-items-center">
+
+
+                <div class="product-heading" style="text-align:center">
+                    <h2>OUR PRODUCTS</h2>
+
+                </div>
+
+                <div class="product-button" id="Generafilter">
+                    <input id="txtTopseller" value="" hidden />
+                    <input id="txtnewarrival" value="" hidden />
+
+                    <a class="btn" id="Topseller" onclick="Applyproductfilter('General','Top','')"> Top Sellers</a>
+
+
+                    <a class="btn btn-2" id="Newarrival" onclick="Applyproductfilter('General','New','')"> New arrivals</a>
+
+                </div>
+                @*<a class="btn" href="@Url.Action("index", "Home", new { sticker = "Top Seller" })"> Top Sellers</a>
+            <a class="btn btn-2" href="@Url.Action("index", "Home", new { sticker = "New Arrival" })"> New arrivals</a>*@
+
+            </div>
+
+
+
+            <div class="row g-4" data-aos="fade-up" data-aos-duration="1800" id="Products_Section">
+
+                @{int Duplicatecheck = 0;}
+                @foreach (var item in ViewBag.ProductList)
+                {
+
+                    if (Duplicatecheck != @item.GlassID)
+                    {
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 line-content" id="line-content">
+                            <div class="product-item" id="Product_Items">
+                                <div class="img">
+                                    @if (item.Sticker == "Hot")
+                                    {
+                                        <a class="bg-danger wishlist-link" href="@Url.Action("Product_Details", "Products", new { Productid = @item.GlassID })"><i class="fas fa-fire bg"></i> @item.Sticker</a>
+                                    }
+                                    @if (item.Sticker == "New Arrival")
+                                    {
+                                        <a style="background-color: #0068AB !important;border: 1px solid #0068AB !important;" class="wishlist-link bg-secondary" href="@Url.Action("Product_Details", "Products", new { Productid = @item.GlassID })">@item.Sticker</a>
+                                    }
+                                    @if (item.Sticker == "Top Seller")
+                                    {
+                                        <a class="wishlist-link wishlist-link-premium" href="@Url.Action("Product_Details", "Products", new { Productid = @item.GlassID })"><i class="fas fa-crown bg"></i> @item.Sticker</a>
+                                    }
+
+                                    <div class="img-wgt">
+                                        <img onmouseover="sideviewimage('@item.GlassID-image-color','@item.SideViewImagePath')" onmouseout="originalimage('@item.GlassID-image-color','@item.ImagePath')" onclick="Productdetails(@item.GlassID)" id="@item.GlassID-image-color" class="img-fluid" src="@item.ImagePath" alt="ig" />
+                                    </div>
+
+                                </div>
+
+
+                                <div class="details">
+                                    <div class="product-info-shot">
+                                        <h6> <a id="@item.GlassID-detail" href="@Url.Action("Product_Details","Products",new { Productid=@item.GlassID})">@item.Title </a></h6>
+                                        <button onclick="selectFrame('@item.SKUNumber',@item.GlassID)" type="button" class="try_on">TRY ON</button>
+                                    </div>
+
+                                    <p>$@item.Price</p>
+
+
+                                    <div class="color">
+                                        <ul>
+                                            @foreach (var colors in ViewBag.ProductList)
+                                            {
+                                                Duplicatecheck = Convert.ToInt32(@item.GlassID);
+                                                if (item.GlassID == colors.GlassID)
+                                                {
+                                                    <li onclick="Changecolour(@colors.GlassID, '@colors.GlassID-detail',@colors.VariationID,
+                                                        '@colors.GlassID-image-color', '@colors.ImagePath')" style="background-color: @colors.ColorCode"></li>
+                                                }
+
+                                            }
+
+
+                                        </ul>
+                                        <div class="icon">
+                                            @{int likecount = 0; }
+                                            @foreach (var likes in ViewBag.ProductList)
+                                            {
+                                                if (item.GlassID == likes.GlassID && likes.Likestatus == 1)
+                                                {
+                                                    likecount = 1;
+
+                                                    <a id='@item.GlassID-Favourite' onclick="UpdateFavourite(,@item.GlassID,'black','@item.GlassID-Favourite')"> <i style="background-color:red !important;color:white !important" class="far fa-heart heart-icon"></i></a>
+                                                    break;
+                                                }
+
+                                            }
+                                            @if (likecount == 0)
+                                            {
+                                                if (Session["UserID"] != null)
+                                                {
+
+                                                    <a id='@item.GlassID-Favourite' onclick="UpdateFavourite(@item.GlassID,'Red','@item.GlassID-Favourite')">
+                                                        <i style="background-color:black !important;color:white !important" class="far fa-heart heart-icon"></i>
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a class="tooltip" id='@item.GlassID-Favourite' onclick="UpdateFavourite(@item.GlassID,'Red','@item.GlassID-Favourite')">
+                                                        <i style="background-color:black !important;color:white !important" class="far fa-heart heart-icon"></i>
+                                                        <span class="tooltiptext">Please login to add the product in the wishlist</span>
+                                                    </a>
+
+
+
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                }
+
+            </div>
+            <div class="col-lg-8 mx-auto ">
+                <div class="blog-pagination pagination d-flex align-items-center justify-content-center flex-wrap" id="page">
+                  
+                        <ul id="pagin">
+                        </ul>
+                      
+                        <a class="click active" href="@Url.Action("eyeglassess","Home")">View all collection</a>
+                        
+                   
+                    <!--<ul>
+                        <li> <a class="active">01</a> </li>-->
+                        @*<li> <a href="#">02</a> </li>
+            <li> <a href="#">03</a> </li>*@
+                    <!--</ul>
+                    <a class="click" href="#">Next</a>
+                    <a class="click active" href="@Url.Action("eyeglassess","Home")">View all collection</a>-->
+                </div>
+            </div>
+            @*<div class="row">
+                <div class="col-md-12">
+                    <div class="blog-pagination" id="page">
+                        <nav>
+                            <ul id="pagin" class="pagination justify-content-center">
+                            </ul>
+                            <div class="view-all text-center">
+                                <a href="@Url.Action("AllCars","Home")" class="btn btn-primary">View All</a>
+                            </div>
+                        </nav>
+                    </div>
+
+                </div>
+            </div>*@
+            <!--::::::products  pagination end:::::: -->
+        </div>
+    </div>
+   
+</section>
+<!-- :::: products end:::::: -->
+<!-- :::: virtualy start:::::: -->
+<section class="virtualy virtualy-bg custum-mg ">
+    <div class="has-bg">
+        <div class="has-bg-9">
+            <img src="~/assets/img/index-bg/left-4.png" alt="img">
+        </div>
+        <div class="has-bg-10">
+            <img src="~/assets/img/index-bg/right-4.png" alt="img">
+        </div>
+    </div>
+    <div class="content virtualy-bg">
+        <div class="row align-items-center justify-content-center" data-aos="fade-up" data-aos-duration="2200">
+            <!--::::::virtualy single item:::::: -->
+            <div class="col-lg-6">
+                <div class="details">
+                    <h3>
+                        Try Our
+                        Best Glasses Virtualy
+                    </h3>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Non odio egestas sed cras. Cras
+                        augue etiam mauris vulputate viverra dignissim.
+                    </p>
+                    <a class="virtual-btn" >
+                        <img src="~/assets/img/virtual-icon.svg" alt="img"> Virtual
+                        Try
+                    </a>
+                </div>
+            </div>
+            <!--::::::virtualy single item:::::: -->
+            <div class="col-lg-5">
+                <div class="img">
+                    <img src="~/assets/img/glasses-man-img.png" alt="img">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- :::: virtualy end:::::: -->
+<!-- :::: Video start:::::: -->
+<section class="video">
+    <!-- :::: Video has-bg start:::::: -->
+    <div class="has-bg">
+        <div class="has-bg-11">
+            <img src="~/assets/img/index-bg/left-5.png" alt="img">
+        </div>
+        <div class="has-bg-12">
+            <img src="~/assets/img/index-bg/right-5.png" alt="img">
+        </div>
+    </div>
+    <!-- :::: Video has-bg end:::::: -->
+    <div class="container custum-pd-two" data-aos="fade-up" data-aos-duration="2600">
+        <!--::::::Video title start:::::: -->
+        <div class="col-lg-6 mx-auto text-center">
+            <div class="title">
+                <h2>Video Guide</h2>
+                <p>
+                    we believe glasses shouldn't be expensive. <br>
+                    Quality prescription eyeglasses and sunglasses<br>
+                    From factory to your doorstep, we are here to meet all your optical needs.
+                </p>
+            </div>
+        </div>
+        <!--::::::Video title end:::::: -->
+        <div class="col-lg-12 mx-auto">
+            <div class="row">
+                <!--::::::Video single item:::::: -->
+                <div class="col-md-4">
+                    <div class="video-item">
+                        <div class="img">
+                            <img src="~/assets/img/vedioo-img.png" alt="img">
+                            <a class="venobox" data-autoplay="true" data-vbtype="video"
+                               href="https://www.youtube.com/watch?v=KUs7ZH5uWl4">
+                                <i class="fas fa-play-circle"></i>
+                            </a>
+                        </div>
+                        <div class="details">
+                            <h6> Video A</h6>
+                            <p>How to measure your pd.</p>
+                        </div>
+                    </div>
+                </div>
+                <!--::::::Video single item:::::: -->
+                <div class="col-md-4">
+                    <div class="video-item">
+                        <div class="img">
+                            <img src="~/assets/img/vedioo-img.png" alt="img">
+                            <a class="venobox" data-autoplay="true" data-vbtype="video"
+                               href="https://www.youtube.com/watch?v=KUs7ZH5uWl4">
+                                <i class="fas fa-play-circle"></i>
+                            </a>
+                        </div>
+                        <div class="details">
+                            <h6> Video B</h6>
+                            <p>How to read a Prescription.</p>
+                        </div>
+                    </div>
+                </div>
+                <!--::::::Video single item:::::: -->
+                <div class="col-md-4">
+                    <div class="video-item">
+                        <div class="img">
+                            <img src="~/assets/img/vedioo-img.png" alt="img">
+                            <a class="venobox" data-autoplay="true" data-vbtype="video"
+                               href="https://www.youtube.com/watch?v=KUs7ZH5uWl4">
+                                <i class="fas fa-play-circle"></i>
+                            </a>
+                        </div>
+                        <div class="details">
+                            <h6> Video C</h6>
+                            <p>How to order glasses online.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- :::: Video start:::::: -->
+<!-- :::: olaglasses start:::::: -->
+<section class="olaglasses">
+    <!-- :::: olaglasses has-bg start:::::: -->
+    <div class="has-bg">
+        <div class="has-bg-13">
+            <img src="~/assets/img/index-bg/left-6.png" alt="img">
+        </div>
+        <div class="has-bg-14">
+            <img src="~/assets/img/index-bg/right-6.png" alt="img">
+        </div>
+    </div>
+    <!-- :::: olaglasses has-bg start:::::: -->
+    <div class="olaglasses-item owl-carousel owl-theme glass-home">
+        <!--::::::olaglasses-item-img"::::: -->
+
+        @foreach (var item in ViewBag.ClientReviews)
+        {
+        <div onclick="ClientReviewInfo(@item.GlassID,'@item.ReviewImage.Replace(" ","$")','@item.Title',@item.Price,'@item.Review',@item.TotalReviews,@item.AverageRating)"
+             data-bs-toggle="modal" href="#ReviewsModal" role="button" class="item olaglasses-item-img" style="background-image: url('@item.ReviewImage');">
+
+
+            @*<img src="@item.ReviewImage" style="width:100%;">*@
+
+
+        </div>}
+
+    </div>
+</section>
+<!-- :::: olaglasses end:::::: -->
+   <!-- :::: blog start:::::: -->
+   <section class="blog blog-bg custum-mg">
+      <!-- :::: blog has-bg start:::::: -->
+      <div class="has-bg">
+         <div class="has-bg-15">
+            <img src="~/assets/img/index-bg/left-7.png" alt="img">
+         </div>
+         <div class="has-bg-16">
+            <img src="~/assets/img/index-bg/right-7.png" alt="img">
+         </div>
+      </div>
+      <!-- :::: blog has-bg end:::::: -->
+         <div class="blog-bg">
+            <div class="row g-4 justify-content-center" data-aos="fade-up" data-aos-duration="1500">
+               <!-- :::: blog dingle item:::::: -->
+               <div class="col-lg-4 col-md-6">
+                  <div class="blog-item">
+                     <div class="img">
+                        <img src="~/assets/img/blog-img-one.png" alt="">
+                     </div>
+                     <div class="details">
+                        <p>Post by Admin // 24 Sept. 2021</p>
+                       <h4>
+                          <a href="@Url.Action("newsdetail","Home")" target="_blank">flat price for blue light blocking & anti-glare</a>
+                       </h4> 
+                        <p class="text-black">Protect your eyes by wearing the eyeglass with Blue light
+                           blocking! Flat price for Blue light Blocking & Anti-glare.
+                        </p>
+                        <a class="btn" href="@Url.Action("newsdetail","Home")" target="_blank"> read more</a>
+                     </div>
+                  </div>
+               </div>
+               <!-- :::: blog dingle item:::::: -->
+               <div class="col-lg-4 col-md-6">
+                  <div class="blog-item">
+                     <div class="img">
+                        <img src="~/assets/img/blog-img-two.png" alt="">
+                     </div>
+                     <div class="details">
+                        <p class="paragraph-active">Post by Admin // 24 Sept. 2021</p>
+                        <h4>
+
+                           <a class="active" href="@Url.Action("newsdetail","Home")" target="_blank">visual try on find cute frames? no wait! try at home! </a>
+                        </h4>
+                        <p class="text-black">Discover which pair suit you best at home! A virtual mirror shows
+                           you wearning your favourite style as it exactly is in real world!
+                        </p>
+                        <a class=" btn  d-inline-block" href="@Url.Action("newsdetail","Home")" target="_blank">read more</a>
+                     </div>
+                  </div>
+               </div>
+               <!-- :::: blog dingle item:::::: -->
+               <div class="col-lg-4 col-md-6">
+                  <div class="blog-item">
+                     <div class="img">
+                        <img src="~/assets/img/blog-img-three.png" alt="">
+                     </div>
+                     <div class="details">
+                        <p>Post by Admin // 24 Sept. 2021</p>
+                        <h4>
+                           <a href="@Url.Action("newsdetail","Home")" target="_blank">trabsittion lens with uv & blue light protection</a>
+                        </h4>
+                        <p class="text-black">No need to swap between eyeglasses and sunglasses when you go
+                           outside and return inside. One pair that does it all!
+                        </p>
+                        <a class="btn" href="@Url.Action("newsdetail","Home")" target="_blank"> read more</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+      <!--  -->
+   </section>
+   <!-- :::: blog end:::::: -->
+
+<script src="~/assets/js/jquery-1.12.4.min.js"></script>
+<script>
+    function scrollToBottom(id) {
+        $('html,body').animate({
+            scrollTop: $(".product-bg").offset().top
+        },
+            'fast');
+    }
+    $(document).ready(function () {
+       
+
+        var pageSize = 8;
+
+        var pageCount = $(".line-content").length / pageSize;
+
+        for (var i = 0; i < pageCount; i++) {
+            if (i == 0) {
+                $("#pagin").append('<li ><a  href="#" onclick="scrollToBottom(this)" class="active">' + (i + 1) + '</a></li> ');
+            }
+            else {
+                $("#pagin").append('<li ><a  href="#" onclick="scrollToBottom(this)" >' + (i + 1) + '</a></li> ');
+            }
+        }
+
+        $("#pagin li").first().find("a").addClass("active current");
+
+        showPage = function (page) {
+            $(".line-content").hide();
+            $(".line-content").each(function (n) {
+                if (n >= pageSize * (page - 1) && n < pageSize * page)
+                    $(this).show();
+            });
+        }
+
+        showPage(1);
+
+        $("#pagin li a").click(function () {
+            $("#pagin li a").removeClass("active")
+            $(this).addClass("active")
+            $("#pagin li a").removeClass("current");
+            $(this).addClass("active current");
+            showPage(parseInt($(this).text()))
+        });
+    });
+
+    function UpdateFavourite(Productid,color, FavouriteId) {
+
+        var model = {
+            id: Productid};
+           $.ajax({
+            type: "POST",
+            url: '@Url.Action("HomePageProductFavourite", "Products")',
+              data: JSON.stringify(model),
+              contentType: "application/json; charset=utf-8",
+              dataType: "json",
+               success: function (result) {
+
+                   if (result != "")
+                   {
+                       const element = document.getElementById(FavouriteId);
+
+                       if (result == 'black') {
+                           element.innerHTML = '<i style="background-color:black !important;color:white !important"  class="far fa-heart heart-icon" ></i >';
+
+                       }
+                       else if (result == 'Red') {
+
+                           element.innerHTML = '<i style = "background-color:red !important;color:white !important" class="far fa-heart heart-icon" ></i >';
+                       }
+
+                   }
+
+
+
+              }
+        });
+
+    }
+
+    /*Apply filters to products*/
+    function Applyproductfilter(filtertype, filterdata,colorpalet) {
+    /*alert(filtertype + " " + filterdata);*/
+
+
+
+        $("#parentDiv").fadeIn();
+
+        //$('html, body').animate({
+        //    scrollTop: $("#products_detail").offset().top
+        //}, 1000);
+
+        if (filtertype == "Gender")
+        {
+            if (filterdata == "Women")
+            {
+                if (document.getElementById('womenheading').classList.contains("GenderActive")) {
+                    $("#txtWomenvalue").val("");
+                    $("#womenfilter h4").removeClass("GenderActive");
+                    $("#womenfilter h4").addClass("GenderDeactive");
+                }
+                else {
+                    $("#txtWomenvalue").val(filterdata);
+                    $("#womenfilter h4").removeClass("GenderDeactive");
+                    $("#womenfilter h4").addClass("GenderActive");
+                }
+            }
+
+
+            if (filterdata == "Men") {
+                if (document.getElementById('menheading').classList.contains("GenderActive")) {
+                    $("#txtmenvalue").val("");
+                    $("#menfilter h4").removeClass("GenderActive");
+                    $("#menfilter h4").addClass("GenderDeactive");
+                }
+                else {
+                    $("#txtmenvalue").val(filterdata);
+                    $("#menfilter h4").removeClass("GenderDeactive");
+                    $("#menfilter h4").addClass("GenderActive");
+                }
+            }
+
+
+        }
+
+        var TopSeller = "";
+        var NewArrivals = "";
+
+        if (filtertype == "General") {
+
+            if (filterdata == "Top") {
+                NewArrivals = $("#txtnewarrival").val();
+                if ($("#txtTopseller").val() == "") {
+                    $("#txtTopseller").val("Top Seller");
+                    TopSeller = "Top Seller";
+                    document.getElementById("Topseller").innerHTML = "<i style=font-size:12px !important class='fa fa-check' aria-hidden='true'></i> Top Sellers";
+                }
+                else if ($("#txtTopseller").val() == "Top Seller") {
+                    $("#txtTopseller").val("");
+                    TopSeller = "";
+                    document.getElementById("Topseller").innerHTML = "Top Sellers";
+                }
+            }
+
+            if (filterdata == "New") {
+                TopSeller = $("#txtTopseller").val();
+                if ($("#txtnewarrival").val() == "") {
+                    $("#txtnewarrival").val("New Arrival");
+                    NewArrivals = "New Arrival";
+                    document.getElementById("Newarrival").innerHTML = "<i style=font-size:12px !important class='fa fa-check' aria-hidden='true'></i>  New arrivals";
+                }
+                else if ($("#txtnewarrival").val() == "New Arrival") {
+                    $("#txtnewarrival").val("");
+                    NewArrivals = "";
+                    document.getElementById("Newarrival").innerHTML = "New arrivals";
+                }
+            }
+        }
+
+        var shapearray = [];
+
+                $('input:checkbox.chkshape').each(function () {
+                var selectedshapes = (this.checked ? $(this).val() : "");
+                if (selectedshapes != "") {
+                    shapearray.push(selectedshapes);
+                }
+                });
+
+        var sizearray = [];
+        $('input:checkbox.chksize').each(function () {
+            var selectedsize = (this.checked ? $(this).val() : "");
+            if (selectedsize != "") {
+                sizearray.push(selectedsize);
+            }
+        });
+
+        var materialarray = [];
+        $('input:checkbox.chkmaterial').each(function () {
+            var material = (this.checked ? $(this).val() : "");
+            if (material != "") {
+                materialarray.push(material);
+            }
+        });
+
+
+        var colorarray = [];
+        $('input:checkbox.colorcheckbox').each(function () {
+            var color = (this.checked ? $(this).val() : "");
+
+            if (color != "") {
+                colorarray.push(color);
+            }
+        });
+
+
+
+        if (filtertype == "Color") {
+
+            const element = document.getElementById(colorpalet);
+
+            const fontSize = element.style.border;
+
+            if (fontSize == "3px solid rgb(38, 171, 255)")
+            {
+                document.getElementById(colorpalet).style.border = "3px solid grey";
+            }
+            else
+            {
+                document.getElementById(colorpalet).style.border = "3px solid #26abff";
+            }
+
+        }
+
+
+
+        var model = {
+            Women: $("#txtWomenvalue").val(),
+            Men: $("#txtmenvalue").val(),
+            ddlshape: shapearray,
+            ddlAvailableSize: sizearray,
+            ddlMaterial: materialarray,
+            ddlcolor: colorarray,
+            TopSeller: TopSeller,
+            NewArrivals: NewArrivals,
+
+        };
+
+          $.ajax({
+            type: "POST",
+            url: '@Url.Action("Homeproductfilter", "Products")',
+              data: JSON.stringify(model),
+              contentType: "application/json; charset=utf-8",
+              dataType: "json",
+              success: function (result) {
+                  $("#parentDiv").fadeOut();
+                  var img = document.createElement('img');
+                  var section = "";
+                  $("#Products_Section div").remove();
+                  var Duplicatecheck = 0;
+
+                  var UserID=@Convert.ToInt32(Session["UserID"]);
+                  for (var i = 0; i < result.length; i++) {
+
+                      if (parseInt(Duplicatecheck) != parseInt(result[i].GlassID)) {
+                          section += '<div class="col-lg-3 col-md-6 line-content" id="line-content">';
+                          section += '<div class="product-item" id="Product_Items">';
+                          section += '<div class="img">'
+
+                          if (result[i].Sticker == "Hot") {
+                              section += '<a class="bg-danger wishlist-link" href="/Products/Product_Details/?Productid='+result[i].GlassID+'"><i class="fas fa-fire bg"></i> ' + result[i].Sticker + '</a>'
+                          }
+                          if (result[i].Sticker == "Top Seller") {
+                              section += '<a  class="wishlist-link wishlist-link-premium" href="/Products/Product_Details/?Productid='+result[i].GlassID+'"><i class="fas fa-crown bg"></i> ' + result[i].Sticker + '</a>'
+                          }
+
+                          if (result[i].Sticker == "New Arrival") {
+                              section += '<a style="background-color: #0068AB;border: 1px solid #0068AB;"  href="/Products/Product_Details/?Productid='+result[i].GlassID+'"> ' + result[i].Sticker + '</a>'
+                          }
+                          section += "<img id='" + result[i].GlassID + "-image-color' onmouseover=sideviewimage('" + result[i].GlassID + "-image-color','" + result[i].SideViewImagePath + "') onmouseout=originalimage('" + result[i].GlassID + "-image-color','" + result[i].ImagePath+"')  onclick=Productdetails("+result[i].GlassID+") id='"+result[i].GlassID+"-image-color' class='img-fluid'   style='width:200px; height:109px' src='"+result[i].ImagePath+"' />"
+
+/*                          section += '<img id=' + result[i].GlassID + '-image-color onmouseover="sideviewimage("' + result[i].GlassID + '-image-color",' + result[i].SideViewImagePath + ')" onmouseout="originalimage(' + result[i].GlassID + '-image-color,' + result[i].SideViewImagePath + ')"  onclick="Productdetails(' + result[i].GlassID + ')" id="' + result[i].GlassID + '-image-color" class="img-fluid"   style="width:200px; height:109px" src=' + result[i].ImagePath + ' />'*/
+
+                          section += '</div>';
+
+                          section += '<div class="details">'
+                          section +='<div class="product-info-shot">'
+                          section += '<h6><a id="'+result[i].GlassID+'-detail" href="/Products/Product_Details/?Productid='+result[i].GlassID+'">' + result[i].Title + ' </a></h6>'
+                          section += "<button  onclick=selectFrame('" + result[i].SKUNumber + "','" + result[i].GlassID + "') type='button' class='try_on'>TRY ON</button>"
+                          section += '</div>'
+                          section += '<p>$' + result[i].Price + '</p>'
+
+
+                          section += '<div class="color">'
+
+                          section += '<ul>'
+                          for (var j = 0; j < result.length; j++) {
+
+                              Duplicatecheck = parseInt(result[i].GlassID);
+                              if (result[i].GlassID == result[j].GlassID) {
+                                  section += "<li style='background-color:" + result[j].ColorCode + "' onclick=Changecolour(" + result[j].GlassID + ",'" + result[j].GlassID+"-detail',"+result[j].VariationID+",'"+result[j].GlassID+"-image-color','"+result[j].ImagePath+"')></li>"
+                              }
+                          }
+                          section += '</ul>'
+                          section += '    <div class="icon">'
+                          var likecount = 0;
+                          for (var k = 0; k < result.length; k++)
+                              {
+                                  if (result[i].GlassID == result[k].GlassID && result[k].Likestatus == 1) {
+                                      likecount = 1;
+                                      section += "<a id='"+result[i].GlassID+"-Favourite' onclick=UpdateFavourite("+result[i].GlassID+",'black','"+result[i].GlassID+"-Favourite')> <i style='background-color:red !important;color:white !important' class='far fa-heart heart-icon'></i></a>"
+                                      break;
+                                  }
+                              }
+                          if (likecount == 0)
+                          {
+                              if (UserID ==0 )
+                              {
+                                  section += "<a class='tooltip' id='" + result[i].GlassID + "-Favourite' onclick=UpdateFavourite(" + result[i].GlassID + ",'Red','" + result[i].GlassID + "-Favourite')> <i style='background-color:black !important;color:white !important' class='far fa-heart heart-icon'></i>   <span class='tooltiptext'>Please login to add the product in the wishlist</span></a>"
+                              }
+                              else
+                              {
+                                  section += "<a id='" + result[i].GlassID + "-Favourite' onclick=UpdateFavourite(" + result[i].GlassID + ",'Red','" + result[i].GlassID + "-Favourite')> <i style='background-color:black !important;color:white !important' class='far fa-heart heart-icon'></i></a>"
+                              }
+                             
+                          }
+                          section += '</div>';
+
+                          section += '</div>';
+
+                          section += '</div>';
+                          section += '</div>';
+
+                          section += '</div>';
+                      }
+
+                  }
+                  if (result.length == 0) {
+                      section = "<div id='norecordfound' class='col-md-12' ><h3> No product found </h3></div>"
+                  }
+
+                  $("#Products_Section").append(section);
+
+                  $("#pagin li").remove();
+                  $(function () {
+                      $('#page').Pagination({
+                          size: 100
+
+                      });
+                  });
+
+                  var pageSize = 8;
+                  var pageCount = $(".line-content").length / pageSize;
+
+                  for (var i = 0; i < pageCount; i++) {
+                      if (i == 0) {
+                          $("#pagin").append('<li ><a  href="#" onclick="scrollToBottom(this)" class="active">' + (i + 1) + '</a></li> ');
+                      }
+                      else {
+                          $("#pagin").append('<li ><a  href="#" onclick="scrollToBottom(this)" >' + (i + 1) + '</a></li> ');
+                      }
+                  }
+
+                  $("#pagin li").first().find("a").addClass("active current");
+
+                  showPage = function (page) {
+                      $(".line-content").hide();
+                      $(".line-content").each(function (n) {
+                          if (n >= pageSize * (page - 1) && n < pageSize * page)
+                              $(this).show();
+                      });
+                  }
+
+                  showPage(1);
+
+                  $("#pagin li a").click(function () {
+                      $("#pagin li a").removeClass("active")
+                      $(this).addClass("active")
+                      $("#pagin li a").removeClass("current");
+                      $(this).addClass("active current");
+                      showPage(parseInt($(this).text()))
+                  });
+              }
+          });
+
+
+
+    }
+
+    $(document).ready(function () {
+        $("ul li a").removeClass("active");
+        $("#pagin li").first().find("a").addClass("active");
+        $('#index').addClass('active');
+    });
+
+
+    function Productdetails(productid) {
+         var link = "@Url.Action("Product_Details", "Products",new{ Productid = "pid"})";
+        link = link.replace('pid', productid);
+        window.location.href = link;
+    }
+
+    function Changecolour(Glassid, detail, variationid, colorid, imgurl) {
+    document.getElementById(detail).href = "/Products/Product_Details?Productid="+Glassid+"&vid="+variationid+"";
+    document.getElementById(colorid).src = imgurl;
+    }
+
+    function sideviewimage(imageid, imagepath) {
+
+        if (imagepath != "") {
+            document.getElementById(imageid).src = imagepath;
+        }
+
+
+    }
+
+    function originalimage(imageid, imagepath) {
+
+
+        document.getElementById(imageid).src = imagepath;
+    }
+
+    function ClientReviewInfo(GlassId, ReviewImage, Title, Price, Review, TotalReviews, AverageRating) {
+
+        if (ReviewImage.includes("$")) {
+            ReviewImage = ReviewImage.split('$').join(' ');
+        }
+
+        var list = "";
+        $("#AverageReviewList li").remove();
+        for (var i = 0; i < 5; i++) {
+            if (i < AverageRating) {
+                list = '<li><i style="color:orange" class="fa fa-star"></i></li>';
+            }
+            else {
+                list = '<li><i style="color:lightgrey" class="fa fa-star"></i></li>';
+            }
+
+            $("#AverageReviewList").append(list);
+        }
+
+        $("#AverageReviewList").append('<li id="Totalreviews">' + TotalReviews + '</li>');
+
+        /*document.getElementById("UserImage").src = ReviewImage;*/
+
+        /*document.getElementById("UserImage").style.backgroundImage = 'url(' + ReviewImage + ')';*/
+        var updatedreviewimage = encodeURI(ReviewImage).split('%20').join(' ');
+        $('#UserImage').css('backgroundImage', 'url("'+updatedreviewimage+'")');
+        document.getElementById("product-name").innerHTML = Title;
+        document.getElementById("Product-price").innerHTML = "$" + Price;
+        document.getElementById("Totalreviews").innerHTML = TotalReviews;
+        document.getElementById("UserReviews").innerHTML = Review;
+
+        document.getElementById("shopnow").href = "./Products/Product_Details?Productid=" + GlassId + "";
+
+
+    }
+</script>

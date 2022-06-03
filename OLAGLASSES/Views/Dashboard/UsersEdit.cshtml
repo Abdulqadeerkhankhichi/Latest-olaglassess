@@ -1,0 +1,212 @@
+﻿@using Olaglasses.Models;
+@model Olaglasses.Models.tblUser
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+<head>
+
+    <link rel="stylesheet" href="~/Dashboardassets/assets/plugins/dropzone/dropzone.min.css">
+
+    <link rel="stylesheet" href="~/Dashboardassets/assets/plugins/bootstrap-tagsinput/css/bootstrap-tagsinput.css">
+
+    <script src="~/Dashboardassets/assets/js/profile-settings.js"></script>
+
+    <script src="~/Dashboardassets/assets/plugins/dropzone/dropzone.min.js"></script>
+</head>
+<div class="row">
+    <div class="col-md-5 col-5">
+        <div class="breadcrumb-bar">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    @if (Model.UserID > 0)
+                    {
+                        <h2 class="breadcrumb-title">Edit User Info</h2>
+                    }
+                    else
+                    {
+                <h2 class="breadcrumb-title">Add User Info</h2>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-4 col-4"></div>
+    <div class="col-md-3 col-3 ">
+
+        <a href="@Url.Action("Users","Dashboard")" class="btn btn-secondary float-right" style="background-color:var(--Secondery-color); color:white ;float: right;"><i class="fa fa-list"></i> Users List</a>
+
+    </div>
+
+</div>
+
+
+
+<div class="doc-review review-listing custom-edit-service">
+
+
+    <!-- Add Blog -->
+    <div class="card">
+        <div class="card-body">
+
+            <form method="post" action="@Url.Action("UsersEdit","Dashboard")">
+                <input type="hidden" name="UserID" id="UserID" value="@Model.UserID">
+                <input type="hidden" name="Role" id="Role" value="@Model.Role">
+                <input type="hidden" name="UserImage" id="UserImage" value="@Model.UserImage">
+                <div class="service-fields">
+                    <div class="row">
+
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>First Name <span class="text-danger">*</span></label>
+
+                                <input class="form-control" type="text" name="Firstname" id="Firstname" value="@Model.Firstname" required>
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Last Name <span class="text-danger">*</span></label>
+
+                                <input class="form-control" type="text" name="Lastname" id="Lastname" value="@Model.Lastname" required>
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Email <span class="text-danger">*</span></label>
+
+                                <input class="form-control" type="email" name="UserEmail" id="UserEmail" value="@Model.UserEmail" required>
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Password <span class="text-danger">*</span></label>
+
+                                <input class="form-control" type="password" name="UserPass" id="UserPass" value="@Model.UserPass" required>
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Address</label>
+
+                                <input class="form-control" type="text" name="Address" id="Address" value="@Model.Address">
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Phone</label>
+
+                                <input class="form-control" type="text" name="Phone" id="Phone" value="@Model.Phone">
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>DateofBirth</label>
+
+                                <input class="form-control" type="date" name="DateofBirth" id="DateofBirth" value="@Model.DateofBirth">
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Gender</label>
+
+                                <select class="form-control select" name="Gender">
+
+                                    @if (Model.Gender == "Mr.")
+                                    {
+                                        <option value="Mr." selected>Mr.</option>
+                                        <option value="Mis.">Mis.</option>
+                                        <option value="Mx">Mx</option>
+
+                                    }
+                                    else if (Model.Gender == "Mx")
+                                    {
+                                        <option value="Mr.">Mr.</option>
+                                        <option value="Mis.">Mis.</option>
+                                        <option value="Mx" selected>Mx</option>
+
+                                    }
+                                    else if (Model.Gender == "Mis.")
+                                    {
+                                        <option value="Mr.">Mr.</option>
+                                        <option value="Mis." selected>Mis.</option>
+                                        <option value="Mx">Mx</option>
+
+                                    }
+
+                                    else
+                                    {
+                                        <option value="Mr.">Mr.</option>
+                                        <option value="Mis.">Mis.</option>
+                                        <option value="Mx">Mx</option>
+
+                                    }
+
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Password <span class="text-danger">*</span></label>
+
+                                <input class="form-control" type="password" name="UserPass" id="UserPass" value="@Model.UserPass" required>
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-3" style="margin-top:3%">
+                            <div class="form-group">
+                                <button class="btn btn-primary submit-btn" type="submit" name="form_submit" value="submit">Submit</button>
+                                <a href="@Url.Action("UsersEdit","Dasboaard")"><button class="btn btn-secondary submit-btn" type="button" name="form_submit" value="submit">Cancel</button></a>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+<script src="~/assets/js/jquery-1.12.4.min.js"></script>
+<script>
+    function getcolorcode() {
+
+        var colorcode = document.getElementById("colorcode");
+        var selectedText = colorcode.options[colorcode.selectedIndex].text;
+        $("#colorname").val(selectedText);
+    }
+    $(document).ready(function () {
+        $(".nav li").removeClass("active");
+        $('#promotion').addClass('active');
+
+    });
+</script>
+
+

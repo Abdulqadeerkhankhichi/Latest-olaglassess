@@ -1,0 +1,1346 @@
+﻿
+@{
+    ViewBag.Title = "Sunglassess";
+}
+
+@{
+    ViewBag.Title = "Sunglassess";
+    List<string> genderlist = new List<string>();
+    List<string> materiallist = new List<string>();
+    List<string> sizelist = new List<string>();
+    List<string> shapelist = new List<string>();
+}
+<head>
+
+    @*<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>*@
+    <style>
+        .contact-btn {
+            display: inline-block !important;
+            /* padding: 14px 24px; */
+            width: 135px;
+            height: 50px;
+            border-radius: 28px;
+            background-color: var(--yellow);
+            color: var(--white);
+            border: 1px solid var(--yellow);
+            font-size: 16px;
+            transition: .4s;
+            margin-top: 38px;
+            margin-bottom: 15px;
+        }
+        /*.product-details ul .product-details-item {
+            width: 23.7% !important;
+         
+        }*/
+        .list-cross-icon {
+            position: relative;
+        }
+
+        .cross-icon {
+            /* background-color: black; */
+            font-size: 12px;
+            color: black;
+            padding: 3px;
+            /* width: 20px; */
+            /* height: 20px; */
+            position: absolute;
+            /* right: -20px; */
+            top: -5px;
+            padding: 0px;
+            right: -2px;
+        }
+
+        @@media(min-width: 768px) {
+            .product-details ul .product-details-item {
+                /*width: 23.7% !important;*/
+            }
+        }
+
+        @@media(max-width: 768px) {
+            .product-details ul .product-details-item {
+             /*   width: 46% !important;*/
+            }
+        }
+
+        @@media(min-width: 300px) and (max-width: 900.98px) {
+            .products-hero-aria.hero-banner-img {
+                padding: 150px 0 0;
+            }
+
+            .products-hero-aria {
+                margin-bottom: 0px;
+            }
+        }
+    </style>
+</head>
+
+<!-- ::::products-hero-aria  start:::::: -->
+<section class="products-hero-aria hero-banner-img custum-mg">
+    <!-- ::::hero-banner-img start:::::: -->
+    <div class="content-product hero-banner-img">
+        <h1 data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1500">Working on this graphics </h1>
+    </div>
+    <!-- ::::hero-banner-img end:::::: -->
+</section>
+<!-- ::::products-hero-aria  end:::::: -->
+<!-- ::::products start:::::: -->
+<section class="products products-page">
+    <!-- ::::products has-bg start:::::: -->
+    <div class="has-bg">
+        <div class="has-bg-five">
+            <img src="~/assets/img/product-bg/left-1.png" alt="img">
+        </div>
+        <div class="has-bg-six">
+            <img src="~/assets/img/product-bg/right-1.png" alt="img">
+        </div>
+    </div>
+    <div class="has-bg has-bg2">
+        <div class="has-bg-five">
+            <img src="~/assets/img/product-bg/right-2.png" alt="img">
+        </div>
+        <div class="has-bg-six">
+            <img src="~/assets/img/product-bg/left-2.png" alt="img">
+        </div>
+    </div>
+
+    <!-- ::::products has-bg end:::::: -->
+    <div class="container custum-pd2">
+
+        <div class="product-bg  products-page-one-bg p-0">
+            <!-- ::::products product-details start:::::: -->
+            <!-- ::::products product-details start:::::: -->
+            <div class="product-details">
+                <!-- ::::products product-details item:::::: -->
+                <div class="parentDiv" id="parentDiv" style="display:none">
+                    <img style="width:3% !important" src="~/assets/img/Ajax_loader_metal_512.gif">
+                </div>
+                <ul class="product-details-list">
+
+                    <li class="product-details-item">
+                        <span>Gender</span>
+                        <!-- <div class="bttn"> Select Gender<i class="fas fa-chevron-down iconn"></i></div> -->
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                Select Gender <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <div class="product-details-bg">
+                                    <ul>
+                                        <li>
+                                            <h4>Select Gender</h4>
+                                            <div class="product-details-items">
+                                                <!-- <div class="form"> -->
+                                                <ul class="form" aria-labelledby="dropdownMenuButton2">
+                                                    <li class="dropdown-menu-list">
+                                                        <input id="size-Men" onclick="Applyproductfilter(0,'Gender','Men','')" class="chkgender" value="Men" type="checkbox">
+                                                        <label class="lblcolor" style="font-size:14px !important" for="size-Men">Men</label>
+                                                    </li>
+
+                                                    <li class="dropdown-menu-list">
+                                                        <input id="size-Women" onclick="Applyproductfilter(0,'Gender','Women','')" class="chkgender" value="Women" type="checkbox">
+                                                        <label class="lblcolor" style="font-size:14px !important" for="size-Women">Women</label>
+                                                    </li>
+                                                </ul>
+                                                <!-- </div> -->
+                                                @*<img class="img" src="~/assets/img/pbg-Image.png" alt="img">*@
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    @*<div class="d-flex glsber_area align-items-center  justify-content-between">
+                                        <div class="glsber">
+                                            <img class="" src="~/assets/img/bear-img.png" alt="img">
+                                        </div>
+                                        <div class="glsber_details ">
+                                            <h5>Total Width</h5>
+                                            <input type="range" min="1" max="100" value="0" class="range" id="myRange">
+                                            <div class="d-flex align-items-center  justify-content-between">
+                                                <span>110mm </span>
+                                                <span>150mm  </span>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                </div>
+
+                                <!-- <li>
+
+                        <h4>Select Gender</h4>
+                        <div class="product-details-items">
+
+                            <ul class="form" aria-labelledby="dropdownMenuButton1">
+                                <li class="dropdown-menu-list">
+                                    <input id="size-Men" onclick="Applyproductfilter('Gender','Men','')" class="chkgender" value="Men" type="checkbox">
+                                    <label class="lblcolor" style="font-size:14px !important" for="size-Men">Men</label>
+                                </li>
+
+                                <li class="dropdown-menu-list">
+                                    <input id="size-Women" onclick="Applyproductfilter('Gender','Women','')" class="chkgender" value="Women" type="checkbox">
+                                    <label class="lblcolor" style="font-size:14px !important" for="size-Women">Women</label>
+                                </li>
+
+
+
+                            </ul>
+
+
+                        </div>
+                    </li> -->
+
+
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="product-details-item">
+                        <span>Size</span>
+                        <!-- <div class="bttn"> Select Gender<i class="fas fa-chevron-down iconn"></i></div> -->
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
+                                Select Size<i class="fas fa-chevron-down"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                                <div class="product-details-bg">
+                                    <ul>
+                                        <li>
+                                            <h4>Select Size</h4>
+                                            <div class="product-details-items">
+                                                <!-- <div class="form"> -->
+                                                <ul class="form" aria-labelledby="dropdownMenuButton2">
+                                                    @foreach (var item in ViewBag.AvailableSize)
+                                                    {
+                                                        <li class="dropdown-menu-list">
+                                                            <input id="size-@item" onclick="Applyproductfilter(0,'Size','@item','')" class="chksize" value="@item" type="checkbox">
+                                                            <label class="lblcolor" style="font-size:14px !important" for="size-@item">@item</label>
+                                                        </li>
+
+                                                    }
+                                                </ul>
+                                                <!-- </div> -->
+                                                <img class="img" src="~/assets/img/pbg-Image.png" alt="img">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <div class="d-flex glsber_area align-items-center  justify-content-between">
+                                        <div class="glsber">
+                                            <img class="" src="~/assets/img/bear-img.png" alt="img">
+                                        </div>
+                                        <div class="glsber_details ">
+                                            <h5>Total Width</h5>
+                                            <input onchange="Applyproductfilter(this,'','','')" type="range" min="110" max="150" value="0" class="range" id="myRange">
+                                            <div class="d-flex align-items-center  justify-content-between">
+                                                <span>110mm </span>
+                                                <span>150mm  </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- <li>
+
+                        <h4>Select Size</h4>
+                        <div class="product-details-items">
+
+                            <ul class="form" aria-labelledby="dropdownMenuButton1">
+                                @foreach (var item in ViewBag.AvailableSize)
+                                {
+                                    <li class="dropdown-menu-list">
+                                        <input id="size-@item" onclick="Applyproductfilter('Size','@item','')" class="chksize" value="@item" type="checkbox">
+                                        <label class="lblcolor" style="font-size:14px !important" for="size-@item">@item</label>
+                                    </li>
+
+                                }
+                            </ul>
+
+
+                        </div>
+                    </li> -->
+
+
+                                <li>
+
+
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="product-details-item">
+                        <span>Frame Shape</span>
+                        <!-- <div class="bttn"> Select Gender<i class="fas fa-chevron-down iconn"></i></div> -->
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton4" data-bs-toggle="dropdown" aria-expanded="false">
+                                Select Shape<i class="fas fa-chevron-down"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
+
+                                <div class="product-details-bg">
+                                    <ul>
+                                        <li>
+                                            <h4>Select Shape</h4>
+                                            <div class="product-details-items">
+                                                <!-- <div class="form"> -->
+                                                <ul class="form" aria-labelledby="dropdownMenuButton2">
+                                                    @foreach (var item in ViewBag.shape)
+                                                    {
+                                                        <li class="dropdown-menu-list">
+                                                            <input id="shape-@item" onclick="Applyproductfilter(0,'Shape','@item','')" class="chkshape" value="@item" type="checkbox">
+                                                            <label class="lblcolor" style="font-size:14px !important" for="shape-@item">@item</label>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                                <!-- </div> -->
+                                                @*<img class="img" src="~/assets/img/pbg-Image.png" alt="img">*@
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    @*<div class="d-flex glsber_area align-items-center  justify-content-between">
+                                        <div class="glsber">
+                                            <img class="" src="~/assets/img/bear-img.png" alt="img">
+                                        </div>
+                                        <div class="glsber_details ">
+                                            <h5>Total Width</h5>
+                                            <input type="range" min="1" max="100" value="0" class="range" id="myRange">
+                                            <div class="d-flex align-items-center  justify-content-between">
+                                                <span>110mm </span>
+                                                <span>150mm  </span>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                </div>
+
+                                <!-- <li>
+
+                        <h4>Select Shape</h4>
+                        <div class="product-details-items">
+
+                            <ul class="form" aria-labelledby="dropdownMenuButton1">
+                                @foreach (var item in ViewBag.shape)
+                                {
+                                    <li class="dropdown-menu-list">
+                                        <input id="shape-@item" onclick="Applyproductfilter('Shape','@item','')" class="chkshape" value="@item" type="checkbox">
+                                        <label class="lblcolor" style="font-size:14px !important" for="shape-@item">@item</label>
+                                    </li>
+                                }
+                            </ul>
+
+
+                        </div>
+                    </li> -->
+
+
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="product-details-item">
+                        <span>Color</span>
+                        <!-- <div class="bttn"> Select Gender<i class="fas fa-chevron-down iconn"></i></div> -->
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                Select Color<i class="fas fa-chevron-down"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+
+                                <div class="product-details-bg">
+                                    <ul>
+                                        <li>
+                                            <h4>Select Color</h4>
+                                            <div class="product-details-items">
+                                                <!-- <div class="form"> -->
+                                                <ul class="form" aria-labelledby="dropdownMenuButton2">
+                                                    @foreach (var item in ViewBag.colour)
+                                                    {
+                                                        <li class="dropdown-menu-list">
+                                                            <input id="size-@item.colorname" onclick="Applyproductfilter(0,'Color','@item.colorname','')" class="chkcolour" value="@item.colorname" type="checkbox">
+                                                            <label class="lblcolor" style="font-size:14px !important" for="size-@item.colorname">@item.colorname</label>
+                                                        </li>
+
+                                                    }
+                                                </ul>
+                                                <!-- </div> -->
+                                                @*<img class="img" src="~/assets/img/pbg-Image.png" alt="img">*@
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    @*<div class="d-flex glsber_area align-items-center  justify-content-between">
+                                        <div class="glsber">
+                                            <img class="" src="~/assets/img/bear-img.png" alt="img">
+                                        </div>
+                                        <div class="glsber_details ">
+                                            <h5>Total Width</h5>
+                                            <input type="range" min="1" max="100" value="0" class="range" id="myRange">
+                                            <div class="d-flex align-items-center  justify-content-between">
+                                                <span>110mm </span>
+                                                <span>150mm  </span>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                </div>
+
+                                <!-- <li>
+
+                        <h4>Select Material</h4>
+                        <div class="product-details-items">
+
+                            <ul class="form" aria-labelledby="dropdownMenuButton1">
+                                @foreach (var item in ViewBag.Material)
+                                {
+                                    <li class="dropdown-menu-list">
+                                        <input id="Material-@item.Replace(" ","-")" onclick="Applyproductfilter('Material','@item.Replace(" ","-")','')" class="chkmaterial" value="@item" type="checkbox">
+                                        <label class="lblcolor" style="font-size:14px !important" for="Material-@item">@item</label>
+                                    </li>
+                                }
+                            </ul>
+
+
+                        </div>
+                    </li> -->
+
+
+
+                            </ul>
+                        </div>
+                    </li>
+
+
+                    <li class="product-details-item">
+                        <span>Material</span>
+                        <!-- <div class="bttn"> Select Gender<i class="fas fa-chevron-down iconn"></i></div> -->
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                Select Material<i class="fas fa-chevron-down"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+
+                                <div class="product-details-bg">
+                                    <ul>
+                                        <li>
+                                            <h4>Select Material</h4>
+                                            <div class="product-details-items">
+                                                <!-- <div class="form"> -->
+                                                <ul class="form" aria-labelledby="dropdownMenuButton2">
+                                                    @foreach (var item in ViewBag.Material)
+                                                    {
+                                                        <li class="dropdown-menu-list">
+                                                            <input id="Material-@item.Replace(" ","-")" onclick="Applyproductfilter(0,'Material','@item.Replace(" ","-")','')" class="chkmaterial" value="@item" type="checkbox">
+                                                            <label class="lblcolor" style="font-size:14px !important" for="Material-@item">@item</label>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                                <!-- </div> -->
+                                                @*<img class="img" src="~/assets/img/pbg-Image.png" alt="img">*@
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    @*<div class="d-flex glsber_area align-items-center  justify-content-between">
+                                        <div class="glsber">
+                                            <img class="" src="~/assets/img/bear-img.png" alt="img">
+                                        </div>
+                                        <div class="glsber_details ">
+                                            <h5>Total Width</h5>
+                                            <input type="range" min="1" max="100" value="0" class="range" id="myRange">
+                                            <div class="d-flex align-items-center  justify-content-between">
+                                                <span>110mm </span>
+                                                <span>150mm  </span>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                </div>
+
+                                <!-- <li>
+
+                        <h4>Select Material</h4>
+                        <div class="product-details-items">
+
+                            <ul class="form" aria-labelledby="dropdownMenuButton1">
+                                @foreach (var item in ViewBag.Material)
+                                {
+                                    <li class="dropdown-menu-list">
+                                        <input id="Material-@item.Replace(" ","-")" onclick="Applyproductfilter('Material','@item.Replace(" ","-")','')" class="chkmaterial" value="@item" type="checkbox">
+                                        <label class="lblcolor" style="font-size:14px !important" for="Material-@item">@item</label>
+                                    </li>
+                                }
+                            </ul>
+
+
+                        </div>
+                    </li> -->
+
+
+
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="product-details-item">
+                        <span>Face  Shape</span>
+                        <!-- <div class="bttn"> Select Gender<i class="fas fa-chevron-down iconn"></i></div> -->
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                Select Shape<i class="fas fa-chevron-down"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+
+                                <div class="product-details-bg">
+                                    <ul>
+                                        <li>
+                                            <h4>Select Shape</h4>
+                                            <div class="product-details-items">
+                                                <!-- <div class="form"> -->
+                                                <ul class="form" aria-labelledby="dropdownMenuButton2">
+                                                    <li class="dropdown-menu-list"> <input type="checkbox"> Large (666) </li>
+                                                    <li class="dropdown-menu-list"> <input type="checkbox"> Medium (444) </li>
+                                                    <li class="dropdown-menu-list"> <input type="checkbox"> Small (155) </li>
+                                                </ul>
+                                                <!-- </div> -->
+                                                @*<img class="img" src="~/assets/img/pbg-Image.png" alt="img">*@
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    @*<div class="d-flex glsber_area align-items-center  justify-content-between">
+                                        <div class="glsber">
+                                            <img class="" src="~/assets/img/bear-img.png" alt="img">
+                                        </div>
+                                        <div class="glsber_details ">
+                                            <h5>Total Width</h5>
+                                            <input type="range" min="1" max="100" value="0" class="range" id="myRange">
+                                            <div class="d-flex align-items-center  justify-content-between">
+                                                <span>110mm </span>
+                                                <span>150mm  </span>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                </div>
+
+                                <!-- <li>
+
+                        <h4>Select Material</h4>
+                        <div class="product-details-items">
+
+                            <ul class="form" aria-labelledby="dropdownMenuButton1">
+                                @foreach (var item in ViewBag.Material)
+                                {
+                                    <li class="dropdown-menu-list">
+                                        <input id="Material-@item.Replace(" ","-")" onclick="Applyproductfilter('Material','@item.Replace(" ","-")','')" class="chkmaterial" value="@item" type="checkbox">
+                                        <label class="lblcolor" style="font-size:14px !important" for="Material-@item">@item</label>
+                                    </li>
+                                }
+                            </ul>
+
+
+                        </div>
+                    </li> -->
+
+
+
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="product-details-item">
+                        <span>Short</span>
+                        <!-- <div class="bttn"> Select Gender<i class="fas fa-chevron-down iconn"></i></div> -->
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                Select Short<i class="fas fa-chevron-down"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+
+                                <div class="product-details-bg">
+                                    <ul>
+                                        <li>
+                                            <h4>Select Short</h4>
+                                            <div class="product-details-items">
+                                                <!-- <div class="form"> -->
+                                                <ul class="form" aria-labelledby="dropdownMenuButton2">
+                                                    <li class="dropdown-menu-list"> <input type="checkbox"> Large (666) </li>
+                                                    <li class="dropdown-menu-list"> <input type="checkbox"> Medium (444) </li>
+                                                    <li class="dropdown-menu-list"> <input type="checkbox"> Small (155) </li>
+                                                </ul>
+                                                <!-- </div> -->
+                                                @*<img class="img" src="~/assets/img/pbg-Image.png" alt="img">*@
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    @*<div class="d-flex glsber_area align-items-center  justify-content-between">
+                                        <div class="glsber">
+                                            <img class="" src="~/assets/img/bear-img.png" alt="img">
+                                        </div>
+                                        <div class="glsber_details ">
+                                            <h5>Total Width</h5>
+                                            <input type="range" min="1" max="100" value="0" class="range" id="myRange">
+                                            <div class="d-flex align-items-center  justify-content-between">
+                                                <span>110mm </span>
+                                                <span>150mm  </span>
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                </div>
+
+                                <!-- <li>
+
+                        <h4>Select Material</h4>
+                        <div class="product-details-items">
+
+                            <ul class="form" aria-labelledby="dropdownMenuButton1">
+                                @foreach (var item in ViewBag.Material)
+                                {
+                                    <li class="dropdown-menu-list">
+                                        <input id="Material-@item.Replace(" ","-")" onclick="Applyproductfilter('Material','@item.Replace(" ","-")','')" class="chkmaterial" value="@item" type="checkbox">
+                                        <label class="lblcolor" style="font-size:14px !important" for="Material-@item">@item</label>
+                                    </li>
+                                }
+                            </ul>
+
+
+                        </div>
+                    </li> -->
+
+
+
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+                <div class="display-by">
+                    <ul class="prooduct-design" id="prooduct-design">
+                        @*<li>Brands</li>
+                <li>Sizes</li>
+                <li>Color</li>
+                <li>prices</li>
+                <li>Close</li>*@
+                    </ul>
+                    <div class="group">
+                        <span>Display by :</span>
+                        <img id="col-6" class="group1" src="/assets/img/col-6-grey.png" alt="img" onclick="changeproductsdiv(6,'/assets/img/col-6-green.png','/assets/img/col-3-grey.png')">
+                        <img id="col-3" class="group1" src="/assets/img/col-3-green.png" alt="img" onclick="changeproductsdiv(3,'/assets/img/col-6-grey.png','/assets/img/col-3-green.png')">
+                    </div>
+                </div>
+            </div>
+            <br />
+            <!-- ::::products product-details end:::::: -->
+            <!-- ::::products display-by start:::::: -->
+            <div class="display-by">
+                <ul class="prooduct-design">
+                    @if (ViewBag.StateGendervalue != null)
+                    {
+                        foreach (var genders in ViewBag.StateGendervalue)
+                        {
+
+                            <li>@genders</li>
+
+                        }
+                    }
+
+                    @if (ViewBag.StateMaterial != null)
+                    {
+                        foreach (var materials in ViewBag.StateMaterial)
+                        {
+
+                            <li>@materials</li>
+
+                        }
+                    }
+
+                    @if (ViewBag.StateAvailableSize != null)
+                    {
+                        foreach (var sizes in ViewBag.StateAvailableSize)
+                        {
+
+                            <li>@sizes</li>
+
+                        }
+                    }
+
+                    @if (ViewBag.Stateshape != null)
+                    {
+                        foreach (var shapes in ViewBag.Stateshape)
+                        {
+
+                            <li>@shapes</li>
+
+                        }
+                    }
+                </ul>
+
+            </div>
+            <!-- ::::products display-by end:::::: -->
+            <!--  -->
+            <div class="row g-4 " id="Products_Section">
+                <!-- ::::products single item:::::: -->
+
+
+                @{int Duplicatecheck = 0;}
+                @if (ViewBag.ProductList != null)
+                {
+                    foreach (var item in ViewBag.ProductList)
+                    {
+
+                        if (Duplicatecheck != @item.GlassID)
+                        {
+                            <div class="col-lg-3 product_style"  id="product_style">
+                                <div class="product-item" id="Product_Items">
+                                    <div class="img">
+                                        @if (item.Sticker == "Hot")
+                                        {
+                                            <a class="bg-danger wishlist-link" href="@Url.Action("Product_Details", "Products", new { Productid = @item.GlassID })"><i class="fas fa-fire bg"></i> @item.Sticker</a>
+                                        }
+                                        @if (item.Sticker == "New Arrival")
+                                        {
+                                            <a class="wishlist-link bg-secondary" href="@Url.Action("Product_Details", "Products", new { Productid = @item.GlassID })">@item.Sticker</a>
+                                        }
+                                        @if (item.Sticker == "Top Seller")
+                                        {
+                                            <a class="wishlist-link wishlist-link-premium" href="@Url.Action("Product_Details", "Products", new { Productid = @item.GlassID })"><i class="fas fa-crown bg"></i> @item.Sticker</a>
+                                        }
+                                        <div class="img-wgt">
+                                            <img onmouseover="sideviewimage('@item.GlassID-image-color','@item.SideViewImagePath')" onmouseout="originalimage('@item.GlassID-image-color','@item.ImagePath')" id="@item.GlassID-image-color" class="img-fluid" onclick="Productdetails(@item.GlassID)" src="@item.ImagePath" alt="ig">
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <div class="details">
+                                        <div class="product-info-shot">
+                                            <h6><a id="@item.GlassID-detail" target="_blank" href="@Url.Action("Product_Details","Products",new { Productid=@item.GlassID})">@item.Title </a></h6>
+                                            <button onclick="selectFrame('@item.SKUNumber',@item.GlassID)" type="button" class="try_on">TRY ON</button>
+                                        </div>
+
+                                        <p>$@item.Price</p>
+
+
+                                        <div class="color">
+                                            <ul>
+                                                @foreach (var colors in ViewBag.ProductList)
+                                                {
+                                                    Duplicatecheck = Convert.ToInt32(@item.GlassID);
+                                                    if (item.GlassID == colors.GlassID)
+                                                    {
+                                                        <li onclick="Changecolour(@colors.GlassID, '@colors.GlassID-detail',@colors.VariationID,'@colors.GlassID-image-color','@colors.ImagePath')" style="background-color: @colors.ColorCode"></li>
+                                                    }
+
+                                                }
+
+
+                                            </ul>
+                                            <div class="icon">
+                                                @{int likecount = 0; }
+                                                @foreach (var likes in ViewBag.ProductList)
+                                                {
+                                                    if (item.GlassID == likes.GlassID && likes.Likestatus == 1)
+                                                    {
+                                                        likecount = 1;
+                                                        <a id='@item.GlassID-Favourite' onclick="UpdateFavourite(@item.GlassID,'black','@item.GlassID-Favourite')"> <i style="background-color:red !important;color:white !important" class="far fa-heart heart-icon"></i></a>
+                                                        break;
+                                                    }
+
+
+                                                }
+                                                @if (likecount == 0)
+                                                {
+                                                    if (Session["UserID"] != null)
+                                                    {
+                                                        <a id='@item.GlassID-Favourite' onclick="UpdateFavourite(@item.GlassID,'Red','@item.GlassID-Favourite')">
+                                                            <i style="background-color:black !important;color:white !important" class="far fa-heart heart-icon"></i>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a class="tooltip" id='@item.GlassID-Favourite' onclick="UpdateFavourite(@item.GlassID,'Red','@item.GlassID-Favourite')">
+                                                            <i style="background-color:black !important;color:white !important" class="far fa-heart heart-icon"></i>
+                                                            <span class="tooltiptext">Please login to add the product in the wishlist</span>
+                                                        </a>
+                                                    }
+
+                                                 
+
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <!--::::::products single item:::::: -->
+
+                    }
+                }
+
+
+
+
+
+            </div>
+
+
+
+            <!--::::::products  pagination start:::::: -->
+            <div class="col-lg-8 mx-auto ">
+                <div class="blog-pagination pagination d-flex align-items-center justify-content-center flex-wrap" id="page">
+
+                    <ul id="pagin">
+                    </ul>
+
+
+                </div>
+            </div>
+            <!--::::::products  pagination end:::::: -->
+        </div>
+    </div>
+</section>
+<!-- ::::products end:::::: -->
+<!-- ::::season start:::::: -->
+<section class="season">
+    <!-- ::::season has-bg start:::::: -->
+    <div class="has-bg ">
+        <div class="has-bg-17 ">
+            <img src="~/assets/img/product-bg/right-3.png" alt="img">
+        </div>
+        <div class="has-bg-18">
+            <img src="~/assets/img/product-bg/left-3.png" alt="img">
+        </div>
+    </div>
+    <!-- ::::season has-bg ebd:::::: -->
+
+    <div class="container-fluid custum-pd ">
+        
+    </div>
+
+
+</section>
+<!-- ::::season end:::::: -->
+<!-- ::::season start:::::: -->
+   <section class="season">
+      <!-- ::::season has-bg start:::::: -->
+      <div class="has-bg ">
+         <div class="has-bg-17 ">
+            <img src="~/assets/img/product-bg/right-3.png" alt="img">
+         </div>
+         <div class="has-bg-18">
+            <img src="~/assets/img/product-bg/left-3.png" alt="img">
+         </div>
+      </div>
+      <!-- ::::season has-bg ebd:::::: -->
+
+      <div class="container-fluid custum-pd ">
+         <div class="season-bg" data-aos="fade-up" data-aos-duration="3000">
+            <!-- ::::season title:::::: -->
+            <div class="col-lg-6 mx-auto text-center">
+               <div class="title">
+                  <h2>Top pick of the season </h2>
+               </div>
+            </div>
+            <div class="container custum-pd2">
+               <div class="row g-4 mt-md-5">
+                  <!-- ::::season single item:::::: -->
+                  <div class="col-lg-3 col-md-6">
+                     <div class="season-item">
+                        <div class="season-img">
+                           <img src="~/assets/img/sesson-model-one.png" alt="img">
+                        </div>
+                        <div class="season-details">
+                           <h6>Name here</h6>
+                           <span>$44</span>
+                           <p>In Golden</p>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- ::::season single item:::::: -->
+                  <div class="col-lg-3 col-md-6">
+                     <div class="season-item">
+                        <div class="season-img">
+                           <img src="~/assets/img/sesson-model-two.png" alt="img">
+                        </div>
+                        <div class="season-details season-details-active">
+                           <h6 class="name-active">Name here</h6>
+                           <span class="doler-active">$44</span>
+                           <p>In Golden</p>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- ::::season single item:::::: -->
+                  <div class="col-lg-3 col-md-6">
+                     <div class="season-item">
+                        <div class="season-img">
+                           <img src="~/assets/img/sesson-model-three.png" alt="img">
+                        </div>
+                        <div class="season-details">
+                           <h6>Name here</h6>
+                           <span>$44</span>
+                           <p>In Golden</p>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- ::::season single item:::::: -->
+                  <div class="col-lg-3 col-md-6">
+                     <div class="season-item">
+                        <div class="season-img">
+                           <img src="~/assets/img/sesson-model-four.png" alt="img">
+                        </div>
+                        <div class="season-details">
+                           <h6>Name here</h6>
+                           <span>$44</span>
+                           <p>In Golden</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+         </div>
+      </div>
+
+
+   </section>
+   <!-- ::::season end:::::: -->
+<!-- ::::servie start:::::: -->
+<section class="service ">
+    <!-- ::::servie has-bg start:::::: -->
+    <div class="has-bg">
+        <div class="has-bg-19">
+            <img src="~/assets/img/product-bg/right-4.png" alt="img">
+        </div>
+        <div class="has-bg-20">
+            <img src="~/assets/img/product-bg/left-4.png" alt="img">
+        </div>
+    </div>
+    <!-- ::::servie has-bg end:::::: -->
+    <div class="container custum-pd2">
+        <div class="row">
+            <!-- ::::servie single item:::::: -->
+            <div class="col-lg-4">
+                <div class="service-item" data-aos="fade-right" data-aos-duration="3000">
+                    <div class="icon">
+
+                        <img style="width:79px;height:80px" src="~/assets/img/eye-glasses1.png" alt="icon">
+                    </div>
+                    <h4>
+                        BEST GLASSES AT BEST PRICE
+                    </h4>
+                    <p>
+                        We offer the best quality frames and lenses at the most affordable price. We already supply to
+                        Clinics in Hawai’i and are trusted by thousands of people who buy  from us every year.
+                    </p>
+                </div>
+            </div>
+            <!-- ::::servie single item:::::: -->
+            <div class="col-lg-4">
+                <div class="service-item" data-aos="fade-up" data-aos-duration="3000">
+                    <div class="icon">
+                        <img style="width:79px;height:80px" src="~/assets/img/Free_Shipping.png" alt="icon">
+                    </div>
+                    <h4>fAST SHIPPING fROM HAWAII </h4>
+                    <p>
+                        We are hased in Hawai’i. All our product is completed in Hawai’i and therefore arrives at your door withing days of placing an order
+
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="service-item" data-aos="fade-left" data-aos-duration="3000">
+                    <div class="icon">
+
+                        <img style="width:79px;height:80px" src="~/assets/img/Insurance.png" alt="icon">
+
+                    </div>
+                    <h4>INSURANCE REIMBURSEMENT</h4>
+                    <p>
+                        First online glasses company that uses your vision insurance reducing your cost even further.
+                        We accept : VSP, Eyemed, Aetna, Davis Vision etc.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+<!-- ::::servie end:::::: -->
+<!-- ::::  has-radious:::::: -->
+@*<div class="has-radious">
+    <div class="radious-one">
+        <a href="#">
+
+            <img src="~/assets/img/chat.svg" alt="chat">
+        </a>
+    </div>
+</div>*@
+<script src="~/assets/js/jquery-1.12.4.min.js"></script>
+<script>
+    function scrollToBottom(id) {
+        $('html,body').animate({
+            scrollTop: $(".Products_Section").offset().top
+        },
+            'slow');
+    }
+    function removefilter(filtertageid) {
+        $("#" + filtertageid).prop("checked", false);
+        Applyproductfilter(0,"", "", "");
+    }
+    function UpdateFavourite(Productid,color, FavouriteId) {
+
+        var model = {
+            id: Productid};
+           $.ajax({
+            type: "POST",
+            url: '@Url.Action("HomePageProductFavourite", "Products")',
+              data: JSON.stringify(model),
+              contentType: "application/json; charset=utf-8",
+              dataType: "json",
+               success: function (result) {
+
+                   if (result != "")
+                   {
+                       const element = document.getElementById(FavouriteId);
+
+                       if (result == 'black') {
+                           element.innerHTML = '<i style="background-color:black !important;color:white !important"  class="far fa-heart heart-icon" ></i >';
+
+                       }
+                       else if (result == 'Red') {
+
+                           element.innerHTML = '<i style = "background-color:red !important;color:white !important" class="far fa-heart heart-icon" ></i >';
+                       }
+
+                   }
+
+
+
+              }
+        });
+
+    }
+
+        /*Apply filters to products*/
+    function Applyproductfilter(width,filtertype, filterdata,colorpalet) {
+    /*alert(filtertype + " " + filterdata);*/
+        var widthsize = width.value;
+        $("#prooduct-design li").remove();
+        /*$("#parentDiv").fadeIn();*/
+        var shapearray = [];
+
+        $('input:checkbox.chkshape').each(function () {
+            var selectedshapes = (this.checked ? $(this).val() : "");
+            var selectedid = $(this);
+
+            if (selectedshapes != "") {
+
+
+                $("#prooduct-design").append("<li class='list-cross-icon' onclick=removefilter('" + $(this).attr("id") + "')>" + selectedshapes + "<i class='fa fa-times cross-icon'></i></li>")
+                shapearray.push(selectedshapes);
+            }
+        });
+
+        var sizearray = [];
+        $('input:checkbox.chksize').each(function () {
+            var selectedsize = (this.checked ? $(this).val() : "");
+            if (selectedsize != "") {
+                $("#prooduct-design").append("<li class='list-cross-icon'  onclick=removefilter('" + $(this).attr("id") + "')>" + selectedsize + "<i class='fa fa-times cross-icon'></i></li>")
+                sizearray.push(selectedsize);
+            }
+        });
+
+        var materialarray = [];
+        $('input:checkbox.chkmaterial').each(function () {
+            var material = (this.checked ? $(this).val() : "");
+            if (material != "") {
+                $("#prooduct-design").append("<li class='list-cross-icon'  onclick=removefilter('" + $(this).attr("id") + "')>" + material + "<i class='fa fa-times cross-icon'></i></li>")
+                materialarray.push(material);
+            }
+        });
+
+
+        var gendercount = 0;
+        var genderarray = [];
+        $('input:checkbox.chkgender').each(function () {
+
+            var gender = (this.checked ? $(this).val() : "");
+
+            if (gender != "") {
+                gendercount++;
+                $("#prooduct-design").append("<li class='list-cross-icon' onclick=removefilter('" + $(this).attr("id") + "')>" + gender + "<i class='fa fa-times cross-icon'></i></li>");
+                genderarray.push(gender);
+            }
+        });
+
+        var colorcount = 0;
+        var colorarray = [];
+        $('input:checkbox.chkcolour').each(function () {
+
+            var color = (this.checked ? $(this).val() : "");
+
+            if (color != "") {
+
+                colorcount++;
+                $("#prooduct-design").append("<li class='list-cross-icon' onclick=removefilter('" + $(this).attr("id") + "')>" + color + "<i class='fa fa-times cross-icon'></i></li>");
+                colorarray.push(color);
+            }
+        });
+
+        var model = {
+            glassestype:"Sunglass",
+            ddlshape: shapearray,
+            ddlAvailableSize: sizearray,
+            ddlMaterial: materialarray,
+            ddlgender: genderarray,
+            ddlcolor: colorarray,
+            width: widthsize
+
+        };
+
+          $.ajax({
+            type: "POST",
+            url: '@Url.Action("glassesfilter", "Home")',
+              data: JSON.stringify(model),
+              contentType: "application/json; charset=utf-8",
+              dataType: "json",
+              success: function (result) {
+
+
+                  $("#parentDiv").fadeOut();
+                  var img = document.createElement('img');
+                  var section = "";
+                  $("#Products_Section div").remove();
+
+                  var Duplicatecheck = 0;
+
+                  var UserID=@Convert.ToInt32(Session["UserID"]);
+                  for (var i = 0; i < result.length; i++) {
+
+                      $("#Products_Section #norecordfound").remove();
+                      if (parseInt(Duplicatecheck) != parseInt(result[i].GlassID)) {
+                          section += '<div class="col-lg-3 col-md-6" id="product_style">';
+                          section += '<div class="product-item" id="Product_Items">';
+                          section += '<div class="img">'
+
+                          if (result[i].Sticker == "Hot") {
+                              section += '<a class="bg-danger wishlist-link" href="/Products/Product_Details/?Productid='+result[i].GlassID+'"><i class="fas fa-fire bg"></i> ' + result[i].Sticker + '</a>'
+                          }
+                          if (result[i].Sticker == "Top Seller") {
+                              section += '<a  class="wishlist-link wishlist-link-premium" href="/Products/Product_Details/?Productid='+result[i].GlassID+'"><i class="fas fa-crown bg"></i> ' + result[i].Sticker + '</a>'
+                          }
+
+                          if (result[i].Sticker == "New Arrival") {
+                              section += '<a style="background-color: #0068AB;border: 1px solid #0068AB;"  href="/Products/Product_Details/?Productid='+result[i].GlassID+'"> ' + result[i].Sticker + '</a>'
+                          }
+                          section += "<img id='" + result[i].GlassID + "-image-color' onmouseover=sideviewimage('" + result[i].GlassID + "-image-color','" + result[i].SideViewImagePath + "') onmouseout=originalimage('" + result[i].GlassID + "-image-color','" + result[i].ImagePath+"')  onclick=Productdetails("+result[i].GlassID+") id='"+result[i].GlassID+"-image-color' class='img-fluid'    src='"+result[i].ImagePath+"' />"
+
+/*                          section += '<img id=' + result[i].GlassID + '-image-color onmouseover="sideviewimage("' + result[i].GlassID + '-image-color",' + result[i].SideViewImagePath + ')" onmouseout="originalimage(' + result[i].GlassID + '-image-color,' + result[i].SideViewImagePath + ')"  onclick="Productdetails(' + result[i].GlassID + ')" id="' + result[i].GlassID + '-image-color" class="img-fluid"   style="width:200px; height:109px" src=' + result[i].ImagePath + ' />'*/
+
+                          section += '</div>';
+
+                          section += '<div class="details">'
+                          section += '<h6><a  id="' + result[i].GlassID +'-detail" href="/Products/Product_Details/?Productid='+result[i].GlassID+'">' + result[i].Title + ' </a></h6>'
+                          section += '<p>$' + result[i].Price + '</p>'
+                          section += "<button  onclick=selectFrame('"+result[i].SKUNumber+"','"+ result[i].GlassID+"') type='button' style='width:100% !important;border:1px solid skyblue;color:skyblue;padding:5px !important;background-color:transparent !important'>TRY ON</button>"
+
+                          section += '<div class="color">'
+
+                          section += '<ul>'
+                          for (var j = 0; j < result.length; j++) {
+
+                              Duplicatecheck = parseInt(result[i].GlassID);
+                              if (result[i].GlassID == result[j].GlassID) {
+                                  section += "<li style='background-color:" + result[j].ColorCode + "' onclick=Changecolour(" + result[j].GlassID + ",'" + result[j].GlassID + "-detail'," + result[j].VariationID +",'"+result[j].GlassID+"-image-color','"+result[j].ImagePath+"')></li>"
+                              }
+                          }
+                          section += '</ul>'
+                          section += '    <div class="icon">'
+                          var likecount = 0;
+                          for (var k = 0; k < result.length; k++)
+                              {
+                                  if (result[i].GlassID == result[k].GlassID && result[k].Likestatus == 1) {
+                                      likecount = 1;
+                                      section += "<a id='"+result[i].GlassID+"-Favourite' onclick=UpdateFavourite("+result[i].GlassID+",'black','"+result[i].GlassID+"-Favourite')> <i style='background-color:red !important;color:white !important' class='far fa-heart heart-icon'></i></a>"
+                                      break;
+                                  }
+                              }
+                          if (likecount == 0) {
+                              if (UserID == 0) {
+                                  section += "<a class='tooltip' id='" + result[i].GlassID + "-Favourite' onclick=UpdateFavourite(" + result[i].GlassID + ",'Red','" + result[i].GlassID + "-Favourite')> <i style='background-color:black !important;color:white !important' class='far fa-heart heart-icon'></i>   <span class='tooltiptext'>Please login to add the product in the wishlist</span></a>"
+                              }
+                              else {
+                                  section += "<a id='" + result[i].GlassID + "-Favourite' onclick=UpdateFavourite(" + result[i].GlassID + ",'Red','" + result[i].GlassID + "-Favourite')> <i style='background-color:black !important;color:white !important' class='far fa-heart heart-icon'></i></a>"
+                              }
+
+                          }
+                          section += '</div>';
+
+                          section += '</div>';
+
+                          section += '</div>';
+                          section += '</div>';
+
+                          section += '</div>';
+                      }
+
+                  }
+
+                  if (result.length == 0) {
+                      section = "<div id='norecordfound' class='col-md-12' style='height:280px'><h3> No products exist agains selected filter </h3></div>"
+                  }
+                  $("#Products_Section").append(section);
+
+
+                  $("#pagin li").remove();
+                  $(function () {
+                      $('#page').Pagination({
+                          size: 100
+
+                      });
+                  });
+
+                  var pageSize = 8;
+                  var pageCount = $(".product_style").length / pageSize;
+
+                  for (var i = 0; i < pageCount; i++) {
+                      if (i == 0) {
+                          $("#pagin").append('<li ><a  href="#" onclick="scrollToBottom(this)" class="active">' + (i + 1) + '</a></li> ');
+                      }
+                      else {
+                          $("#pagin").append('<li ><a  href="#" onclick="scrollToBottom(this)" >' + (i + 1) + '</a></li> ');
+                      }
+                  }
+
+                  $("#pagin li").first().find("a").addClass("active current");
+
+                  showPage = function (page) {
+                      $(".product_style").hide();
+                      $(".product_style").each(function (n) {
+                          if (n >= pageSize * (page - 1) && n < pageSize * page)
+                              $(this).show();
+                      });
+                  }
+
+                  showPage(1);
+
+                  $("#pagin li a").click(function () {
+                      $("#pagin li a").removeClass("active")
+                      $(this).addClass("active")
+                      $("#pagin li a").removeClass("current");
+                      $(this).addClass("active current");
+                      showPage(parseInt($(this).text()))
+                  });
+              }
+        });
+
+    }
+    function sideviewimage(imageid, imagepath) {
+
+        if (imagepath != "") {
+            document.getElementById(imageid).src = imagepath;
+        }
+
+    }
+
+    function originalimage(imageid, imagepath) {
+        document.getElementById(imageid).src = imagepath;
+    }
+
+       function Productdetails(productid) {
+         var link = "@Url.Action("Product_Details", "Products",new{ Productid = "pid"})";
+        link = link.replace('pid', productid);
+        window.location.href = link;
+    }
+
+    function changeproductsdiv(type, col2image, col3image) {
+
+
+
+        if (type == 3) {
+            $("#Products_Section div").removeClass("col-lg-6");
+            $("#Products_Section #product_style").addClass("col-lg-3");
+            document.getElementById('col-6').src = col2image;
+            document.getElementById('col-3').src = col3image;
+        }
+        else if (type == 6) {
+            $("#Products_Section div").removeClass("col-lg-3");
+            $("#Products_Section #product_style").addClass("col-lg-6");
+            document.getElementById('col-6').src = col2image;
+            document.getElementById('col-3').src = col3image;
+        }
+
+
+        //if (document.getElementById('product_style').classList.contains("col-lg-3")) {
+
+        //    $("#Products_Section div").removeClass("col-lg-3");
+
+        //    $("#Products_Section #product_style").addClass("col-lg-6");
+
+        //}
+        //else if (document.getElementById('product_style').classList.contains("col-lg-6")) {
+
+        //}
+
+
+
+
+    }
+    $(document).ready(function () {
+
+        $(function () {
+            $('#page').Pagination({
+                size: 100
+
+            });
+        });
+
+        var pageSize = 8;
+
+        var pageCount = $(".product_style").length / pageSize;
+
+        for (var i = 0; i < pageCount; i++) {
+            if (i == 0) {
+                $("#pagin").append('<li ><a  href="#" onclick="scrollToBottom(this)" class="active">' + (i + 1) + '</a></li> ');
+            }
+            else {
+                $("#pagin").append('<li ><a  href="#" onclick="scrollToBottom(this)" >' + (i + 1) + '</a></li> ');
+            }
+        }
+
+        $("#pagin li").first().find("a").addClass("active current");
+
+        showPage = function (page) {
+            $(".product_style").hide();
+            $(".product_style").each(function (n) {
+                if (n >= pageSize * (page - 1) && n < pageSize * page)
+                    $(this).show();
+            });
+        }
+
+        showPage(1);
+
+        $("#pagin li a").click(function () {
+            $("#pagin li a").removeClass("active")
+            $(this).addClass("active")
+            $("#pagin li a").removeClass("current");
+            $(this).addClass("active current");
+            showPage(parseInt($(this).text()))
+        });
+
+        jQuery('.js-example-basic-single').select2();
+        $("ul li a").removeClass("active");
+        $("#pagin li").first().find("a").addClass("active");
+        $('#Sunglassess').addClass('active');
+    });
+
+
+    //function Changecolour(colorid, imgurl) {
+
+    //    /*        $("#Product_Items img").remove();*/
+    //    /*var img = document.createElement('img');*/
+    //    /*img.src = "/assets/img/index-bg/prouduct-7.png";*/
+    //    /*$("#Product_Items .img").append("<img class='img-fluid' src='" + img.src + "' alt='ig' />");*/
+    //    document.getElementById(colorid).src = imgurl;
+    //}
+
+    function Changecolour(Glassid, detail, variationid, colorid, imgurl) {
+        document.getElementById(detail).href = "/Products/Product_Details?Productid=" + Glassid + "&vid=" + variationid + "";
+        document.getElementById(colorid).src = imgurl;
+    }
+</script>

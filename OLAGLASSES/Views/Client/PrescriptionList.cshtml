@@ -1,0 +1,321 @@
+﻿@using Olaglasses.Models;
+@{
+    List<tblUserPrescription> prescriptions = (List<tblUserPrescription>)ViewBag.PrescriptionList;
+}
+@{
+    ViewBag.Title = "PrescriptionList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{string UserID = "";}
+@{string UserName = "";}
+@{string UserImage = "";}
+@{string CoverImage = "";}
+@if (@Context.Request.Cookies["_UserID"].Value != null && @Context.Request.Cookies["_UserID"].Value != "")
+{
+    UserID = @Context.Request.Cookies["_UserID"].Value;
+}
+@if (Session["UserID"] != null)
+{
+    UserID = Session["UserID"].ToString();
+}
+@if (@Context.Request.Cookies["_UserImage"].Value != null && @Context.Request.Cookies["_UserImage"].Value != "")
+{
+    UserImage = @Context.Request.Cookies["_UserImage"].Value;
+}
+
+@if (Session["UserImage"] != null)
+{
+    UserImage = Session["UserImage"].ToString();
+}
+@if (@Context.Request.Cookies["_UserName"].Value != null && @Context.Request.Cookies["_UserName"].Value != "")
+{
+    UserName = @Context.Request.Cookies["_UserName"].Value;
+}
+@if (Session["userName"] != null)
+{
+    UserName = Session["userName"].ToString();
+}@if (@Context.Request.Cookies["_CoverImagecookie"].Value != null && @Context.Request.Cookies["_CoverImagecookie"].Value != "")
+{
+    CoverImage = @Context.Request.Cookies["_CoverImagecookie"].Value;
+}
+
+@if (Session["CoverPhoto"] != null)
+{
+    CoverImage = Session["CoverPhoto"].ToString();
+}
+<head>
+    <style>
+        .bg-success-light {
+            background-color: rgba(15, 183, 107,0.12) !important;
+            color: #26af48 !important;
+        }
+
+        @@media(min-width: 768px) {
+            .client-menu {
+                width: 26%;
+            }
+        }
+
+        @@media(max-width: 768px) {
+            .detail-section {
+                padding-top: 10px;
+            }
+        }
+    </style>
+</head>
+<!-- ::::protfolio-hero-aria start:::::: -->
+<section class="protfolio-hero-aria protfolio-banner custum-mg">
+    <div class="protfolio-banner bg-img-content" style="background:url(@CoverImage)">
+        <h1 class="d-none"> none</h1>
+    </div>
+</section>
+<!-- ::::protfolio-hero- ariaend:::::: -->
+
+<section class="protfolio-system">
+    <div class="has-bg">
+        <div class="has-bg-1">
+            <img src="~/assets/img/protfolio-bg-left.png" alt="img">
+        </div>
+        <div class="has-bg-2">
+            <img src="~/assets/img/protfolio-bg-right.png" alt="img">
+        </div>
+    </div>
+
+    <div class="container custum-pd2">
+        <div class="d-flex flex-wrap justify-content-between align-items-center">
+            <div class="protfolio-img d-flex align-items-center ">
+                <div class="img">
+                    <img src="@UserImage" alt="img">
+                </div>
+                <div class="brooklyn">
+                    <h2>@UserName</h2>
+                    <p></p>
+                </div>
+            </div>
+            <div class="icon">
+                <ul class="list-inline">
+                    <a href="https://www.facebook.com/olaglasses" target="_blank"> <li class="list-inline-item"><i class="fab fa-facebook-f"></i></li></a>
+                    <a href="https://twitter.com/olaglasses" target="_blank"><li class="list-inline-item active"><i class="fab fa-twitter"></i></li></a>
+                    <a href="https://www.instagram.com/" target="_blank"><li class="list-inline-item"><i class="fab fa-instagram"></i></li></a>
+                    <a href="https://printess.com/" target="_blank"><li class="list-inline-item"><i class="fab fa-pinterest-p"></i></li></a>
+                </ul>
+            </div>
+        </div>
+        <div class="row pt-5">
+            <div class="col-lg-4 col-md-4 client-menu">
+                <div class="acount-bg">
+                    <h2>My Account</h2>
+                    <h4>My orders</h4>
+                    <p>
+                        <a id="orderlist" style="color:black" href="@Url.Action("Orders","client",new { id = Convert.ToInt32(UserID) })">
+
+                            <span>Order List</span>
+                        </a>
+                    </p>
+                    <h4>Account Settings</h4>
+                    <ul>
+                        <li> <a id="PersonalInfo" href="@Url.Action("PersonalInfo","Client",new { id=Convert.ToInt32(UserID)})">Personal Info</a> </li>
+                        <li><a id="addressmanagement" href="@Url.Action("addressmanagement","Client",new { id=Convert.ToInt32(UserID)})">Address management</a> </li>
+                        <li><a id="clientchangepassword" href="@Url.Action("changepassword","Client")">Change Password</a> </li>
+                        <li><a id="emailSubscribed" href="@Url.Action("EmailSubscriptions","Client",new { id=Convert.ToInt32(UserID)})">E-Mail Subscription</a> </li>
+                        <li><a id="PrescriptionList" href="@Url.Action("PrescriptionList","Client",new { id=Convert.ToInt32(UserID)})">My Prescription </a> </li>
+                    </ul>
+                    <h4>others</h4>
+                    <p>
+                        <a style="color:black" target="_blank" href="@Url.Action("Favourites","Dashboard",new { id = Convert.ToInt32(UserID) })">
+
+                            <span>My Favourite</span>
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+            <div class="col-lg-7 offset-md-1 col-md-7 detail-section">
+                <h2>Prescription List</h2>
+                @if (prescriptions.Count > 0)
+                {
+                    <div class="management">
+                        <div class="row">
+
+                            @{
+                                // Here the initialization happens outside of the loop
+                                var count = 0;
+                            }
+
+                            @foreach (var item in prescriptions)
+                            {
+                                count++;
+                                <div class="col-md-9" style="margin-top:10px">
+                                    <div class="table-aria">
+
+                                        <h4>@item.prescription</h4>
+                                        <table class="table table-bordered text-center">
+
+                                            <tbody>
+
+                                                @if (count <= 0)
+                                                {
+                                                    <tr class="table-headding">
+                                                        <td></td>
+                                                        <td>Sphere</td>
+                                                        <td>Cylinder</td>
+                                                        <td>Axis</td>
+                                                        <td>ADD</td>
+                                                        <td>PD</td>
+                                                        <td>Birth Year</td>
+                                                    </tr>
+                                                }
+                                                <tr>
+                                                    <td>Left</td>
+                                                    <td>@item.l_sph</td>
+                                                    <td>@item.l_cyl</td>
+                                                    <td>@item.l_axis</td>
+                                                    <td>@item.l_add</td>
+                                                    @if (item.Dualpd > 0)
+                                                    {
+                                                        <td>@item.PD</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td></td>
+                                                    }
+
+                                                    <td></td>
+                                                </tr>
+                                                <tr class="coustum-table-pd">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    @if (item.Dualpd == 0)
+                                                    {
+                                                        <td>@item.PD</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td></td>
+                                                    }
+
+
+                                                    @if (@item.prescriptionDate != null)
+                                                    {
+                                                        <td>@item.prescriptionDate.Value.ToString("dd/MM/yyyy")</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td> </td>
+                                                    }
+                                                </tr>
+                                                <tr class="table-bg">
+                                                    <td>Right</td>
+                                                    <td>@item.r_sph</td>
+                                                    <td>@item.r_cyl</td>
+                                                    <td>@item.r_axis</td>
+                                                    <td>@item.r_add</td>
+                                                    @if (item.Dualpd > 0)
+                                                    {
+                                                        <td>@item.Rightpd</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td></td>
+                                                    }
+                                                    <td></td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="table-btm d-flex">
+                                            <a href="@Url.Action("EditDeleteprescriotion", "Client", new { id = Convert.ToInt32(UserID), prescriptionid = @item.PrescriptionID })">
+                                                <div editprescription(@Convert.ToInt32(UserID),@item.PrescriptionID)" class="img d-flex align-items-center">
+                                                    <img src="~/assets/img/edit.png" alt="Edit">
+                                                    <span>Edit</span>
+                                                </div>
+                                            </a>
+                                            <div class="img d-flex align-items-center" onclick="deleteprescription(@item.PrescriptionID)">
+                                                <img src="~/assets/img/remove.png" alt="remove">
+                                                <span class="delete">Delete</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                if (count < 2)
+                                {
+                                    <div class="col-lg-3">
+                                        <div class="note-icon-aria-bg">
+                                            <div class="icon-aria">
+                                                <a href="@Url.Action("Addprescription", "Client")"> <img src="~/assets/img/note-icon.png" alt="ing"></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                <br />
+                            }
+
+
+
+
+                        </div>
+
+                    </div>
+                }
+                else
+                {
+
+                    <h4 class="text-center" style="color:red; text-align:center;">No prescription  availale</h4>
+
+                }
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<div class="modal fade" id="deleteprescription" aria-hidden="true" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            @using (Html.BeginForm("Deleteprescriotio", "Client", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <form>
+                    <div class="modal-body" style="text-align:center">
+                        <div class="form-content p-2">
+                            <input type="text" id="txtprescriptionid" name="prescriptionid" hidden>
+                            <input type="number" name="id" value="@Convert.ToInt32(UserID)" hidden />
+                            <h2 class="modal-title">Delete</h2>
+                            <p class="mb-4" style="margin-bottom:0px !important">Are you sure want to delete?</p>
+                            <button type="submit" class="btn btn-success">Confirm </button>
+                            <button onclick="closeprescriptionmodal()" type="button" class="btn btn-danger">No</button>
+                        </div>
+                    </div>
+                </form>}
+        </div>
+    </div>
+</div>
+
+<script src="~/assets/js/jquery-1.12.4.min.js"></script>
+<script>
+
+
+
+
+    $(document).ready(function () {
+        $("ul li a").removeClass("active");
+        $('#PrescriptionList').addClass('active');
+        $("#LinkCopy").fadeOut(8000);
+    });
+
+    function deleteprescription(id) {
+        $("#txtprescriptionid").val(id);
+        $("#deleteprescription").modal("show");
+    }
+    function closeprescriptionmodal() {
+        $("#deleteprescription").modal("hide");
+    }
+</script>
+

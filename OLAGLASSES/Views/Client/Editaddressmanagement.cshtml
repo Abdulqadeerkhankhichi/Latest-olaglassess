@@ -1,0 +1,269 @@
+﻿@using Olaglasses.Models;
+@model Olaglasses.Models.tblAddress
+
+@{
+    ViewBag.Title = "PrescriptionList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{string UserID = "";}
+@{string UserName = "";}
+@{string UserImage = "";}
+@{string CoverImage = "";}
+@if (@Context.Request.Cookies["_UserID"].Value != null && @Context.Request.Cookies["_UserID"].Value != "")
+{
+    UserID = @Context.Request.Cookies["_UserID"].Value;
+}
+@if (Session["UserID"] != null)
+{
+    UserID = Session["UserID"].ToString();
+}
+@if (@Context.Request.Cookies["_UserImage"].Value != null && @Context.Request.Cookies["_UserImage"].Value != "")
+{
+    UserImage = @Context.Request.Cookies["_UserImage"].Value;
+}
+
+@if (Session["UserImage"] != null)
+{
+    UserImage = Session["UserImage"].ToString();
+}
+@if (@Context.Request.Cookies["_UserName"].Value != null && @Context.Request.Cookies["_UserName"].Value != "")
+{
+    UserName = @Context.Request.Cookies["_UserName"].Value;
+}
+@if (Session["userName"] != null)
+{
+    UserName = Session["userName"].ToString();
+}@if (@Context.Request.Cookies["_CoverImagecookie"].Value != null && @Context.Request.Cookies["_CoverImagecookie"].Value != "")
+{
+    CoverImage = @Context.Request.Cookies["_CoverImagecookie"].Value;
+}
+
+@if (Session["CoverPhoto"] != null)
+{
+    CoverImage = Session["CoverPhoto"].ToString();
+}
+<head>
+    <style>
+        .bg-success-light {
+            background-color: rgba(15, 183, 107,0.12) !important;
+            color: #26af48 !important;
+        }
+
+        @@media(min-width: 768px) {
+            .client-menu {
+                width: 26%;
+            }
+        }
+
+        @@media(max-width: 768px) {
+            .detail-section {
+                padding-top: 10px;
+            }
+        }
+    </style>
+</head>
+<!-- ::::protfolio-hero-aria start:::::: -->
+<section class="protfolio-hero-aria protfolio-banner custum-mg">
+    <div class="protfolio-banner bg-img-content" style="background:url(@CoverImage)">
+        <h1 class="d-none"> none</h1>
+    </div>
+</section>
+<!-- ::::protfolio-hero- ariaend:::::: -->
+
+<section class="protfolio-system">
+    <div class="has-bg">
+        <div class="has-bg-1">
+            <img src="~/assets/img/protfolio-bg-left.png" alt="img">
+        </div>
+        <div class="has-bg-2">
+            <img src="~/assets/img/protfolio-bg-right.png" alt="img">
+        </div>
+    </div>
+
+    <div class="container custum-pd2">
+        <div class="d-flex flex-wrap justify-content-between align-items-center">
+            <div class="protfolio-img d-flex align-items-center ">
+                <div class="img">
+                    <img src="@UserImage" alt="img">
+                </div>
+                <div class="brooklyn">
+                    <h2>@UserName</h2>
+                    <p></p>
+                </div>
+            </div>
+            <div class="icon">
+                <ul class="list-inline">
+                    <a href="https://www.facebook.com/olaglasses" target="_blank"> <li class="list-inline-item"><i class="fab fa-facebook-f"></i></li></a>
+                    <a href="https://twitter.com/olaglasses" target="_blank"><li class="list-inline-item active"><i class="fab fa-twitter"></i></li></a>
+                    <a href="https://www.instagram.com/" target="_blank"><li class="list-inline-item"><i class="fab fa-instagram"></i></li></a>
+                    <a href="https://printess.com/" target="_blank"><li class="list-inline-item"><i class="fab fa-pinterest-p"></i></li></a>
+                </ul>
+            </div>
+        </div>
+        <div class="row pt-5">
+            <div class="col-lg-4 col-md-4 client-menu">
+                <div class="acount-bg">
+                    <h2>My Account</h2>
+                    <h4>My orders</h4>
+                    <p>
+                        <a id="orderlist" style="color:black" href="@Url.Action("Orders","client",new { id = Convert.ToInt32(UserID) })">
+
+                            <span>Order List</span>
+                        </a>
+                    </p>
+                    <h4>Account Settings</h4>
+                    <ul>
+                        <li> <a id="PersonalInfo" href="@Url.Action("PersonalInfo","Client",new { id=Convert.ToInt32(UserID)})">Personal Info</a> </li>
+                        <li><a id="addressmanagement" href="@Url.Action("addressmanagement","Client",new { id=Convert.ToInt32(UserID)})">Address management</a> </li>
+                        <li><a id="clientchangepassword" href="@Url.Action("changepassword","Client")">Change Password</a> </li>
+                        <li><a id="emailSubscribed" href="@Url.Action("EmailSubscriptions","Client",new { id=Convert.ToInt32(UserID)})">E-Mail Subscription</a> </li>
+                        <li><a id="PrescriptionList" href="@Url.Action("PrescriptionList","Client",new { id=Convert.ToInt32(UserID)})">My Prescription </a> </li>
+                    </ul>
+                    <h4>others</h4>
+                    <p>
+                        <a style="color:black" target="_blank" href="@Url.Action("Favourites","Dashboard",new { id = Convert.ToInt32(UserID) })">
+
+                            <span>My Favourite</span>
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+            <div class="col-lg-7 offset-md-1 col-md-7 pescription detail-section">
+
+                <div id="Checkout" class="Checkout">
+                    <h2>Address</h2>
+                    @if (ViewBag.message != null && ViewBag.message != "")
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="padding-right:0 !important" id="LinkCopy">
+                            @ViewBag.message
+
+                        </div>
+                    }
+                    @using (Html.BeginForm("Editaddressmanagement", "Client", FormMethod.Post))
+                    {
+                        <form>
+                            <input hidden name="AddressID" id="AddressID" value="@Model.AddressID" />
+                            <div class="Cardholder input-area ">
+                                <h3>Billing Information</h3>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="fname">First Name*</label> <br>
+                                        <input class="form-control edit_pescription" type="text" name="BFname" id="BFname" required value="@Model.BFname">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">Last Name*</label> <br>
+                                        <input class="form-control edit_pescription" type="text" name="BLname" id="BLname" value="@Model.BLname" required>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="fname">Address*</label> <br>
+                                        <input class="form-control edit_pescription" type="text" name="BAddress" id="BAddress" value="@Model.BAddress" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">City*</label> <br>
+                                        <input class="form-control edit_pescription" type="text" name="Bcity" id="Bcity" value="@Model.Bcity" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">State*</label> <br>
+                                        <input class="form-control edit_pescription" type="text" name="BState" id="BState" value="@Model.BState" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">Postal Code*</label> <br>
+                                        <input class="form-control edit_pescription" type="text" name="BPostalCode" id="BPostalCode" value="@Model.BPostalCode" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">Country*</label> <br>
+                                        <input class="form-control edit_pescription" type="text" name="BCountry" id="BCountry" value="@Model.BCountry" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">Phone*</label> <br>
+                                        <input class="form-control edit_pescription" type="text" name="BPhone" id="BPhone" value="@Model.BPhone" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">Email*</label> <br>
+                                        <input class="form-control edit_pescription" type="email" name="BEmail" id="BEmail" value="@Model.BEmail" required>
+                                        <small style="color:red !important;font-weight:bold;font-size:14px !important " id="ErrorAccessMessagesubscribeNowEmail"> </small>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="Cardholder input-area Shipping" id="Shipping">
+                                <h3>Shipping Information</h3>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="fname">First Name*</label> <br>
+                                        <input class="form-control edit_pescription" type="text" name="SFname" id="SFname" value="@Model.SFname">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">Last Name*</label> <br>
+                                        <input class="form-control edit_pescription" type="text" name="SLname" id="SLname" value="@Model.SLname">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="fname">Address*</label> <br>
+                                        <input class="form-control edit_pescription" type="text" name="SAddress" id="SAddress" value="@Model.SAddress">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">City*</label> <br>
+                                        <input class="form-control edit_pescription" type="text" name="Scity" id="Scity" value="@Model.Scity">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">State*</label> <br>
+                                        <input class="form-control edit_pescription" type="text" name="SState" id="SState" value="@Model.SState">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">Postal Code*</label> <br>
+                                        <input class="form-control edit_pescription" type="text" name="SPostalCode" id="SPostalCode" value="@Model.SPostalCode">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">Country*</label> <br>
+                                        <input class="form-control edit_pescription" type="text" name="SCountry" id="SCountry" value="@Model.SCountry">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">Phone*</label> <br>
+                                        <input class="form-control edit_pescription" type="text" name="SPhone" id="SPhone" value="@Model.SPhone">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fname">Email*</label> <br>
+                                        <input class="form-control edit_pescription" type="text" name="SEmail" id="SEmail" value="@Model.SEmail">
+                                        <small style="color:red !important;font-weight:bold;font-size:14px !important " id="ErrorAccessMessagesubscribeNowEmailS"> </small>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <button class="btn btn-primary submit-btn" type="submit" name="form_submit" value="submit">Submit</button>
+                        </form>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+
+<script src="~/assets/js/jquery-1.12.4.min.js"></script>
+<script>
+
+
+
+
+    $(document).ready(function () {
+        $("ul li a").removeClass("active");
+        $('#addressmanagement').addClass('active');
+        $("#LinkCopy").fadeOut(8000);
+    });
+
+    function deleteprescription(id) {
+        $("#txtprescriptionid").val(id);
+        $("#deleteprescription").modal("show");
+    }
+    function closeprescriptionmodal() {
+        $("#deleteprescription").modal("hide");
+    }
+</script>
+

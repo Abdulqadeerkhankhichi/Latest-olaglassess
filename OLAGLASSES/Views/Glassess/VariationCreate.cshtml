@@ -1,0 +1,540 @@
+﻿@using Olaglasses.Models;
+@model Olaglasses.Models.tblVariation
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<head>
+    <style>
+        .img-container {
+            display: inline;
+            position: relative;
+        }
+
+        .cancelimage {
+            position: absolute;
+            right: 0;
+        }
+    </style>
+</head>
+
+<div class="row">
+    <div class="col-md-5 col-5">
+        <div class="breadcrumb-bar">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    @if (Model.VariationID > 0)
+                    {
+                        <h2 class="breadcrumb-title">Edit Variation Info</h2>
+                    }
+                    else
+                    {
+                        <h2 class="breadcrumb-title">Add Variation Info</h2>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-4"></div>
+    <div class="col-md-3 col-3 ">
+
+        <a href="@Url.Action("VariationIndex","Glassess", new { id=@Model.ProductID })" class="btn btn-secondary float-right" style="background-color:var(--Secondery-color); color:white ;float: right;"><i class="fa fa-list"></i> Variation List</a>
+
+    </div>
+</div>
+
+
+
+<div class="doc-review review-listing custom-edit-service">
+
+
+    <!-- Add Blog -->
+    <div class="card">
+        <div class="card-body">
+            @using (Html.BeginForm("VariationCreate", "Glassess", FormMethod.Post, new
+            {
+                enctype = "multipart/form-data"
+            }))
+            {
+                <form>
+
+                    <input type="hidden" name="VariationID" value="@Model.VariationID">
+                    <input type="hidden" name="ProductID" id="ProductID" value="@Model.ProductID">
+                    <div class="service-fields">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Color Code <span class="text-danger">*</span></label>
+
+                                    <input class="form-control" type="text" name="ColorCode" id="ColorCode" value="@Model.ColorCode" required="" onchange="AddGetCode()">
+                                    <div class="help-block" style="color:red; display:none" id="Adderror"> Enter unique Code </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Color 1 <span class="text-danger">*</span></label>
+                                    <select class="form-control select" name="Color1">
+                                        @foreach (var item in ViewBag.color)
+                                        {
+                                            if (Model.Color1 == item.hexacode)
+                                            {
+                                                <option value="@item.hexacode" selected>@item.colorname</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.hexacode">@item.colorname</option>
+                                            }
+                                        }
+                                        @*@if (Model.Color1 == "Black")
+                                            {
+                                                <option selected>Black</option>
+                                                <option>Antique</option>
+                                                <option>Burgundy</option>
+                                            }
+                                            @if (Model.Color1 == "Antique")
+                                            {
+                                                <option>Black</option>
+                                                <option selected>Antique</option>
+                                                <option>Burgundy</option>
+                                            }
+                                            @if (Model.Color1 == "Burgundy")
+                                            {
+                                                <option>Black</option>
+                                                <option>Antique</option>
+                                                <option selected>Burgundy</option>
+
+                                            }
+                                            @if (Model.Color1 == "")
+                                            {
+                                                <option selected>Black</option>
+                                                <option>Antique</option>
+                                                <option>Burgundy</option>
+                                            }*@
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Color 2 <span class="text-danger">*</span></label>
+
+                                    <select class="form-control select" name="Color2">
+                                        @foreach (var item in ViewBag.color)
+                                        {
+                                            if (Model.Color2 == item.hexacode)
+                                            {
+                                                <option value="@item.hexacode" selected>@item.colorname</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.hexacode">@item.colorname</option>
+                                            }
+                                        }
+                                        @*@if (Model.Color2 == "Black")
+                                            {
+                                                <option selected>Black</option>
+                                                <option>Antique</option>
+                                                <option>Burgundy</option>
+                                            }
+                                            @if (Model.Color2 == "Antique")
+                                            {
+                                                <option>Black</option>
+                                                <option selected>Antique</option>
+                                                <option>Burgundy</option>
+                                            }
+                                            @if (Model.Color2 == "Burgundy")
+                                            {
+                                                <option>Black</option>
+                                                <option>Antique</option>
+                                                <option selected>Burgundy</option>
+
+                                            }
+                                            @if (Model.Color2 == "")
+                                            {
+                                                <option selected>Black</option>
+                                                <option>Antique</option>
+                                                <option>Burgundy</option>
+                                            }*@
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="service-fields">
+                        <div class="row">
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Size <span class="text-danger">*</span></label>
+
+                                    <select class="form-control select" name="size">
+
+                                        @if (Model.size == "Small")
+                                        {
+                                            <option selected>Small</option>
+                                            <option>Medium</option>
+                                            <option>Large</option>
+                                        }
+                                        @if (Model.size == "Medium")
+                                        {
+                                            <option>Small</option>
+                                            <option selected>Medium</option>
+                                            <option>Large</option>
+                                        }
+                                        @if (Model.size == "Large")
+                                        {
+                                            <option>Small</option>
+                                            <option>Medium</option>
+                                            <option selected>Large</option>
+
+                                        }
+                                        @if (Model.size == "")
+                                        {
+                                            <option selected>Small</option>
+                                            <option>Medium</option>
+                                            <option>Large</option>
+                                        }
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Frame A-Width <span class="text-danger">*</span></label>
+
+                                    <input class="form-control" type="text" name="FrameAWidth" id="FrameAWidth" value="@Model.FrameAWidth" required="">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Frame B-Width <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" name="FrameBHeight" id="FrameBHeight" value="@Model.FrameBHeight" required="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-fields">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Frame ED <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" name="FrameED" id="FrameED" value="@Model.FrameED" required="">
+
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Frame DB Bridge <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" name="FrameDBBridger" id="FrameDBBridger" value="@Model.FrameDBBridger" required="">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Frame Temple Legs<span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" name="FrameTempleLegs" id="FrameTempleLegs" value="@Model.FrameTempleLegs" required="">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-fields">
+                        <div class="row">
+
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Frame Total Width <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" name="FrameTotalWidth" id="FrameTotalWidth" value="@Model.FrameTotalWidth" required="">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Minimum PD: +SP<span class="text-danger">*</span></label>
+
+                                    <input class="form-control" type="text" name="MinPDPositive" id="MinPDPositive" value="@Model.MinPDPositive" required="">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Minimum PD: -SP <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" name="MinPDNeg" id="MinPDNeg" value="@Model.MinPDNeg" required="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="service-fields">
+                        <div class="row">
+                            @*<div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label>File <span class="text-danger">*</span></label>
+                                        <input class="form-control" type="file" id="TemplateImages" name="TemplateImages" accept="image/jpeg, image/png, image/gif,">
+                                        <small class="form-text text-muted">Allowed images: jpg, gif, png. Maximum 10 images only.</small>
+                                    </div>
+                                </div>*@
+
+                            <div class="col-md-4">
+                                <div class="fo3m-group">
+                                    <label>Sku Numbrer <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" name="SKUNumber" id="SKUNumber" value="@Model.SKUNumber" required="">
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="change-avatar">
+                                        <div class="profile-img" style="display:none">
+                                            <img style="width:162px;height:146px;display:none" src=@Model.ImagePath alt="User Image" id="ImagePath">
+                                            <input type="text" name="ImagePath" value="@Model.ImagePath" hidden>
+                                        </div>
+                                        <div class="upload-img">
+                                            <div class="change-photo-btn">
+                                                <span><i class="fa fa-upload"></i> Upload Photo</span>
+                                                <input type="file" class="upload" id="Image" name="Image" multiple>
+
+                                            </div>
+                                            @*<small class="form-text text-muted">Allowed images: size 191 * 112.</small>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="change-avatar">
+                                        <div class="profile-img">
+                                            <img style="width:162px;height:146px" src=@Model.SideViewImagePath alt="User Image" id="SideViewPath">
+                                            <input type="text" name="SideViewImagePath" value="@Model.SideViewImagePath" hidden>
+                                        </div>
+                                        <div class="upload-img">
+                                            <div class="change-photo-btn">
+                                                <span><i class="fa fa-upload"></i> Side View Photo</span>
+                                                <input type="file" class="upload" id="SideViewImage" name="SideViewImagePath" onchange="showsideview(this)">
+
+                                            </div>
+                                            @*<small class="form-text text-muted">Allowed images: size 191 * 112.</small>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="gallery" id="gallery">
+                                    @if (ViewBag.variationimages != null)
+                                    {
+                                        foreach (var item in ViewBag.variationimages)
+                                        {
+                                            <div class="img-container" id="imagegallery-@item.Variationimageid">
+                                                <img style="width:210px;height:100px" src="@item.ImagePath" />
+                                                <i onclick="deleteimage(@item.Variationimageid,'imagegallery-@item.Variationimageid')" class="fa fa-times cancelimage"></i>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="col-md-3" style="margin-top:3%">
+                                <button class="btn btn-primary submit-btn" type="submit" name="form_submit" value="submit" id="Register">Submit</button>
+                                <a href="@Url.Action("VariationIndex","Glassess",new { id=@Model.ProductID})">
+                                    <button class="btn btn-secondary submit-btn" type="button" name="form_submit" value="submit">Cancel</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            }
+        </div>
+    </div>
+    <!-- /Add Blog -->
+
+</div>
+
+<script src="~/assets/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+
+    function deleteimage(variationid,variationgellery)
+    {
+
+        //var imagefiles = $("#Image").get(0);
+        //var files = imagefiles.files;
+        //console.log(files);
+
+        //const dt = new DataTransfer()
+
+        //return;
+        if (variationid == 0) {
+            document.getElementById(variationgellery).remove();
+            return;
+        }
+        else
+        {
+            document.getElementById(variationgellery).remove();
+            var model = { variationid: variationid };
+
+            $.ajax({
+            type: "POST",
+            url: '@Url.Action("deletevariationimage", "Glassess")',
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+            }
+
+            });
+        }
+
+
+    }
+
+    $(function () {
+        // Multiple images preview in browser
+        var imagesPreview = function (input, placeToInsertImagePreview) {
+            var gallerysection = "";
+            if (input.files) {
+
+                var filesAmount = input.files.length;
+                var duplicatefiles = input.files;
+
+                var count = 0;
+                for (i = 0; i < filesAmount; i++) {
+                    $("#gallery .newimage").remove();
+                    gallerysection = "";
+                    var reader = new FileReader();
+
+                    reader.onload = function (event)
+                    {
+                        //$($.parseHTML('<div class="img-container"  id="imagegallery-"'+i+'>')).appendTo(placeToInsertImagePreview);
+                        //$($.parseHTML('<img style="width: 210px;height:100px;margin-left:5px">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+                        //$($.parseHTML('<i onclick=deleteimage(0,"") class="fa fa-times cancelimage"></i></div>')).appendTo(placeToInsertImagePreview);
+                        gallerysection = '<div class="img-container newimage"  id="imagegallery-'+count+'">'
+                        gallerysection += '<img style = "width: 210px;height:100px;margin-left:5px"  src="' + event.target.result + '">'
+                        gallerysection += '</div>'
+                        /*gallerysection += '<i onclick=deleteimage(0,"imagegallery-' + count + '") class="fa fa-times cancelimage"></i></div>'*/
+
+                        $("#gallery").append(gallerysection);
+                    }
+                    reader.readAsDataURL(input.files[i]);
+                }
+
+            }
+
+        };
+
+        $('#Image').on('change', function () {
+
+
+            var fileUpload1 = $("#Image").get(0);
+            var files1 = fileUpload1.files;
+            var fileExtension = ['jpeg', 'jpg', 'png',];
+
+
+            var hasInvalidFiles = false;
+            for (var i = 0; i < files1.length; i++) {
+                var file = files1[i];
+                var filex = file.name.split('.').pop();
+                if (fileExtension.indexOf(filex) == -1) {
+                    hasInvalidFiles = true;
+                }
+            }
+            if (hasInvalidFiles) {
+                alert("Unsupported file selected.");
+                return;
+            }
+            imagesPreview(this, 'div.gallery');
+        });
+    });
+
+    //function show(input) {
+
+    //    if (input.files && input.files[0]) {
+    //        var filerdr = new FileReader();
+    //        filerdr.onload = function (e) {
+    //            $('#ImagePath').attr('src', e.target.result);
+    //        }
+    //        filerdr.readAsDataURL(input.files[0]);
+    //    }
+    //}
+
+    function showsideview(input) {
+        var files1 = input.files;
+        var fileExtension = ['jpeg', 'jpg', 'png',];
+
+
+        var hasInvalidFiles = false;
+        for (var i = 0; i < files1.length; i++) {
+            var file = files1[i];
+            var filex = file.name.split('.').pop();
+            if (fileExtension.indexOf(filex) == -1) {
+                hasInvalidFiles = true;
+            }
+        }
+        if (hasInvalidFiles) {
+            alert("Unsupported file selected.");
+            return;
+        }
+
+
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#SideViewPath').attr('src', e.target.result);
+
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+</script>
+
+
+
+<script>
+
+    $(document).ready(function () {
+        $(".nav li").removeClass("active");
+        $('#glass').addClass('active');
+
+    });
+</script>
+<script>
+    function AddGetCode() {
+
+
+        var item = document.getElementById("ColorCode");
+        var item1 = document.getElementById("ProductID");
+        $.ajax({
+            type: "get",
+            url: "/Glassess/GetCoode",
+            data: { code: item.value, glassID: item1.value },
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'text',
+
+            success: function (d) {
+                console.log(d);
+                //var d = JSON.parse(d).d;
+                //var data = JSON.parse(d);
+                if (d == 1) {
+                    $('#AddEmailError').addClass('has-error');
+                    $('#Adderror').show();
+                    document.getElementById("Register").disabled = true;
+                }
+                if (d == 0) {
+                    $('#AddEmailError').removeClass('has-error');
+                    $('#Adderror').hide();
+                    document.getElementById("Register").disabled = false;
+                }
+            },
+            error: function () {
+
+            }
+        });
+
+    }</script>

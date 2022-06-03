@@ -1,0 +1,154 @@
+﻿@using Olaglasses.Models;
+@model Olaglasses.Models.tblpromotionoffer
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+<head>
+
+    <link rel="stylesheet" href="~/Dashboardassets/assets/plugins/dropzone/dropzone.min.css">
+
+    <link rel="stylesheet" href="~/Dashboardassets/assets/plugins/bootstrap-tagsinput/css/bootstrap-tagsinput.css">
+
+    <script src="~/Dashboardassets/assets/js/profile-settings.js"></script>
+
+    <script src="~/Dashboardassets/assets/plugins/dropzone/dropzone.min.js"></script>
+</head>
+<div class="row">
+    <div class="col-md-5 col-5">
+        <div class="breadcrumb-bar">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    @if (Model.Promotionid > 0)
+                    {
+                        <h2 class="breadcrumb-title">Edit Promotion Info</h2>
+                    }
+                    else
+                    {
+                <h2 class="breadcrumb-title">Add Promotion Info</h2>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-4 col-4"></div>
+    <div class="col-md-3 col-3 ">
+
+        <a href="@Url.Action("Index","Promotion")" class="btn btn-secondary float-right" style="background-color:var(--Secondery-color); color:white ;float: right;"><i class="fa fa-list"></i> Promotion List</a>
+
+    </div>
+
+</div>
+
+
+
+<div class="doc-review review-listing custom-edit-service">
+
+
+    <!-- Add Blog -->
+    <div class="card">
+        <div class="card-body">
+
+            <form method="post" action="@Url.Action("Edit","Promotion")">
+                <input type="hidden" name="Promotionid" id="Promotionid" value="@Model.Promotionid">
+                <input  hidden  name="colorname" id="colorname" value="@Model.colorname">
+                <div class="service-fields">
+                    <div class="row">
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Color <span class="text-danger">*</span></label>
+                                <select class="form-control select" name="colorcode" id="colorcode" onchange="getcolorcode()">
+                                    @foreach (var item in ViewBag.colorlist)
+                                    {
+                                        if (Model.colorname == item.colorname)
+                                        {
+                                            <option value="@item.hexacode" selected>@item.colorname</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.hexacode">@item.colorname</option>
+                                        }
+                                    }
+                                </select>
+                                @*<input class="form-control" type="text" name="CouponColor" id="CouponColor" value="@Model.CouponColor" required="">*@
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Description <span class="text-danger">*</span></label>
+                                <small style="color:@ViewBag.Color !important;font-weight:bold;font-size:14px !important "> @ViewBag.Error</small>
+                                @if (@Model.description != "" && @Model.description != null)
+                                {
+                                    <input class="form-control" type="text" name="description" id="description" value="@Model.description.Trim()" required="">
+                                }
+                                else
+                                {
+                                    <input class="form-control" type="text" name="description" id="description" value="" required="">
+                                }
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <div class="form-group">
+                                <label>Status <span class="text-danger">*</span></label>
+                                <select class="form-control select" name="isActive">
+
+                                    @if (Model.isActive == 1)
+                                    {
+                                        <option value="1" selected>Active</option>
+                                        <option value="0">InActive</option>
+
+                                    }
+                                    @if (Model.isActive == 0)
+                                    {
+                                        <option value="1">Active</option>
+                                        <option  value="0" selected>InActive</option>
+                                    }
+
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3" style="margin-top:3%">
+                            <div class="form-group">
+                                <button class="btn btn-primary submit-btn" type="submit" name="form_submit" value="submit">Submit</button>
+                                <a href="@Url.Action("Index","Promotion")"><button class="btn btn-secondary submit-btn" type="button" name="form_submit" value="submit">Cancel</button></a>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+
+
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+<script src="~/assets/js/jquery-1.12.4.min.js"></script>
+<script>
+    function getcolorcode() {
+        
+        var colorcode = document.getElementById("colorcode");
+        var selectedText = colorcode.options[colorcode.selectedIndex].text;
+        $("#colorname").val(selectedText);
+    }
+    $(document).ready(function () {
+        $(".nav li").removeClass("active");
+        $('#promotion').addClass('active');
+
+    });
+</script>
+
+

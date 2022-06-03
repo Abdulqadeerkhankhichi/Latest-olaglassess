@@ -1,0 +1,388 @@
+﻿@using Olaglasses.Models;
+@model Olaglasses.Models.tblUser
+@{
+    ViewBag.Title = "PersonalInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{string genderstatus = "";}
+@{string Mrgenderstatus = "";}
+@{string Msgenderstatus = "";}
+@{string Mxgenderstatus = "";}
+@{string UserID = "";}
+@{string UserName = "";}
+@{string UserImage = "";}
+@{string CoverImage = "";}
+
+@{genderstatus = @Model.Gender;}
+@if (genderstatus != null && genderstatus != "")
+{
+    if (genderstatus == "Mr.")
+    {
+        Mrgenderstatus = "checked";
+    }
+    else if (genderstatus == "Mis.")
+    {
+        Msgenderstatus = "checked";
+    }
+    if (genderstatus == "Mx")
+    {
+        Mxgenderstatus = "checked";
+    }
+}
+@if (@Context.Request.Cookies["_UserImage"].Value != null && @Context.Request.Cookies["_UserImage"].Value != "")
+{
+    UserImage = @Context.Request.Cookies["_UserImage"].Value;
+}
+
+@if (Session["UserImage"] != null)
+{
+    UserImage = Session["UserImage"].ToString();
+}
+
+@if (@Context.Request.Cookies["_CoverImagecookie"].Value != null && @Context.Request.Cookies["_CoverImagecookie"].Value != "")
+{
+    CoverImage = @Context.Request.Cookies["_CoverImagecookie"].Value;
+}
+
+@if (Session["CoverPhoto"] != null)
+{
+    CoverImage = Session["CoverPhoto"].ToString();
+}
+<head>
+    <style>
+        @@media(min-width: 768px) {
+            .client-menu {
+                width: 26%;
+            }
+        }
+
+        @@media(max-width: 768px) {
+            .detail-section {
+                padding-top: 10px;
+            }
+        }
+
+        .change-photo-btn input.upload {
+            bottom: 0;
+            cursor: pointer;
+            filter: alpha(opacity=0);
+            left: 0;
+            margin: 0;
+            opacity: 0;
+            padding: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 220px;
+        }
+
+        .change-avatar .profile-img img {
+            border-radius: 4px;
+            height: 100px;
+            width: 100px;
+            object-fit: cover;
+        }
+
+        .change-avatar {
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            /* align-items: center;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;*/
+        }
+
+            .change-avatar .profile-img {
+                margin-right: 15px;
+            }
+
+        change-avatar .change-photo-btn {
+            margin: 0 0 10px;
+            width: 150px;
+        }
+
+        .change-photo-btn {
+            background-color: var(--tertiary-color);
+            /*border-radius: 50px;*/
+            color: #fff;
+            cursor: pointer;
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin: 0 auto;
+            padding: 10px 15px;
+            position: relative;
+            transition: .3s;
+            text-align: center;
+            /* width: 220px;*/
+            margin-top: 3%;
+        }
+    </style>
+</head>
+
+@if (@Context.Request.Cookies["_UserID"].Value != null && @Context.Request.Cookies["_UserID"].Value != "")
+{
+    UserID = @Context.Request.Cookies["_UserID"].Value;
+}
+@if (Session["UserID"] != null)
+{
+    UserID = Session["UserID"].ToString();
+}
+@if (@Context.Request.Cookies["_UserName"].Value != null && @Context.Request.Cookies["_UserName"].Value != "")
+{
+    UserName = @Context.Request.Cookies["_UserName"].Value;
+}
+@if (Session["userName"] != null)
+{
+    UserName = Session["userName"].ToString();
+}
+<!-- ::::protfolio-hero-aria start:::::: -->
+<section class="protfolio-hero-aria protfolio-banner custum-mg">
+    <div class="protfolio-banner bg-img-content" style="background:url(@CoverImage)">
+        <h1 class="d-none"> none</h1>
+    </div>
+</section>
+<!-- ::::protfolio-hero- ariaend:::::: -->
+
+<section class="protfolio-system">
+    <div class="has-bg">
+        <div class="has-bg-1">
+            <img src="~/assets/img/protfolio-bg-left.png" alt="img">
+        </div>
+        <div class="has-bg-2">
+            <img src="~/assets/img/protfolio-bg-right.png" alt="img">
+        </div>
+    </div>
+    <div class="container custum-pd2">
+        <div class="d-flex flex-wrap justify-content-between align-items-center">
+            <div class="protfolio-img d-flex align-items-center ">
+                <div class="img">
+                    <img src="@UserImage" alt="img">
+                </div>
+                <div class="brooklyn">
+                    <h2>@UserName</h2>
+                    @*<p>4140 Parker Rd. Allentown, New Mexico 31134</p>*@
+                </div>
+            </div>
+            <div class="icon">
+                <ul class="list-inline">
+                    <a href="https://www.facebook.com/olaglasses" target="_blank"> <li class="list-inline-item"><i class="fab fa-facebook-f"></i></li></a>
+                    <a href="https://twitter.com/olaglasses" target="_blank"><li class="list-inline-item active"><i class="fab fa-twitter"></i></li></a>
+                    <a href="https://www.instagram.com/" target="_blank"><li class="list-inline-item"><i class="fab fa-instagram"></i></li></a>
+                    <a href="https://printess.com/" target="_blank"><li class="list-inline-item"><i class="fab fa-pinterest-p"></i></li></a>
+                </ul>
+            </div>
+        </div>
+        <div class="row pt-5">
+            <div class="col-lg-4 col-md-4 client-menu">
+                <div class="acount-bg">
+                    <h2>My Account</h2>
+                    <h4>My orders</h4>
+                    <p>
+                        <a style="color:black" href="@Url.Action("Orders","client",new { id = Convert.ToInt32(UserID) })">
+
+                            <span>Order List</span>
+                        </a>
+                    </p>
+                    <h4>Account Settings</h4>
+                    <ul>
+                        <li> <a id="PersonalInfo" href="@Url.Action("PersonalInfo","Client",new { id=Convert.ToInt32(UserID)})">Personal Info</a> </li>
+                        <li><a id="addressmanagement" href="@Url.Action("addressmanagement","Client",new { id=Convert.ToInt32(UserID)})">Address management</a> </li>
+                        <li><a id="clientchangepassword" href="@Url.Action("changepassword","Client")">Change Password</a> </li>
+                        <li><a id="emailSubscribed" href="@Url.Action("EmailSubscriptions","Client",new { id=Convert.ToInt32(UserID)})">E-Mail Subscription</a> </li>
+                        <li><a id="PrescriptionList" href="@Url.Action("PrescriptionList","Client",new { id=Convert.ToInt32(UserID)})">My Prescription </a> </li>
+                    </ul>
+                    <h4>others</h4>
+                    <p>
+                        <a style="color:black" target="_blank" href="@Url.Action("Favourites","Dashboard",new { id = Convert.ToInt32(UserID) })">
+
+                            <span>My Favourite</span>
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+            <div class="col-lg-7 offset-md-1 col-md-7 detail-section">
+                <div class="protfolio-system-right">
+                    <h2>Personal Info</h2>
+                    <div class="gender&input-aria">
+                        <div class="row">
+
+                            @if (ViewBag.IsError != null && ViewBag.IsError != "")
+                            {
+                                <div class="alert alert-success alert-dismissible fade show" role="alert" style="padding-right:0 !important" id="LinkCopy">
+                                    @ViewBag.IsError
+                                    @*<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>*@
+                                </div>
+                            }
+                            @using (Html.BeginForm("PersonalInfo", "client", FormMethod.Post, new
+                            {
+                                enctype = "multipart/form-data"
+                            }))
+                            {
+                                <form>
+                                    <input name="UserID" value="@Model.UserID" hidden>
+                                    <input name="UserPass" value="@Model.UserPass" hidden>
+                                    <input name="Role" value="@Model.Role" hidden>
+                                    <div class=" d-flex input-item flex-wrap">
+                                        <label class=" form-label input-left-item">Gender</label>
+                                        <input id="Gender" name="Gender" value="@Model.Gender" hidden />
+                                        <div class="checkbox d-flex input-right-item trnform2">
+                                            <!-- <div class="w3-half" style="padding-top:12px"> -->
+                                            <div class="chakbox-item d-flex align-items-center">
+                                                <input onclick="Genderstatus('Mr.')" @Mrgenderstatus type="radio" id="customRadio1" name="customRadio">
+                                                <label for="customRadio1">Mr.</label>
+
+                                            </div>
+                                            <div class="chakbox-item d-flex align-items-center">
+                                                <input onclick="Genderstatus('Mis.')" @Msgenderstatus type="radio" id="customRadio2" name="customRadio">
+                                                <label for="customRadio2">Mis.</label>
+
+                                            </div>
+                                            <div class="chakbox-item d-flex align-items-center">
+                                                <input onclick="Genderstatus('Mx.')" @Mxgenderstatus type="radio" id="customRadio3" name="customRadio">
+                                                <label for="customRadio3">Mx.</label>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class=" d-flex input-item flex-wrap">
+                                        <label class="form-label input-left-item">First Name</label>
+                                        <input class="form-control input-right-item trnform" type="text"
+                                               name="Firstname" value="@Model.Firstname" placeholder="Enter First Name Here">
+                                    </div>
+                                    <div class=" d-flex input-item flex-wrap">
+                                        <label class="form-label input-left-item">Last Name</label>
+                                        <input value="@Model.Lastname" class="form-control input-right-item trnform" type="text"
+                                               name="Lastname" placeholder="Enter Last Name Here">
+                                    </div>
+                                    <div class=" d-flex input-item flex-wrap">
+                                        <label class="form-label input-left-item">Email Address</label>
+                                        <input value="@Model.UserEmail" class="form-control input-right-item trnform" type="email"
+                                               name="UserEmail" placeholder="Enter Email">
+                                    </div>
+
+                                    <div class=" d-flex input-item flex-wrap">
+                                        <label class="form-label input-left-item">Date of birth</label>
+                                        @*<input value="@Model.DateofBirth" class="form-control input-right-item trnform" type="text"
+                                            name="DateofBirth" placeholder="Month/Day/Year">*@
+
+                                        @if (@Model.DateofBirth != null)
+                                        {
+                                            <input class="form-control input-right-item trnform" type="date" name="DateofBirth" id="DateofBirth" value="@Model.DateofBirth.Value.ToString("yyyy-MM-dd")" required="">
+                                        }
+                                        else
+                                        {
+                                            <input class="form-control input-right-item trnform" type="date" name="DateofBirth" id="DateofBirth" value="" required="">
+                                        }
+                                    </div>
+
+                                    <div class=" d-flex input-item flex-wrap">
+                                        <label class="form-label input-left-item">Telephone</label>
+
+
+                                        <input value="@Model.Phone" class="form-control input-right-item trnform" type="text"
+                                               name="Phone" placeholder="Enter Telephone">
+
+                                    </div>
+                                    <div class="d-flex input-item flex-wrap" style="display:none !important">
+                                        <label class="form-label input-left-item">Fax Number</label>
+                                        <input value=" " class="form-control input-right-item trnform" type="text"
+                                               name="FaxNumber" placeholder="Fax Number">
+                                        @*<input value="@Model.FaxNumber" class="form-control input-right-item trnform" type="text"
+                                            name="FaxNumber" placeholder="Fax Number">*@
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 d-flex input-item flex-wrap">
+                                            <div class="form-group">
+                                                <div class="change-avatar">
+                                                    <div class="profile-img">
+                                                        <img src=@Model.UserImage alt="User Image" id="UserImage" style="margin-left: 8%;">
+                                                        <input type="text" name="UserImage" value="@Model.UserImage" hidden>
+                                                    </div>
+                                                    <div class="upload-img">
+                                                        <div class="change-photo-btn">
+                                                            <span><i class="fa fa-upload"></i> Upload Photo</span>
+                                                            <input type="file" class="upload" id="Image" name="Image" onchange="show(this)">
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 d-flex input-item flex-wrap">
+                                            <div class="form-group">
+                                                <div class="change-avatar">
+                                                    <div class="profile-img">
+                                                        <img src=@Model.CoverPhoto alt="User Image" id="CoverPhoto" style="margin-left: 8%;">
+                                                        <input type="text" name="CoverPhoto" value="@Model.CoverPhoto" hidden>
+                                                    </div>
+                                                    <div class="upload-img">
+                                                        <div class="change-photo-btn">
+                                                            <span><i class="fa fa-upload"></i> Upload Cover</span>
+                                                            <input type="file" class="upload" id="ImageCoverPhoto" name="ImageCoverPhoto" onchange="show1(this)">
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=" d-flex input-item flex-wrap">
+                                        <label class="form-label input-left-item"></label>
+                                        <button class="update-btn input-right-item trnform" type="submit">
+                                            update
+                                            now
+                                        </button>
+                                    </div>
+                                </form>
+
+                            }
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+<script src="~/assets/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+    function show(input) {
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#UserImage').attr('src', e.target.result);
+
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+    function show1(input) {
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#CoverPhoto').attr('src', e.target.result);
+
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+<script src="~/assets/js/jquery-1.12.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("ul li a").removeClass("active");
+        $('#PersonalInfo').addClass('active');
+        $("#LinkCopy").fadeOut(8000);
+    });
+    function Genderstatus(gender) {
+        $("#Gender").val(gender);
+    }
+
+</script>

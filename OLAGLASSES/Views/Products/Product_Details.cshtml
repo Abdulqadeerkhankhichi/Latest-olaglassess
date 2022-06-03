@@ -1,0 +1,2620 @@
+﻿@using Olaglasses.Models;
+@model Olaglasses.Models.tblProduct
+@{
+    List<Sp_Get_Product_VirtualTry_List_Result> products1 = (List<Sp_Get_Product_VirtualTry_List_Result>)ViewBag.VirtualProductList1;
+    ViewBag.Title = "Product_Details";
+
+}
+@{string UserID = "";}
+@{int ReviewStatus = 0;}
+@{string Additionalinformationimage = "";}
+
+@if (@Context.Request.Cookies["_UserID"].Value != null && @Context.Request.Cookies["_UserID"].Value != "")
+{
+    UserID = @Context.Request.Cookies["_UserID"].Value;
+}
+@if (Session["UserID"] != null)
+{
+    UserID = Session["UserID"].ToString();
+}
+<head>
+
+    <link rel='stylesheet' href='https://sachinchoolur.github.io/lightslider/dist/css/lightslider.css'>
+    <!-- Bootstrap CSS -->
+    <!--<link rel="stylesheet" href="~/Slider_Assets/css/bootstrap.min.css">-->
+    <!-- Fontawesome CSS -->
+    <!--<link rel="stylesheet" href="~/Slider_Assets/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="~/Slider_Assets/plugins/fontawesome/css/all.min.css">-->
+    <!-- Select2 CSS -->
+    <!--<link rel="stylesheet" href="~/Slider_Assets/plugins/select2/css/select2.min.css">-->
+    <!-- Main CSS -->
+    @*<link rel="stylesheet" href="~/Slider_Assets/css/style.css">*@
+
+    <style>
+
+        .carousel-control-next-icon {
+            background-color: black;
+        }
+
+        .carousel-control-prev-icon {
+            background-color: black;
+        }
+
+        /*slider start*/
+        .container {
+            margin-top: 100px;
+            margin-bottom: 100px
+        }
+
+        .carousel-inner img {
+            width: 100%;
+            height: 100%
+        }
+
+        #custCarousel .carousel-indicators {
+            position: static;
+            margin-top: 20px
+        }
+
+            #custCarousel .carousel-indicators > li {
+                width: 100px
+            }
+
+            #custCarousel .carousel-indicators li img {
+                display: block;
+                opacity: 0.5
+            }
+
+            #custCarousel .carousel-indicators li.active img {
+                opacity: 1
+            }
+
+            #custCarousel .carousel-indicators li:hover img {
+                opacity: 0.75
+            }
+
+        .carousel-item img {
+            width: 80%
+        }
+        /*slider end*/
+        #lblselectedcolor {
+            color: black;
+            font-size: 24px
+        }
+
+        .myAlert-bottom {
+            position: fixed;
+            bottom: 5px;
+            width: 22%;
+            left: 75%;
+        }
+
+        .alert {
+            display: none;
+        }
+
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .sawyer .sawyer-right .sawyer-right-virtu {
+            margin-bottom: 20px;
+        }
+
+        .star-rating {
+            direction: rtl;
+            float: left;
+        }
+
+            .star-rating input[type=radio] {
+                display: none
+            }
+
+            .star-rating label {
+                color: #bbb;
+                cursor: pointer;
+                font-size: 18px;
+                padding: 0;
+                -webkit-transition: all .3s ease-in-out;
+                transition: all .3s ease-in-out
+            }
+
+                .star-rating label:hover,
+                .star-rating label:hover ~ label,
+                .star-rating input[type=radio]:checked ~ label {
+                    color: #f2b600
+                }
+
+        .slick-slider {
+            position: relative;
+            display: block;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+            -khtml-user-select: none;
+            -ms-touch-action: pan-y;
+            touch-action: pan-y;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .slick-list {
+            position: relative;
+            display: block;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+            .slick-list:focus {
+                outline: none;
+            }
+
+            .slick-list.dragging {
+                cursor: pointer;
+            }
+
+        .slick-slider .slick-track,
+        .slick-slider .slick-list {
+            -webkit-transform: translate3d(0, 0, 0);
+            -moz-transform: translate3d(0, 0, 0);
+            -ms-transform: translate3d(0, 0, 0);
+            -o-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+
+        .slick-track {
+            position: relative;
+            top: 0;
+            left: 0;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+            .slick-track:before,
+            .slick-track:after {
+                display: table;
+                content: '';
+            }
+
+            .slick-track:after {
+                clear: both;
+            }
+
+        .slick-loading .slick-track {
+            visibility: hidden;
+        }
+
+        .slick-slide {
+            display: none;
+            float: left;
+            height: 100%;
+            min-height: 1px;
+        }
+
+        [dir='rtl'] .slick-slide {
+            float: right;
+        }
+
+        .slick-slide img {
+            display: block;
+        }
+
+        .slick-slide.slick-loading img {
+            display: none;
+        }
+
+        .slick-slide.dragging img {
+            pointer-events: none;
+        }
+
+        .slick-initialized .slick-slide {
+            display: block;
+        }
+
+        .slick-loading .slick-slide {
+            visibility: hidden;
+        }
+
+        .slick-vertical .slick-slide {
+            display: block;
+            height: auto;
+            border: 1px solid transparent;
+        }
+
+        .slick-arrow.slick-hidden {
+            display: none;
+        }
+
+        .slick-prev,
+        .slick-next,
+        .pharmacy-home-slider .swiper-button-prev,
+        .pharmacy-home-slider .swiper-button-next {
+            font-size: 0;
+            line-height: 0;
+            position: absolute;
+            top: 50%;
+            display: block;
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            -webkit-transform: translate(0, -50%);
+            -ms-transform: translate(0, -50%);
+            transform: translate(0, -50%);
+            box-shadow: 1px 6px 14px rgba(0,0,0,0.2);
+            background: #fff;
+            border-radius: 100%;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            background: #fff;
+            z-index: 9999;
+        }
+
+            .slick-prev:hover,
+            .slick-prev:focus,
+            .slick-next:hover,
+            .slick-next:focus,
+            .pharmacy-home-slider .swiper-button-prev:hover,
+            .pharmacy-home-slider .swiper-button-next:hover {
+                background-color: #0de0fe;
+                color: #fff;
+                opacity: 1;
+            }
+
+                .slick-prev:hover:before,
+                .slick-prev:focus:before,
+                .slick-next:hover:before,
+                .slick-next:focus:before,
+                .pharmacy-home-slider .swiper-button-prev:hover:before,
+                .pharmacy-home-slider .swiper-button-next:hover:before {
+                    color: #fff;
+                    opacity: 1;
+                }
+
+            .slick-prev.slick-disabled:before,
+            .slick-next.slick-disabled:before {
+                opacity: .25;
+            }
+
+            .slick-prev:before,
+            .slick-next:before {
+                font-family: 'slick';
+                font-size: 20px;
+                line-height: 1;
+                opacity: .75;
+                color: #383838;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+        .slick-prev {
+            left: 0;
+            z-index: 1;
+        }
+
+        .pharmacy-home-slider .swiper-button-prev:after,
+        .pharmacy-home-slider .swiper-button-next:after {
+            display: none;
+        }
+
+        .pharmacy-home-slider .swiper-button-prev:before {
+            content: '←';
+            color: #383838;
+            height: 40px;
+            font-size: 20px;
+            display: flex;
+            display: -webkit-flex;
+            align-items: center;
+            -webkit-align-items: center;
+            justify-content: center;
+            -webkit-justify-content: center;
+        }
+
+        .pharmacy-home-slider .swiper-button-next:before {
+            content: '→';
+            color: #383838;
+            font-size: 20px;
+            display: flex;
+            display: -webkit-flex;
+            align-items: center;
+            -webkit-align-items: center;
+            justify-content: center;
+            -webkit-justify-content: center;
+            height: 40px;
+        }
+
+        [dir='rtl'] .slick-prev {
+            right: -25px;
+            left: auto;
+        }
+
+        .slick-prev:before {
+            content: '←';
+        }
+
+        [dir='rtl'] .slick-prev:before {
+            content: '→';
+        }
+
+        .slick-next {
+            right: 0;
+        }
+
+        [dir='rtl'] .slick-next {
+            right: auto;
+            left: -25px;
+        }
+
+        .slick-next:before {
+            content: '→';
+        }
+
+        [dir='rtl'] .slick-next:before {
+            content: '←';
+        }
+
+        .pharmacy-home-slider {
+            position: relative;
+        }
+
+            .pharmacy-home-slider .swiper-container {
+                position: relative;
+                padding: 0 !important;
+                height: 450px;
+                min-height: inherit;
+            }
+
+                .pharmacy-home-slider .swiper-container:before {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 99;
+                    background-color: rgba(13, 13, 13, 0.33);
+                }
+
+            .pharmacy-home-slider .banner-wrapper {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                -webkit-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                padding: 0 15px;
+                z-index: 999;
+            }
+
+                .pharmacy-home-slider .banner-wrapper .banner-header h1,
+                .pharmacy-home-slider .banner-wrapper .banner-header p,
+                .pharmacy-home-slider .search-box .form-text {
+                    color: #fff;
+                }
+
+            .pharmacy-home-slider img {
+                max-width: 100%;
+                height: 100%;
+            }
+
+            .pharmacy-home-slider .swiper-pagination {
+                left: 50%;
+                transform: translateX(-50%);
+                -webkit-transform: translateX(-50%);
+                -ms-transform: translateX(-50%);
+                padding: 20px;
+            }
+
+        .sawyer .main-img {
+            background-color: var(--Gary2);
+            padding: 0px 0px !important;
+        }
+
+        svg {
+            width: 5%;
+        }
+
+        .upload_image {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+            /* margin-right: 22px; */
+            margin: 9px 0 13px 5px;
+        }
+
+        #uploadpdphot .provide-btn {
+            width: 167px;
+            font-size: 13px;
+        }
+
+        #uploadpdphot .provide-btn {
+            background-color: var(--yellow);
+            color: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 13px 10px;
+            width: 198px;
+            height: 50px;
+            border-radius: 25px;
+            font-size: 16px;
+            line-height: 150%;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .flex_content {
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .reviews_comit_sc {
+            display: flex;
+            line-height: 20px;
+        }
+
+        .color_list {
+            display: inline-block;
+            border-radius: 50%;
+            margin-top: 18px;
+            cursor: pointer;
+            margin-right: 4px;
+            width: 18px;
+            height: 18px;
+        }
+
+        .color_list_transform::after {
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            width: 100%;
+            height: 100%;
+            border: 1px solid #000;
+            content: '';
+            border-radius: 100px;
+            padding: 12px;
+        }
+
+        .color_list_transform {
+            transform: none;
+            position: relative;
+            z-index: 2;
+        }
+
+
+        /*reviews like count  style*/
+        .lblCartCount {
+            font-size: 12px;
+            background: #009B95;
+            color: #fff;
+            padding: 2px 6px;
+            vertical-align: top;
+            margin-left: -13px;
+            width: 20px;
+            height: 20px;
+            line-height: 16px;
+        }
+
+        .badgelabel {
+            padding-left: 9px;
+            padding-right: 9px;
+            -webkit-border-radius: 9px;
+            -moz-border-radius: 9px;
+            border-radius: 15px !important;
+        }
+
+        .badgelabel {
+            display: inline-block;
+            padding: 4px 6px;
+            font-size: .75em;
+            font-weight: 700;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: top;
+            border-radius: 0.25rem;
+            margin-left: -13px;
+        }
+
+
+
+        .carousel-inner img {
+            width: 100%;
+            height: 100%
+        }
+
+        #custCarousel .carousel-indicators {
+            position: static;
+            margin-top: 20px
+        }
+
+            #custCarousel .carousel-indicators > li {
+                width: 100px
+            }
+
+            #custCarousel .carousel-indicators li img {
+                display: block;
+                opacity: 0.5
+            }
+
+            #custCarousel .carousel-indicators li.active img {
+                opacity: 1
+            }
+
+            #custCarousel .carousel-indicators li:hover img {
+                opacity: 0.75
+            }
+
+        .carousel-item img {
+            width: 100%
+        }
+    </style>
+</head>
+
+
+
+
+
+
+@using (Html.BeginForm("AddtoCart", "Products", FormMethod.Post))
+{
+    <input name="ProductID" id="ProductID" value="@Model.GlassID" hidden />
+    <input name="price" id="price" value="@Model.Price" hidden />
+    <input name="Name" id="Name" value="@Model.Title" hidden />
+    <input name="Productcategory" id="Productcategory" value="@Model.ProductCategory" hidden />
+    <input name="UserID" value="@Convert.ToInt32(ViewBag.UserID)" hidden>
+
+
+    <!-- ::::navigation end:::::: -->
+    <section class="sawyer" data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1500">
+        <!-- ::::sawyer has-bg start:::::: -->
+        <div class="has-bg">
+            <div class="has-bg-3">
+                <img src="~/assets/img/product-details-bg/left-1.png" alt="img">
+            </div>
+            <div class="has-bg-4">
+                <img src="~/assets/img/product-details-bg/right-1.png" alt="img">
+            </div>
+        </div>
+
+        <!-- ::::sawyer has-bg ebd:::::: -->
+        <div class="container-fluid">
+
+
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-5" id="sliderdiv">
+
+                    <div id="custCarousel" class="carousel slide" data-interval="false" data-ride="carousel" align="center">
+
+                        @{int slidercount = 0; }
+                        @{int sliderthumbnailcount = 0; }
+
+                        @if (Model.ProductCategory != "Accessory")
+                        {
+                            <div class="carousel-inner" id="carousel-inner">
+                                @foreach (var item in ViewBag.Variationimages)
+                                {
+
+                                    slidercount++;
+
+                                    if (slidercount < 2)
+                                    {
+                                        Additionalinformationimage = @item.ImagePath;
+                                        <input name="Image" id="Image" value="@item.ImagePath" hidden />
+                                        <div class="carousel-item active"> <img src="@item.ImagePath" alt="Hills"> </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="carousel-item"> <img src="@item.ImagePath" alt="Hills"> </div>
+                                    }
+
+
+                                }
+
+
+                            </div>
+
+                            <a class="carousel-control-prev" href="#custCarousel" data-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                            </a> <a class="carousel-control-next" href="#custCarousel" data-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                            </a>
+                            <ol class="carousel-indicators list-inline" id="carousel-indicators">
+                                @foreach (var item in ViewBag.Variationimages)
+                                {
+                                    if (sliderthumbnailcount < 2)
+                                    {
+                                        <li onclick="showadditionalinformation('@item.ImagePath')" id="@item.VariationID-thmbimageslider" class="list-inline-item active"> <a id="carousel-selector-" @sliderthumbnailcount class="selected" data-slide-to="@sliderthumbnailcount" data-target="#custCarousel"> <img src="@item.ImagePath" class="img-fluid"> </a> </li>
+                                    }
+                                    else
+                                    {
+                                        <li onclick="showadditionalinformation('@item.ImagePath')" id="@item.VariationID-thmbimageslider" class="list-inline-item"> <a id="carousel-selector-" @sliderthumbnailcount class="selected" data-slide-to="@sliderthumbnailcount" data-target="#custCarousel"> <img src="@item.ImagePath" class="img-fluid"> </a> </li>
+                                    }
+                                    sliderthumbnailcount++;
+                                }
+
+
+                            </ol>
+                        }
+                        else
+                        {
+
+                            <div class="carousel-inner">
+                                @foreach (var item in ViewBag.Variation)
+                                {
+                                    slidercount++;
+                                    if (slidercount < 2)
+                                    {
+                                        Additionalinformationimage = @item.ImagePath;
+                                        <input name="Image" id="Image" value="@item.ImagePath" hidden />
+                                        <div id="@item.PictureID-imageslider" class="carousel-item active"> <img src="@item.ImagePath" alt="Hills"> </div>
+                                    }
+                                    else
+                                    {
+                                        <div id="@item.PictureID-imageslider" class="carousel-item"> <img src="@item.ImagePath" alt="Hills"> </div>
+                                    }
+                                }
+
+
+                            </div>
+
+                            <a class="carousel-control-prev" href="#custCarousel" data-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                            </a> <a class="carousel-control-next" href="#custCarousel" data-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                            </a>
+                            <ol class="carousel-indicators list-inline">
+                                @foreach (var item in ViewBag.Variation)
+                                {
+                                    if (sliderthumbnailcount < 2)
+                                    {
+                                        <li onclick="showadditionalinformation('@item.ImagePath')" id="@item.PictureID-thmbimageslider" class="list-inline-item active"> <a id="carousel-selector-" @sliderthumbnailcount class="selected" data-slide-to="@sliderthumbnailcount" data-target="#custCarousel"> <img src="@item.ImagePath" class="img-fluid"> </a> </li>
+                                    }
+                                    else
+                                    {
+                                        <li onclick="showadditionalinformation('@item.ImagePath')" id="@item.PictureID-thmbimageslider" class="list-inline-item"> <a id="carousel-selector-" @sliderthumbnailcount class="selected" data-slide-to="@sliderthumbnailcount" data-target="#custCarousel"> <img src="@item.ImagePath" class="img-fluid"> </a> </li>
+                                    }
+                                    sliderthumbnailcount++;
+                                }
+
+
+                            </ol>
+                        }
+                        <!-- slides -->
+
+                    </div>
+
+                    <br />
+                    @*start New Slider*@
+                    @*<ul id="lightSlider">
+
+
+
+                            @if (Model.ProductCategory != "Accessory")
+                            {
+                                foreach (var item in ViewBag.Variationimages)
+                                {
+                                    if (ViewBag.VariationID != 0)
+                                    {
+                                        if (item.VariationID == Convert.ToInt32(ViewBag.VariationID))
+                                        {
+                                            <li data-id="@item.VariationID-imageslider" data-vatiation="new" data-thumb="@item.ImagePath">
+                                                <a onclick="Changecolour(@item.VariationID,'@item.VariationID-colorli','@item.ImagePath','@item.Color1')">
+                                                    <img class="img.img-slider-product-details" src="@item.ImagePath" />
+                                                </a>
+                                            </li>
+
+
+
+                                        }
+                                        else
+
+                                        {
+
+                                            <li data-id="@item.VariationID-imageslider" data-vatiation="new" data-thumb="@item.ImagePath" style="display:none">
+                                                <a onclick="Changecolour(@item.VariationID,'@item.VariationID-colorli','@item.ImagePath','@item.Color1')">
+                                                    <img class="img.img-slider-product-details" src="@item.ImagePath" />
+                                                </a>
+                                            </li>
+
+                                        }
+
+
+                                    }
+                                    else
+                                    {
+
+                                        <li data-id="@item.VariationID-imageslider" data-vatiation="new" data-thumb="@item.ImagePath">
+                                            <a onclick="Changecolour(@item.VariationID,'@item.VariationID-colorli','@item.ImagePath','@item.Color1')">
+                                                <img class="img.img-slider-product-details" src="@item.ImagePath" />
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                foreach (var item in ViewBag.Variation)
+                                {
+                                    <li data-id="@item.PictureID-imageslider" data-vatiation="new" data-thumb="@item.ImagePath">
+                                        <a><img class="img.img-slider-product-details" src="@item.ImagePath" /></a>
+                                    </li>
+                                }
+                            }
+
+                        </ul>*@
+                    @*end new slider*@
+                    <a onclick="selectFrame('@Model.SKUNumber','@Model.GlassID')" style="color:white !important;width:100% !important" class="virtual"><img src="~/assets/img/virtual-icon.svg" alt="img">Virtual Try</a>
+                </div>
+
+
+                <!-- ::::Sawyer  images side start:::::: -->
+                @*<div class="col-md-5">*@
+                @*<div class="main-img">
+                        @foreach (var item in ViewBag.Variation)
+                        {
+                            if (ViewBag.VariationID != 0)
+                            {
+                                if (item.VariationID == Convert.ToInt32(ViewBag.VariationID))
+                                {
+                                    <input name="Image" id="Image" value="@item.ImagePath" hidden />
+                                    <img id="Main-Image" class="img-fluid" src="@item.ImagePath" alt="img">
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                <input name="Image" id="Image" value="@item.ImagePath" hidden />
+                                <img id="Main-Image" class="img-fluid" src="@item.ImagePath" alt="img">
+                                break;
+                            }
+
+                        }
+                    </div>*@
+
+                @*<div class="doctor-slider slider" id="variationslider">
+
+                        @if (Model.ProductCategory != "Accessory")
+                        {
+                            foreach (var item in ViewBag.Variationimages)
+                            {
+                                if (ViewBag.VariationID != 0)
+                                {
+                                    if (item.VariationID == Convert.ToInt32(ViewBag.VariationID))
+                                    {
+                                        <div class="profile-widget" id="@item.VariationID-imageslider">
+                                            <div class="doc-img">
+                                                <a onclick="Changecolour(@item.VariationID,'@item.VariationID-colorli','@item.ImagePath','@item.Color1')">
+                                                    <img id="slider-images" style="width:132px; height:auto" src="@item.ImagePath" class="img-fluid" alt="No Image">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+
+                                    {
+                                        <div class="profile-widget" id="@item.VariationID-imageslider" style="display:none">
+                                            <div class="doc-img">
+                                                <a onclick="Changecolour(@item.VariationID,'@item.VariationID-colorli','@item.ImagePath','@item.Color1')">
+                                                    <img id="slider-images" style="width:132px; height:auto" src="@item.ImagePath" class="img-fluid" alt="No Image">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
+
+
+                                }
+                                else
+                                {
+                                    <div class="profile-widget" id="@item.VariationID-imageslider">
+                                        <div class="doc-img">
+                                            <a onclick="Changecolour(@item.VariationID,'@item.VariationID-colorli','@item.ImagePath','@item.Color1')">
+                                                <img id="slider-images" style="width:132px; height:auto" src="@item.ImagePath" class="img-fluid" alt="No Image">
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            foreach (var item in ViewBag.Variationimages)
+                            {
+                                if (ViewBag.VariationID != 0)
+                                {
+                                    if (item.VariationID == Convert.ToInt32(ViewBag.VariationID))
+                                    {
+                                        <div class="profile-widget" id="@item.VariationID-imageslider">
+                                            <div class="doc-img">
+                                                <a onclick="Changecolour(0,'@item.PictureID-colorli','@item.ImagePath','')">
+                                                    <img id="slider-images" style="width:220px !important; height:173px !important" src="@item.ImagePath" class="img-fluid" alt="No Image">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="profile-widget" id="@item.VariationID-imageslider">
+                                        <div class="doc-img">
+                                            <a onclick="Changecolour(0,'@item.PictureID-colorli','@item.ImagePath','')">
+                                                <img id="slider-images" style="width:220px !important; height:173px !important" src="@item.ImagePath" class="img-fluid" alt="No Image">
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+
+                            }
+                        }
+                    </div>*@
+
+
+
+
+
+
+
+
+                @*<a onclick="selectFrame('');showhidevirtualtry('S',@Model.GlassID)" style="color:white !important;width:100% !important" class="virtual-btn"><img src="~/assets/img/virtual-icon.svg" alt="img">Virtual Try</a>*@
+
+                @*<a onclick="selectFrame('@Model.SKUNumber','@Model.GlassID')" style="color:white !important;width:100% !important" class="virtual"><img src="~/assets/img/virtual-icon.svg" alt="img">Virtual Try</a>*@
+
+                @*</div>*@
+                <!-- ::::Sawyer  images side end:::::: -->
+                <!-- ::::Sawyer-right details start:::::: -->
+                <div class="col-md-5">
+                    <div class="sawyer-right">
+
+                        <h2>@Model.Title </h2>
+                        <ul class="sawyer-rating">
+
+                            @for (int i = 0; i < 5; i++)
+                            {
+                                if (i < @ViewBag.AverageRating)
+                                {
+                                    <li><i style="color:orange" class="fa fa-star"></i></li>
+
+                                }
+                                else
+                                {
+                                    <li><i style="color:lightgrey" class="fa fa-star"></i></li>
+                                }
+                            }
+
+
+                            <li>(@ViewBag.Reviewscount Reviews)</li>
+                        </ul>
+                        <span>$@Model.Price</span>
+
+                        <br />
+
+                        @if (Model.ProductCategory != "Accessory")
+                        {
+                            foreach (var item in ViewBag.Variation)
+                            {
+                                if (ViewBag.VariationID != 0)
+                                {
+                                    if (item.VariationID == Convert.ToInt32(ViewBag.VariationID))
+                                    {
+                                        <p id="lblselectedcolor">Select Color:  @item.Color1 (@item.ColorCode)  </p>
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    <p style="display:none" id="lblselectedcolor">Select Color:  @item.Color1 (@item.ColorCode)  </p>
+                                    break;
+                                }
+                            }
+                        }
+
+
+
+
+                        @if (Model.ProductCategory != "Accessory")
+                        {
+
+                            <div class="color" id="maincolordiv">
+                                <ul>
+                                    @{int colorcount = 0; }
+                                    @foreach (var colors in ViewBag.Variation)
+                                    {
+                                        if (colorcount == 0)
+                                        {
+                                            <input name="color" id="txtcolors" value="@colors.Color1" hidden />
+                                            <input name="VariationId" id="VariationId" value="@colors.VariationID" hidden />
+                                            colorcount = colorcount + 1;
+                                            if (colors.VariationID == Convert.ToInt32(ViewBag.VariationID))
+                                            {
+                                                <li class="color_list color_list_transform" ID='@colors.VariationID-colorli' onclick="reloadvariationimages(@colors.ProductID,@colors.VariationID,'@colors.Color1','@colors.ColorCode','@colors.VariationID-size','@colors.VariationID-imageslider','@colors.VariationID-thmbimageslider');Changecolour(@colors.VariationID,'@colors.VariationID-colorli','@colors.ImagePath','@colors.Color1')" style="background-color: @colors.Color1"></li>
+                                            }
+                                            else
+                                            {
+                                                <li class="color_list" ID='@colors.VariationID-colorli' onclick="reloadvariationimages(@colors.ProductID,@colors.VariationID,'@colors.Color1','@colors.ColorCode','@colors.VariationID-size','@colors.VariationID-imageslider','@colors.VariationID-thmbimageslider');Changecolour(@colors.VariationID,'@colors.VariationID-colorli','@colors.ImagePath','@colors.Color1')" style="background-color: @colors.Color1"></li>
+                                            }
+
+                                        }
+                                        else
+
+                                        {
+                                            if (colors.VariationID == Convert.ToInt32(ViewBag.VariationID))
+                                            {
+                                                <li class="color_list color_list_transform" ID='@colors.VariationID-colorli' onclick="reloadvariationimages(@colors.ProductID,@colors.VariationID,'@colors.Color1','@colors.ColorCode','@colors.VariationID-size','@colors.VariationID-imageslider','@colors.VariationID-thmbimageslider');Changecolour(@colors.VariationID,'@colors.VariationID-colorli','@colors.ImagePath','@colors.Color1')" style="background-color: @colors.Color1"></li>
+                                            }
+                                            else
+                                            {
+                                                <li class="color_list" ID='@colors.VariationID-colorli' onclick="reloadvariationimages(@colors.ProductID,@colors.VariationID,'@colors.Color1','@colors.ColorCode','@colors.VariationID-size','@colors.VariationID-imageslider','@colors.VariationID-thmbimageslider');Changecolour(@colors.VariationID,'@colors.VariationID-colorli','@colors.ImagePath','@colors.Color1')" style="background-color: @colors.Color1"></li>
+                                            }
+
+                                        }
+
+
+
+
+                                    }
+
+
+                                </ul>
+                            </div>
+                            <div class="available-sizes">
+                                <h4>Available Sizes</h4>
+                                <a href="#pills-tab"> <p>Size Guide <i class="fas fa-info-circle"></i></p></a>
+                            </div>
+                            <div class="product-button ">
+                                @{int count = 0; }
+                                @foreach (var item in ViewBag.Variation)
+                                {
+                                    if (count == 0)
+                                    {
+
+                                        <input name="size" id="txtsizes" value="@item.size" hidden />
+                                        count = count + 1;
+
+                                        if (item.VariationID == Convert.ToInt32(ViewBag.VariationID))
+                                        {
+                                            <a style="margin-top:5px" id='@item.VariationID-size'
+                                               @*onclick="Getsize('@item.size','@item.VariationID-size')"*@
+                                               class="btn" href="#">@item.size @item.FrameAWidth - @item.FrameDBBridger - @item.FrameTempleLegs</a>
+                                        }
+                                        else
+                                        {
+                                            <a style="margin-top:5px" id='@item.VariationID-size'
+                                               @*onclick="Getsize('@item.size','@item.VariationID-size')"*@
+                                               class="btn bg-transparent">@item.size @item.FrameAWidth - @item.FrameDBBridger - @item.FrameTempleLegs</a>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (item.VariationID == Convert.ToInt32(ViewBag.VariationID))
+                                        {
+                                            <a style="margin-top:5px" id='@item.VariationID-size'
+                                               @*onclick="Getsize('@item.size','@item.VariationID-size')"*@
+                                               class="btn" href="#">@item.size @item.FrameAWidth - @item.FrameDBBridger - @item.FrameTempleLegs</a>
+                                        }
+                                        else
+                                        {
+                                            <a style="margin-top:5px" id='@item.VariationID-size'
+                                               @*onclick="Getsize('@item.size','@item.VariationID-size')"*@
+                                               class="btn bg-transparent" >@item.size @item.FrameAWidth - @item.FrameDBBridger - @item.FrameTempleLegs</a>
+                                        }
+
+                                    }
+
+
+
+                                    @*<a class="btn bg-transparent" href="#">42 - 21 - 140</a>*@
+                                }
+                            </div>
+                            <input name="type" id="type" value="1" hidden />
+                            <div class="sawyer-right-virtu">
+
+                                @if (ViewBag.ProductCategory != "Sunglass")
+                                {
+                                    if (Convert.ToInt32(ViewBag.UserID) != 0)
+                                    {
+                                        <a onclick="selectlenses(@Model.GlassID)" class="virtual" style="background: var(--Secondery-color); color: var(--white); width: 100% !important;">
+                                            <img class="me-3" src="~/assets/img/virtual-icon.svg" alt="img">select lenses
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="virtual" style="background: var(--Secondery-color); color: var(--white); width: 100% !important;">
+                                            <img class="me-3" src="~/assets/img/virtual-icon.svg" alt="img">select lenses
+                                        </a>
+                                    }
+                                }
+                                else
+                                {
+                                    <a></a>
+                                }
+
+
+
+                                @if (ViewBag.Isfav != null)
+                                {
+                                    <div class="icon">
+                                        <a href="@Url.Action("ProductFavourite", "Products", new { id = Model.GlassID })"> <i style="background-color:red !important;" class="far fa-heart heart-icon"></i></a>
+                                    </div> 
+                                    
+                                    }
+                                else
+                                {<div class="icon"><a href="@Url.Action("ProductFavourite", "Products", new { id = Model.GlassID })"><i class="far fa-heart"></i></a></div>}
+
+                            </div>
+                            if (Convert.ToInt32(ViewBag.UserID) != 0)
+                            {
+                                <button class="frame" type="submit" style=" width: 100% !important; ">frame only</button>
+                            }
+                            else
+                            {
+                                <a data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <button class="frame" type="submit" style=" width: 100% !important; ">frame only</button>
+                                </a>
+                            }
+                        }
+                        else if (Model.ProductCategory == "Accessory")
+                        {
+                            <input name="type" id="type" value="0" hidden />
+                            <div class="sawyer-right-virtu">
+                                @if (Convert.ToInt32(ViewBag.UserID) != 0)
+                                {
+                                    <button class="virtual" type="submit" style="background: var(--Secondery-color); color: var(--white); width: 85% !important;">
+                                        Add to Cart
+                                    </button>
+                                }
+                                else
+                                {
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        <button class="virtual" type="submit" style="background: var(--Secondery-color); color: var(--white); width: 85% !important;">
+                                            Add to Cart
+                                        </button>
+                                    </a>
+
+                                }
+                                @if (ViewBag.Isfav != null)
+                                {<div class="icon">
+                                        <a href="@Url.Action("ProductFavourite", "Products", new { id = Model.GlassID })"> <i style="background-color:red !important;" class="far fa-heart heart-icon"></i></a>
+                                    </div> }
+                                else
+                                {<div class="icon"><a href="@Url.Action("ProductFavourite", "Products", new { id = Model.GlassID })"><i class="far fa-heart"></i></a></div>}
+
+                            </div>
+                        }
+                        <div class="share">
+                            <h3>Share this</h3>
+                            <ul class="share-media">
+                                <li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://optical.yehtohoga.com/Products/Product_Details?Productid=@Model.GlassID "><i class="fab fa-facebook-f"></i></a></li>
+
+                                <li><a target="_blank" href="https://twitter.com/intent/tweet?text=https://optical.yehtohoga.com/Products/Product_Details?Productid=@Model.GlassID"><i class="fab fa-twitter active"></i></a></li>
+                                <li><a target="_blank" href="https://www.instagram.com/?url=https://optical.yehtohoga.com/Products/Product_Details?Productid=@Model.GlassID"><i class="fab fa-instagram"></i></a></li>
+                                <li><a target="_blank" href="https://printess.com/?url=https://optical.yehtohoga.com/Products/Product_Details?Productid=@Model.GlassID"><i class="fab fa-pinterest-p"></i></a></li>
+
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- ::::Sawyer-right details start:::::: -->
+
+            </div>
+        </div>
+    </section>
+}
+
+
+
+<!-- ::::Sawyer  end:::::: -->
+<!-- :::: additional start:::::: -->
+<section class="additional" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1500">
+    <!-- ::::additional has-bg start:::::: -->
+
+    <div class="has-bg">
+        <div class="has-bg-five">
+            <img src="~/assets/img/product-details-bg/left-2.png" alt="img">
+        </div>
+        <div class="has-bg-six">
+            <img src="~/assets/img/product-details-bg/right-2.png" alt="img">
+        </div>
+    </div>
+
+
+    <!-- ::::additional has-bg start:::::: -->
+
+    <div class="container">
+
+        <!-- :::: glasses nav&tabs start:::::: -->
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <!-- :::: glasses nav&tabs list:::::: -->
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                        aria-selected="true">
+                    additional information
+                </button>
+            </li>
+            <!-- :::: glasses nav&tabs list:::::: -->
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                        aria-selected="false">
+                    size guide
+                </button>
+            </li>
+            <!-- :::: glasses nav&tabs list:::::: -->
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact"
+                        aria-selected="false">
+                    Shipping & Returns
+                </button>
+            </li>
+        </ul>
+        <div class="tab-content additional-bg" id="pills-tabContent">
+            <!-- :::: glasses nav&tabs details:::::: -->
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <h2>Additional Information</h2>
+                        <p>
+                            @Model.AdditionalInfo
+                        </p>
+                        @if (Model.ProductCategory != "Accessory")
+                        {
+                            <div class="list">
+                                <ul>
+                                    <li>Model:</li>
+                                    <li> Name:</li>
+                                    <li> Material: </li>
+                                    <li> Gender: </li>
+                                    <li> Shape: </li>
+                                </ul>
+                                <ul>
+                                    <li> @Model.Manufacturer</li>
+                                    <li> @Model.Title</li>
+                                    <li> @Model.Material</li>
+                                    <li>@Model.Gender</li>
+                                    <li>@Model.shape</li>
+
+                                </ul>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="list">
+                                <ul>
+                                    <li>Model:</li>
+                                    <li> Name:</li>
+
+                                </ul>
+                                <ul>
+                                    <li> @Model.Manufacturer</li>
+                                    <li> @Model.Title</li>
+
+
+                                </ul>
+                            </div>
+                        }
+                    </div>
+                    @foreach (var item in ViewBag.Variation)
+                    {
+                        <div class="col-md-6">
+                            @*<img id="Activeproductimage" class="img-fluid" src="@item.ImagePath" alt="img">*@
+                            <img id="Activeproductimage" class="img-fluid" src="@Additionalinformationimage" alt="img">
+                        </div>
+                        break;
+                    }
+
+                </div>
+
+            </div>
+            <!-- :::: glasses nav&tabs details:::::: -->
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6 col-md-12">
+                        <h2>Size Guide</h2>
+                        <table class="table table-sm mt-4">
+                            <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col" class="table-header">Rang in MM</th>
+                                    <th scope="col" class="table-header">Rang in Inch</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+
+                                    <td class="table-list">Small</td>
+                                    <td>0 to 130 MM</td>
+                                    <td>0 to 5.1 inch</td>
+                                </tr>
+                                <tr>
+                                    <td class="table-list">Medium</td>
+                                    <td>131 to 135 MM</td>
+                                    <td>5.1 to 5.32 inch</td>
+                                </tr>
+                                <tr class="last-item">
+                                    <td class="table-list">Learg</td>
+                                    <td>Greater then 136MM</td>
+                                    <td>Greater then 5.3 2Inch</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                        <div class="what-is">
+                            <h3>What is my size?</h3>
+                            <div class="option ">
+                                <ul>
+                                    <li>Option 1: Musure you</li>
+                                    <li>Current frames</li>
+                                </ul>
+                                <ul>
+                                    <li>Option 1: Musure you</li>
+                                    <li>Current frames</li>
+                                </ul>
+                            </div>
+                            <div class="size-img">
+                                <div class="size-left-img">
+                                    <div class="size-left-shape">
+                                        <img class="size-left-shape-one" src="~/assets/img/size-lefr-shape-one.png"
+                                             alt="img">
+                                        <img class="size-left-shape-two" src="~/assets/img/size-lefr-shape-two.png"
+                                             alt="img">
+                                        <img class="size-left-shape-three" src="~/assets/img/size-shape.png"
+                                             alt="img">
+                                    </div>
+                                    <div class="size-left-main-img">
+                                        <img src="~/assets/img/size-left-main-img.png" alt="img">
+                                    </div>
+                                </div>
+                                <div class="size-right-img">
+                                    <div class="size-right-shape">
+                                        <img class="size-right-line-one" src="~/assets/img/size-right-line-one.png"
+                                             alt="img">
+                                        <img class="size-right-line-two" src="~/assets/img/size-right-line-two.png"
+                                             alt="img">
+                                        <img class="size-right-shape-one" src="~/assets/img/size-shape.png" alt="img">
+                                    </div>
+                                    <div class="size-main-main-img">
+                                        <img src="~/assets/img/size-right-main-img.png" alt="img">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- :::: glasses nav&tabs details:::::: -->
+            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <h3>Delivery</h3>
+                        <p>
+
+                            Direct Vision will deliver the Product to the address provided by the Customer in a commercially viable manner as quickly and efficiently as reasonably possible. In some instances, an order may be delayed. Delays may include a lack of Product in stock, product requiring special handling or prescription information needing to be verified. Delays may also be due to issue with a third-party shipping company. Direct Vision holds no responsibility to delays under any circumstance. Once Product is in stock they should be shipped within 1-2 business days and will arrive within the time estimate provided for your chosen shipping method. If you are dissatisfied with the delivery time, your sole remedy and recourse is to return the Product in accordance with our return policy.
+                        </p>
+
+                    </div>
+                    <div class="col-md-12">
+                        <h3>Returns and Exchanges</h3>
+                        <p>
+
+                            Direct Vision offers a 14 day return policy on all eyewear. To make a return simply contact us within 14 days for your request to be processed. Please ship the product back to us as soon a possible to receive your refund. Glasses or sunglasses must be returned in their original and unworn conditions. Returns of glasses or sunglasses made after 14 days are subject to a restocking fee. Direct Vision has the right to deny returns or exchanges, in very rare circumstances, based on the nature of your prior transactions. Direct Vision is not responsible for refunding the cost of shipping but may cover this cost at the company’s discretion.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- :::: glasses nav&tabs start:::::: -->
+
+    </div>
+</section>
+<!-- :::: additionalend:::::: -->
+<!-- :::: reviews start:::::: -->
+<section class="reviews">
+    <div class="has-bg">
+        <div class="has-bg-28">
+            <img src="~/assets/img/product-details-bg/left-3.png" alt="img">
+        </div>
+        <div class="has-bg-27">
+            <img src="~/assets/img/product-details-bg/right-3.png" alt="img">
+        </div>
+    </div>
+    <div class="container custum-pd2">
+        <!-- :::: reviews title start:::::: -->
+        <div class="reviews-title">
+            <h2>Customer reviews  <span id="lblcustomerreview">(@ViewBag.Reviewscount)</span></h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vel elit ridiculus crornare. Egeadipiscing
+                libero eget nec sed mauris. Sed ac, massa viverra tellus elementum tortor egestas at lorem nunc
+                consectetur mauris.
+            </p>
+        </div>
+        <!-- :::: reviews title end:::::: -->
+
+        @*:::: reviews imges start::::::*@
+        <div id="reviews-imges-section" class="owl-carousel owl-theme reviews-imges" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1500">
+
+
+
+
+            @foreach (var item in ViewBag.Reviewslist)
+            {
+                if (item.ReviewImage != null)
+                {
+                    <div class="item review-box-img" style="background-image: url('@item.ReviewImage');">
+                        <img class="img-fluid review-img" src="@item.ReviewImage" alt="img">
+                    </div>
+
+                }
+
+            }
+
+
+        </div>
+        @*:::: reviews imges end::::::
+            :::: reviews avarage-bg start::::::*@
+
+        <div class="avarage-bg" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1500" id="averagrratingstars">
+            <h2>Average Rating</h2>
+            <ul id="avergaestarul">
+
+
+                @for (int i = 0; i < 5; i++)
+                {
+                    if (i < @ViewBag.AverageRating)
+                    {
+                        <li><i style="color:orange" class="fa fa-star"></i></li>
+
+                    }
+                    else
+                    {
+                        <li><i style="color:lightgrey" class="fa fa-star"></i></li>
+                    }
+                }
+                <li id="lblaveragerating">(@ViewBag.AverageRating)</li>
+            </ul>
+            @if (Session["UserID"] != null)
+            {
+                <h4 onclick="showhidereviewsection()">
+
+                    <svg width="19" height="15" viewBox="0 0 19 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 4H11V6H0V4ZM0 2H11V0H0V2ZM0 10H7V8H0V10ZM15.01 6.87L15.72 6.16C16.11 5.77 16.74 5.77 17.13 6.16L17.84 6.87C18.23 7.26 18.23 7.89 17.84 8.28L17.13 8.99L15.01 6.87ZM14.3 7.58L9 12.88V15H11.12L16.42 9.7L14.3 7.58Z"
+                              fill="#00B0DC" />
+                    </svg> Write a review
+
+                </h4>
+            }
+            else
+            {
+                <h4>
+
+                    <svg onclick="@Url.Action("Login","Account")" width="19" height="15" viewBox="0 0 19 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0 4H11V6H0V4ZM0 2H11V0H0V2ZM0 10H7V8H0V10ZM15.01 6.87L15.72 6.16C16.11 5.77 16.74 5.77 17.13 6.16L17.84 6.87C18.23 7.26 18.23 7.89 17.84 8.28L17.13 8.99L15.01 6.87ZM14.3 7.58L9 12.88V15H11.12L16.42 9.7L14.3 7.58Z"
+                              fill="#00B0DC" />
+                    </svg> Write a review
+
+                </h4>
+            }
+            @*@using (Html.BeginForm("SaveReview", "Products", FormMethod.Post, new
+                {
+                    enctype = "multipart/form-data"
+                }))
+                {@Html.AntiForgeryToken()*@
+
+            <div class="card" style="display:none;" id="reviewsection">
+                <div class="card-body">
+                    <div class="form-group">
+                        <div>
+                            <input name="GlassID" id="GlassID" value="@Model.GlassID" hidden>
+
+                            <input name="UserID" id="txtUserId" value="@Convert.ToInt32(ViewBag.UserID)" hidden>
+                            <div class="flex_content">
+                                <div class="reviews_comit_sc">
+                                    <p class="reviews_comit_text">Review</p>
+                                    <div class="star-rating">
+                                        <input id="star-1" type="radio" name="rating" value="5" onclick="updaterating(5)">
+                                        <label for="star-1" title="1 stars">
+                                            <i class="active fa fa-star"></i>
+                                        </label>
+                                        <input id="star-2" type="radio" name="rating" value="4" onclick="updaterating(4)">
+                                        <label for="star-2" title="2 stars">
+                                            <i class="active fa fa-star"></i>
+                                        </label>
+                                        <input id="star-3" type="radio" name="rating" value="3" onclick="updaterating(3)">
+                                        <label for="star-3" title="3 stars">
+                                            <i class="active fa fa-star"></i>
+                                        </label>
+                                        <input id="star-4" type="radio" name="rating" value="2" onclick="updaterating(2)">
+                                        <label for="star-4" title="4 stars">
+                                            <i class="active fa fa-star"></i>
+                                        </label>
+                                        <input id="star-5" type="radio" name="rating" value="1" onclick="updaterating(1)">
+                                        <label for="star-5" title="5 star">
+                                            <i class="active fa fa-star"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                @*<div class="uplode_sc">
+                        <div class="provide-item provide-item2" style="float:right !important">
+
+
+                            <ul class="list-inline">
+
+                                <li class="list-inline-item">
+                                    <div class="uploded-btn-area" id="uploadpdphot">
+                                        <label class="provide-btn">
+                                            <input data-default-file="/assets/img/review_default.png" name="ReviewImage" id="ReviewImage" class="form-control" type="file" tabindex="0" onchange="show(this)">
+                                            upload photo
+                                        </label>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>*@
+                            </div>
+
+                        </div>
+
+                        <input value="0" id="Rating" hidden />
+
+                    </div>
+                    @*<label>Review</label>*@
+                    <small style="color:red !important;font-weight:bold;font-size:14px !important " id="ErrorReviewMessage"> </small>
+
+                    <div class="review_cam_profile">
+
+                        <textarea id="Review" name="Review" style="width:100% !important" rows="5" required> </textarea>
+                        <div class="uplode_photo_svw">
+                            <label for="ReviewImage">
+                                <div class="show_profile" id="upload-section">
+                                    <img id="imgshow2" class="review_cam_img" src="~/assets/img/review-cam.jpeg" alt="review-cam">
+                                    <p> Upload Photo </p>
+                                    <input type="file" class="d-none form-control form-control-file" id="ReviewImage" name="ReviewImage" onchange="show(this)">
+                                </div>
+                            </label>
+                            <div style="" id="show_profile" class="show_profile preview">
+                                <a onclick="hideshowreview()" class="close_profile"></a>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <br />
+
+
+
+                    <br />
+
+
+                    @*<img id="ImagePath" src="~/assets/img/review_default.png" class="upload_image" />
+        <br />*@
+                    <div class="submit-section">
+
+                        <button onclick="Savereview()" type="button" class="btn btn-primary submit-btn">Add Review</button>
+
+                    </div>
+                </div>
+            </div>
+            @*}*@
+        </div>
+        <!-- :::: reviews avarage-bg start:::::: -->
+        @*Rating Section*@
+
+
+
+
+        <div class="row" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1500">
+
+            <!-- :::: reviews nav&tabs start:::::: -->
+            <div class="col-lg-9 order-1 order-lg-0">
+
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <!-- :::: reviews nav&tabs list:::::: -->
+                        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
+                                data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
+                                aria-selected="true">
+                            All Reviews <span id="lbltotalreviews">(@ViewBag.Reviewscount)</span>
+                        </button>
+                        <input id="txttotalreviews" hidden value="@ViewBag.Reviewscount" />
+                        <!-- :::: reviews nav&tabs list:::::: -->
+                        @*<button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab"
+                                    data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile"
+                                    aria-selected="false">
+                                Images (@ViewBag.Reviewsimagescount)
+                            </button>*@
+                    </div>
+                </nav>
+
+
+                <div class="tab-content" id="nav-tabContent">
+                    <!-- :::: reviews nav&tabs details:::::: -->
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                         aria-labelledby="nav-home-tab">
+
+                        @foreach (var item in ViewBag.Reviewslist)
+                        {
+                            <div class="row reletive" id="divreview_@item.ReviewID">
+                                <div class="col-lg-8">
+                                    <div class="rating-left repply">
+                                        <div class="hawkins">
+                                            <img class="img-fluid hawkins-img" src="@item.UserImage" alt="img">
+                                            <div class="hawkins-details">
+
+                                                <h4>@item.UserName</h4>
+                                                <ul>
+                                                    <li>@item.CreatedDate</li>
+                                                    @*<li> 10:30 AM</li>*@
+                                                </ul>
+                                                <p>
+                                                    @item.Review
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="comment_reviews">
+                                        <div class="hawkins-icon">
+                                            <ul>
+                                                @for (int i = 0; i < 5; i++)
+                                                {
+                                                    if (i < @item.Rating)
+                                                    {
+                                                        <li><i style="color:orange" class="fa fa-star"></i></li>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <li><i style="color:lightgrey" class="fa fa-star"></i></li>
+                                                    }
+                                                }
+
+
+                                            </ul>
+                                            @{int reviewlikecount = 0; }
+                                            @{int reviewlikecountfigure = 0; }
+                                            @if (Session["UserID"] != null)
+                                            {
+
+
+                                                foreach (var likescount in ViewBag.ReviewsLikecount)
+                                                {
+                                                    if (likescount.ReviewID == item.ReviewID)
+                                                    {
+                                                        reviewlikecountfigure++;
+                                                    }
+
+                                                }
+
+                                                foreach (var likes in ViewBag.ReviewsLike)
+                                                {
+
+                                                    if (likes.ReviewID == item.ReviewID)
+                                                    {
+                                                        reviewlikecount = 1;
+                                                        @*<a href="@Url.Action("UpdateLikes", "Products", new { item.ReviewID, item.GlassID })">*@
+
+                                                        if (Convert.ToInt32(UserID) == Convert.ToInt32(likes.UserID))
+                                                        {
+                                                            <a onclick="Updatelikecount('txtlikecountstatus_@item.ReviewID',@item.ReviewID,@item.GlassID,@Convert.ToInt32(ViewBag.UserID),'vote_@item.ReviewID','lblCartCount_@item.ReviewID','txtlikecount_@item.ReviewID')">
+                                                                <i style="background-color:red;color:white" id="vote_@item.ReviewID" style="" class="far fa-heart heart-icon"></i>
+                                                                <span class="badgelabel badge-warning lblCartCount " id="lblCartCount_@item.ReviewID"> @reviewlikecountfigure </span>
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a onclick="Updatelikecount('txtlikecountstatus_@item.ReviewID',@item.ReviewID,@item.GlassID,@Convert.ToInt32(ViewBag.UserID),'vote_@item.ReviewID','lblCartCount_@item.ReviewID','txtlikecount_@item.ReviewID')">
+                                                                <i id="vote_@item.ReviewID" style="" class="far fa-heart heart-icon"></i>
+                                                                <span class="badgelabel badge-warning lblCartCount " id="lblCartCount_@item.ReviewID"> @reviewlikecountfigure </span>
+                                                            </a>
+                                                        }
+
+
+
+                                                        <input hidden value="1" id="txtlikecountstatus_@item.ReviewID" />
+                                                        break;
+                                                    }
+                                                }
+                                                if (reviewlikecount == 0)
+                                                {
+                                                    @*<a href="@Url.Action("UpdateLikes", "Products", new { item.ReviewID, item.GlassID })">*@
+                                                    <a onclick="Updatelikecount('txtlikecountstatus_@item.ReviewID',@item.ReviewID,@item.GlassID,@Convert.ToInt32(ViewBag.UserID),'vote_@item.ReviewID','lblCartCount_@item.ReviewID','txtlikecount_@item.ReviewID')">
+                                                        <i id="vote_@item.ReviewID" style="" class="far fa-heart heart-icon"></i>
+                                                        <span class="badgelabel badge-warning lblCartCount" id="lblCartCount_@item.ReviewID"> @reviewlikecountfigure </span>
+                                                    </a>
+                                                    <input hidden value="0" id="txtlikecountstatus_@item.ReviewID" />
+                                                }
+                                            }
+                                            <input hidden value="@reviewlikecountfigure" id="txtlikecount_@item.ReviewID" />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+                    </div>
+                    <!-- :::: reviews nav&tabs details:::::: -->
+                    @*<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            @foreach (var item in ViewBag.Reviewslist)
+                            {
+                                if (@item.ReviewImage != "" && @item.ReviewImage != null)
+                                {
+                                    <div class="row reletive">
+                                        <div class="col-lg-8">
+                                            <div class="rating-left repply">
+                                                <div class="hawkins">
+                                                    <img class="img-fluid hawkins-img" src="@item.UserImage" alt="img">
+                                                    <div class="hawkins-details">
+
+                                                        <h4>@item.UserName</h4>
+                                                        <ul>
+                                                            <li>@item.CreatedDate</li>
+
+                                                        </ul>
+                                                        <p>
+                                                            @item.Review
+                                                        </p>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="comment_reviews">
+                                                <div class="hawkins-icon">
+                                                    <ul>
+                                                        @for (int i = 0; i < 5; i++)
+                                                        {
+                                                            if (i < @item.Rating)
+                                                            {
+                                                                <li><i class="active fa fa-star"></i></li>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <li><i class="fa fa-star"></i></li>
+                                                            }
+                                                        }
+
+
+                                                    </ul>
+
+                                                    @{int reviewlikecount = 0; }
+
+                                                    @{int reviewlikecountimagefigure = 0;}
+
+
+                                                    @if (Session["UserID"] != null)
+                                                    {
+                                                        foreach (var likescountimage in ViewBag.ReviewsLikecount)
+                                                        {
+                                                            if (likescountimage.ReviewID == item.ReviewID)
+                                                            {
+                                                                reviewlikecountimagefigure++;
+                                                            }
+
+                                                        }
+                                                        foreach (var likes in ViewBag.ReviewsLike)
+                                                        {
+                                                            if (likes.ReviewID == item.ReviewID)
+                                                            {
+                                                                reviewlikecount = 1;
+                                                                <a href="@Url.Action("UpdateLikes", "Products", new { item.ReviewID, item.GlassID })">
+                                                                    <i style="background-color:red !important;color:white !important" class="far fa-heart heart-icon"></i>
+                                                                    <span class="badgelabel badge-warning" id="lblCartCount"> @reviewlikecountimagefigure </span>
+                                                                </a>
+                                                                break;
+                                                            }
+
+                                                        }
+
+                                                        if (reviewlikecount == 0)
+                                                        {<a href="@Url.Action("UpdateLikes", "Products", new { item.ReviewID, item.GlassID })">
+                                                                <i style="background-color:#f2f2f2 !important;color:red !important" class="far fa-heart heart-icon"></i>
+                                                                <span class="badgelabel badge-warning" id="lblCartCount"> @reviewlikecountimagefigure </span>
+                                                            </a>
+
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            }
+
+                        </div>*@
+                </div>
+
+            </div>
+            <!-- :::: reviews nav&tabs start:::::: -->
+            <!-- :::: reviews recent-oldest start:::::: -->
+
+            <div class="col-lg-3 order-0 order-lg-1">
+
+
+            </div>
+            <!-- :::: reviews recent-oldest end:::::: -->
+
+        </div>
+
+    </div>
+</section>
+<!-- :::: reviews end:::::: -->
+<!-- ::::products start:::::: -->
+<!-- ::::products start:::::: -->
+<section class="products products-page-two  products-details-one products-details-one-area">
+    <!-- ::::products has-bg start:::::: -->
+    <div class="has-bg">
+        <div class="has-bg-29">
+            <img src="~/assets/img/product-details-bg/left-4.png" alt="img">
+        </div>
+        <div class="has-bg-30">
+            <img src="~/assets/img/product-details-bg/right-4.png" alt="img">
+        </div>
+    </div>
+    <!-- ::::products has-bg end:::::: -->
+    <div class="container custum-pd2">
+        <div class="products-title-might text-center">
+            <div class="title">
+                <h2>You Might Also Like</h2>
+            </div>
+        </div>
+        <div class="product-bg bg-transparent p-0">
+
+            <div class="row g-4">
+
+                @{int Count = 0;}
+                @{int Duplicatecheck = 0;}
+                @foreach (var item in ViewBag.ProductList)
+                {
+                    if (Count < 5)
+                    {
+                        Count = Count + 1;
+                        if (Duplicatecheck != @item.GlassID)
+                        {
+                            <div class="col-lg-3 col-md-6">
+                                <div class="product-item" id="Product_Items">
+                                    <div class="img">
+                                        @if (item.Sticker == "Hot")
+                                        {
+                                            <a class="bg-danger wishlist-link" href="@Url.Action("Product_Details", "Products", new { Productid = @item.GlassID })"><i class="fas fa-fire bg"></i> @item.Sticker</a>
+                                        }
+                                        @if (item.Sticker == "New Arrival")
+                                        {
+                                            <a class="wishlist-link bg-secondary" href="@Url.Action("Product_Details", "Products", new { Productid = @item.GlassID })">@item.Sticker</a>
+                                        }
+                                        @if (item.Sticker == "Top Seller")
+                                        {
+                                            <a class="wishlist-link wishlist-link-premium" href="@Url.Action("Product_Details", "Products", new { Productid = @item.GlassID })"><i class="fas fa-crown bg"></i> @item.Sticker</a>
+                                        }
+                                        <div class="img-wgt">
+                                            <img id="@item.GlassID-image-color" class="img-fluid" src="@item.ImagePath" alt="ig">
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <div class="details">
+                                        <div class="product-info-shot">
+                                            <h6><a target="_blank" href="@Url.Action("Product_Details", "Products", new { Productid = @item.GlassID })">@item.Title </a></h6>
+                                        </div>
+
+                                        <p>$@item.Price</p>
+                                        <div class="color">
+                                            <ul>
+                                                @foreach (var colors in ViewBag.ProductList)
+                                                {
+                                                    Duplicatecheck = Convert.ToInt32(@item.GlassID);
+                                                    if (item.GlassID == colors.GlassID)
+                                                    {
+                                                        <li onclick="Changecolour1('@colors.GlassID-image-color','@colors.ImagePath')" style="background-color: @colors.ColorCode"></li>
+                                                    }
+
+                                                }
+
+
+                                            </ul>
+                                            <div class="icon">
+                                                @{int likecount = 0; }
+                                                @foreach (var likes in ViewBag.ProductList)
+                                                {
+                                                    if (item.GlassID == likes.GlassID && likes.Likestatus == 1)
+                                                    {
+                                                        likecount = 1;
+                                                        <a href="#"> <i style="background-color:red !important;color:white !important" class="far fa-heart heart-icon"></i></a>
+                                                        break;
+                                                    }
+
+                                                }
+                                                @if (likecount == 0)
+                                                {<a> <i style="background-color:black !important;color:white !important" class="far fa-heart heart-icon"></i></a>
+
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <!--::::::products single item:::::: -->
+                    }
+                }
+
+
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-8">
+            <div id="Alertdiv" class="myAlert-bottom alert alert-success">
+                <strong style="font-size:18px" id="Message"></strong>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- ::::products end:::::: -->
+<!-- ::::products end:::::: -->
+<!-- ::::  has-radious:::::: -->
+@*<div class="has-radious">
+        <div class="radious-one">
+            <a href="#">
+
+                <img src="~/assets/img/chat.svg" alt="chat">
+            </a>
+        </div>
+    </div>*@
+<!-- ::::  has-radious end:::::: -->
+<!-- /Main Wrapper -->
+<script src="~/Slider_Assets/js/jquery.min.js"></script>
+<!-- Bootstrap Core JS -->
+<script src="~/Slider_Assets/js/popper.min.js"></script>
+<script src="~/Slider_Assets/js/bootstrap.min.js"></script>
+<!-- Slick JS -->
+<script src="~/Slider_Assets/js/slick.js"></script>
+<script src="~/Slider_Assets/js/select2.min.js"></script>
+<!-- Custom JS -->
+<script src="~/Slider_Assets/js/script.js"></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js'></script>
+<script src='https://sachinchoolur.github.io/lightslider/dist/js/lightslider.js'></script>
+<!-- Custom JS -->
+@*<script src="~/Slider_Assets/js/script.js"></script>*@
+
+@*<script src="~/assets/js/jquery-1.12.4.min.js"></script>*@
+<script>
+    $('#lightSlider').lightSlider({
+        gallery: true,
+        item: 1,
+        loop: true,
+        slideMargin: 0,
+        thumbItem: 9
+    });
+</script>
+
+<script>
+
+
+    function showadditionalinformation(imagepath)
+    {
+        document.getElementById("Activeproductimage").src = imagepath;
+        $("#Image").val(imagepath);
+    }
+
+
+
+
+    //$('.carousel-control-next-icon').on('click', function () {
+
+    //    var innerbody = $('.carousel-item.active img:eq(0)').attr("src");
+    //    document.getElementById("Activeproductimage").src = innerbody;
+    //});
+
+
+        $('.carousel-control-next-icon').on('click', function () {
+            setTimeout(function () {
+                var innerbody = $('.carousel-item.active img:eq(0)').attr("src");
+                $("#Image").val(innerbody);
+                document.getElementById("Activeproductimage").src = innerbody; }, 2000);
+        });
+
+
+    $('.carousel-control-prev-icon').on('click', function () {
+
+        setTimeout(function () {
+            var innerbody = $('.carousel-item.active img:eq(0)').attr("src");
+            $("#Image").val(innerbody);
+            document.getElementById("Activeproductimage").src = innerbody;
+        }, 2000);
+
+    });
+
+    //$('.lSGallery .active').on('click', function () {
+
+    //    var innerbody = $('li.lslide.active img:eq(0)').attr("src");
+    //    document.getElementById("Activeproductimage").src = innerbody;
+    //});
+
+
+    $(document).ready(function () {
+
+        $('.slick-slider').slick({
+            accessibility: false
+        });
+        //setTimeout(function (){ alert(" 5 seconds! Alert"); }, 5000);
+        //$('#custCarousel').carousel({
+        //    interval: false,
+        //});
+
+        //$("#carousel-inner div").remove();
+        //$("#carousel-indicators li").remove();
+
+
+
+
+
+
+        /*console.log("I am read");*/
+        //$('.lSGallery li').each(function (i) {
+        //    console.log("Result:" + i);
+        //    i++;
+        //    console.log("Paretid" + $("#lightSlider li:nth-child(" + i + ")").data("id"));
+        //    var parentid = $("#lightSlider li:nth-child(" + i + ")").data("id");
+
+        //    $(this).attr("data-id", parentid);
+        //    /*pcount = i;*/
+        //});
+
+       /* $("#reviews-imges-section .owl-stage-outer .owl-stage div").remove();*/
+        /*on slider image click set active image to additional information*/
+
+
+        //$('ul.lSGallery li').click(function (e) {
+        //    var innerbody = $('li.lslide.active img:eq(0)').attr("src");
+        //    document.getElementById("Activeproductimage").src = innerbody;
+        //});
+
+
+        //var elements = document.getElementsByClassName('lslide active');
+        //console.log("elements:" + elements[0].data("thumb"));
+        //$('.lslide').each(function () {
+        //    console.log("Attribute" + $(this).attr('data-vatiation'));
+        //});
+
+        /*read active slider image and set to additional information*/
+        //var innerbody = $('li.lslide.active img:eq(0)').attr("src");
+        //document.getElementById("Activeproductimage").src = innerbody;
+
+        /*$(".owl-stage-outer").append("<p>Testting</p>")*/
+
+
+        //var image = "/ProjectImages/Variations/Cricket.jpg";
+        //$('#reviews-imges-section').append($('<div  class="item review-box-img" style="background-image: url(' + image + ');"><img  class="img-fluid review-img" src="/ProjectImages/Variations/Cricket.jpg" alt="image description" width="168.857px" /><div class="carousel-caption"></div></div>'));
+
+
+
+        /*lslide active*/
+
+
+
+
+        var VariationID = @Html.Raw(Json.Encode(ViewBag.VariationID));
+
+
+        //if (VariationID != "0")
+        //{
+        //    VariationID = VariationID + "-imageslider";
+        //    var elements = document.getElementsByClassName('profile-widget');
+
+        //    for (var i = 0; i < elements.length; i++) {
+        //        if (VariationID != elements[i].id) {
+        //            elements[i].style.display = "none";
+        //        }
+        //        else {
+        //            elements[i].style.display = "inline-block";
+        //        }
+        //    }
+        //}
+
+    });
+
+
+    function reloadvariationimages(Poductid, variationid, Color1, ColorCode, variationsize, sliderimages,thmbimageslider) {
+
+        //var base_url = window.location.origin;
+        //var link = base_url + "/Products/Product_Details/?Productid=" + Poductid + "&vid=" + variationid;
+        //window.location.href = link;
+        //return;
+
+
+        $("#carousel-inner div").remove();
+        $("#carousel-indicators li").remove();
+
+        var slides = "";
+        var indicators = "";
+
+        var model = { variationid: variationid };
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Variationimages", "Products")',
+                data: JSON.stringify(model),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+
+                    for (var i = 0; i < result.length; i++)
+                    {
+                        var mainslideid = result[i].VariationID + "-imageslider";
+                        if (i < 1) {
+                            $("#Image").val(result[i].ImagePath);
+                            document.getElementById("Activeproductimage").src = result[i].ImagePath;
+                            slides += "<div id=" + mainslideid + " class='carousel-item active'> <img src='" + result[i].ImagePath + "' alt='Hills'> </div>";
+                        }
+                        else {
+                            slides += "<div id=" + mainslideid + " class='carousel-item'> <img src='" + result[i].ImagePath + "' alt='Hills'> </div>";
+                        }
+
+                    }
+
+                    for (var j = 0; j < result.length; j++) {
+                        var subslideid = result[j].VariationID + "-thmbimageslider";
+                        var slideid = "carousel-selector-" + result[j].VariationID;
+                        if (j < 1) {
+                            indicators += "<li onclick=showadditionalinformation('" + result[j].ImagePath + "') id=" + subslideid + " class='list-inline-item active'>\
+                                        <a id='"+ slideid + "' class='selected' data-slide-to='" + j + "' data-target='#custCarousel' > <img src='" + result[j].ImagePath + "' class='img-fluid'></a>\
+                                        </li>";
+                        }
+                        else {
+                            indicators += "<li onclick=showadditionalinformation('" + result[j].ImagePath + "') id=" + subslideid + " class='list-inline-item'>\
+                                        <a id='"+ slideid + "' class='selected' data-slide-to='" + j + "' data-target='#custCarousel' > <img src='" + result[j].ImagePath + "' class='img-fluid'></a>\
+                                        </li>";
+                        }
+
+                    }
+
+
+                    $("#carousel-inner").append(slides);
+                    $("#carousel-indicators").append(indicators);
+                }
+            });
+
+        $('.product-button a').addClass('bg-transparent');
+        $('#' + variationsize).removeClass('bg-transparent');
+        $("#lblselectedcolor").fadeIn();
+        document.getElementById("lblselectedcolor").innerHTML = "Select Color:  " + Color1 + " ( " + ColorCode + " )";
+
+
+
+        //var slides = "<div id='24-imageslider' class='carousel-item active'> <img src='/ProjectImages/Variations/1.png' alt='Hills'> </div>\
+        //<div id='24-imageslider' class='carousel-item '> <img src='/ProjectImages/Variations/2.png' alt='Hills'> </div>\
+        //<div id='24-imageslider' class='carousel-item '> <img src='/ProjectImages/Variations/additional-right-img.png' alt='Hills'> </div>";
+
+        //var indicators = "<li id='24-thmbimageslider' class='list-inline-item active'>\
+        //<a id='carousel-selector-0' class='selected' data-slide-to='0' data-target='#custCarousel' > <img src='/ProjectImages/Variations/1.png' class='img-fluid'></a>\
+        //</li>\
+        //<li id='24-thmbimageslider' class='list-inline-item active'>\
+        //<a id='carousel-selector-1' class='selected' data-slide-to='1' data-target='#custCarousel' > <img src='/ProjectImages/Variations/2.png' class='img-fluid'></a>\
+        //</li>\
+        //<li id='24-thmbimageslider' class='list-inline-item active'>\
+        //<a id='carousel-selector-2' class='selected' data-slide-to='2' data-target='#custCarousel' > <img src='/ProjectImages/Variations/additional-right-img.png' class='img-fluid'></a>\
+        //</li>";
+
+        //$("#carousel-inner").append(slides);
+        //$("#carousel-indicators").append(indicators);
+
+
+
+
+
+
+
+
+
+        //var elements = document.getElementsByClassName('carousel-item');
+
+
+        //for (var i = 0; i < elements.length; i++) {
+        //    if (sliderimages != elements[i].id)
+        //    {
+        //        elements[i].style.display = "none";
+        //    }
+        //    else
+        //    {
+        //        elements[i].removeAttribute("style");
+
+        //        if (i < 1) {
+        //            elements[i].classList.add("active");
+        //        }
+        //        /*elements[i].style.display = "block";*/
+        //    }
+        //}
+
+
+        //var thumbelements = document.getElementsByClassName('list-inline-item');
+
+        //for (var i = 0; i < thumbelements.length; i++) {
+
+        //    if (thmbimageslider != thumbelements[i].id) {
+        //        thumbelements[i].style.display = "none";
+        //    }
+        //    else {
+
+        //        thumbelements[i].removeAttribute("style");
+        //        if (i < 1) {
+        //            thumbelements[i].classList.add("active");
+        //        }
+
+        //    }
+        //}
+
+
+    }
+
+
+
+
+    function Updatelikecount(statusvalue,ReviewID,GlassID,UserID,votesection,countsection)
+    {
+
+
+        var status = $("#txtlikecountstatus_"+ReviewID).val();
+
+        var model = {
+            status: status,
+            ReviewID: ReviewID,
+            GlassID: GlassID,
+            UserID: UserID
+        };
+
+        $.ajax({
+           type: "POST",
+            url: '@Url.Action("UpdateLikes", "Products")',
+              data: JSON.stringify(model),
+              contentType: "application/json; charset=utf-8",
+              dataType: "json",
+            success: function (result) {
+
+                if (status == 0) {
+                    document.getElementById("Message").innerHTML = " <i class='fa fa-check-circle'></i> Review Liked";
+                    document.getElementById("Message").style.color = "#3c763d";
+                    document.getElementById("Alertdiv").style.backgroundColor = '#d4edda';
+                    document.getElementById("Alertdiv").style.borderColor = "#c3e6cb";
+                    $("#Alertdiv").fadeIn();
+                    $("#Alertdiv").fadeOut(8000);
+
+                    document.getElementById(countsection).innerHTML = result;
+                    $("#txtlikecount_"+ReviewID).val(result);
+                    $("#txtlikecountstatus_"+ReviewID).val(1);
+                    var element = document.getElementById(votesection);
+                    element.style.backgroundColor = "red";
+                    element.style.color = "white";
+                }
+                else if (status ==1) {
+                    document.getElementById("Message").innerHTML = " <i class='fa fa-times-circle'></i> Review Unlike";
+                    document.getElementById("Message").style.color = "white";
+                    document.getElementById("Alertdiv").style.backgroundColor = '#ef0255';
+                    document.getElementById("Alertdiv").style.borderColor = "#ef0255";
+                    $("#Alertdiv").fadeIn();
+                    $("#Alertdiv").fadeOut(8000);
+
+                    document.getElementById(countsection).innerHTML = result;
+                    $("#txtlikecount_" + ReviewID).val(result);
+                    $("#txtlikecountstatus_" + ReviewID).val(0);
+
+                    var element = document.getElementById(votesection);
+                    element.style.backgroundColor = "#f2f2f2";
+                    element.style.color = "red";
+
+                }
+
+
+            }
+        });
+    }
+
+    function Savereview()
+    {
+        if (window.FormData !== undefined) {
+
+            $("#ErrorReviewMessage").fadeOut();
+            var totalreviews = $("#txttotalreviews").val();
+            var fileUpload = $("#ReviewImage").get(0);
+            var files = fileUpload.files;
+
+            // Create FormData object
+            var fileData = new FormData();
+
+
+                for (var i = 0; i < files.length; i++) {
+
+                    fileData.append(files[i].name, files[i]);
+                }
+
+
+
+            // Looping over all files and add it to FormData object
+
+            var UserID = $("#txtUserId").val();
+            var GlassID = $("#GlassID").val();
+            var Rating = $("#Rating").val();
+            var Review = $("#Review").val();
+      
+
+            if (Review == " ") {
+                document.getElementById("ErrorReviewMessage").innerHTML = "Please enter something.";
+                $("#ErrorReviewMessage").fadeIn();
+                return;
+            }
+            // Adding one more key to FormData object
+            fileData.append('UserID', UserID);
+            fileData.append('GlassID', GlassID);
+            fileData.append('Rating', Rating);
+            fileData.append('Review', Review);
+
+
+            var img = document.createElement('img');
+            var userimg = document.createElement('img');
+            $.ajax({
+                url: '/Products/SaveReview',
+                type: "POST",
+                contentType: false, // Not to set any content header
+                processData: false, // Not to process data
+                data: fileData,
+                dataType: "json",
+                success: function (result) {
+                    
+                    $("#ReviewImage").val('');
+                    var datevalue = new Date(parseInt(result.data.CreatedDate.replace("/Date(", "").replace(")/", ""), 10));
+                    var todayDate = new Date(datevalue);
+                    var format = "AM";
+                    var hour = todayDate.getHours();
+                    var min = todayDate.getMinutes();
+                    if (hour > 11) { format = "PM"; }
+                    if (hour > 12) { hour = hour - 12; }
+                    if (hour == 0) { hour = 12; }
+                    if (min < 10) { min = "0" + min; }
+                    var Month = todayDate.getMonth() + 1;
+                    var CreatedDate = Month + "/" + todayDate.getDate() + "/" + todayDate.getFullYear() + " " + hour + ":" + min + " " + format;
+
+
+                    img.src = result.data.ReviewImage;
+                    userimg.src = result.data.UserImage;
+                    var reviewsection = "";
+                    reviewsection = '<div class="row reletive" >\
+                                    <div class="col-lg-8">\
+                                    <div class="rating-left repply">\
+                                        <div class="hawkins">\
+                                            <img class="img-fluid hawkins-img" src='+ userimg.src+' alt="img" />\
+                                            <div class="hawkins-details">\
+                                                <h4 id="divreview_'+ result.data.ReviewID +'">'+result.data.UserName+'</h4>\
+                                                <ul><li>'+CreatedDate+'</li></ul>\
+                                                <p>'+result.data.Review+'</p>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                    <div class="comment_reviews">\
+                                        <div class="hawkins-icon">\
+                                            <ul>'
+                                                for (var i = 0; i < 5; i++)
+                                                {
+                                                    if (i < result.data.Rating)
+                                                    {
+                                                        reviewsection += '<li><i style="color:orange" class="fa fa-star"></i></li>'
+
+                                                    }
+                                                    else
+                                                    {
+                                                        reviewsection += '<li><i style="color:lightgrey" class="fa fa-star"></i></li>'
+                                                    }
+                                                }
+                                            reviewsection += '</ul>\
+                                                            <a onclick=Updatelikecount("txtlikecountstatus_'+result.data.ReviewID+'",'+result.data.ReviewID+','+result.data.GlassID+','+UserID+',"vote_'+result.data.ReviewID+'","lblCartCount_'+result.data.ReviewID+'","txtlikecount_'+result.data.ReviewID+'")>\
+                                                                <i id="vote_'+result.data.ReviewID+'" style="background-color:#f2f2f2 !important;" class="far fa-heart heart-icon"></i>\
+                                                                <span class="badgelabel badge-warning lblCartCount" id="lblCartCount_'+result.data.ReviewID+'">0</span>\
+                                                            </a>\
+                                                        <input hidden value="0" id="txtlikecountstatus_'+ result.data.ReviewID +'" />\
+                                                        <input hidden value="0" id="txtlikecount_'+result.data.ReviewID+'" />\
+                                        </div>\
+                                    </div>\
+                                </div>\
+                    </div>'
+                    $("#nav-home").append(reviewsection);
+
+
+                    /*Add review image to slider*/
+
+                    //var image = img.src;
+                    //$('#reviews-imges-section').append($('<div  class="item review-box-img" style="background-image: url(' + image + ');"><img  class="img-fluid review-img" src='+image+' alt="image description" width="168.857px" /><div class="carousel-caption"></div></div>'));
+
+
+
+                    /*$("#reviews-imges-section .owl-stage-outer .owl-stage .owl-item cloned").append("<p>asaadsad</p>");*/
+
+                    
+                    /*Temporary Comment*/
+                    if (result.data.ReviewImage != null)
+                    {
+                        if (result.Totalimagereviews < 2) {
+                            var image = "'" + result.data.ReviewImage + "'";
+                            $('#reviews-imges-section .owl-stage-outer .owl-stage').append($('<div class="owl-item" style="width: 168.857px;"> <div  class="item review-box-img" style="background-image: url(' + image + ');"><img  class="img-fluid review-img" src=' + image + ' alt="image description" /><div class="carousel-caption"></div></div></div>'));
+                        }
+                        else
+                        {
+                            $("div.owl-item.cloned").last().remove();
+                            var image = "'" + result.data.ReviewImage + "'";
+                            $('#reviews-imges-section .owl-stage-outer .owl-stage').append($('<div class="owl-item" style="width: 168.857px;"> <div  class="item review-box-img" style="background-image: url(' + image + ');"><img  class="img-fluid review-img" src=' + image + ' alt="image description" /><div class="carousel-caption"></div></div></div>'));
+                            $('#reviews-imges-section .owl-stage-outer .owl-stage').append($('<div class="owl-item cloned" style="width: 168.857px;"> <div  class="item review-box-img" style="background-image: url(' + image + ');"><img  class="img-fluid review-img" src=' + image + ' alt="image description" /><div class="carousel-caption"></div></div></div>'));
+                        }
+
+                        
+                    }
+
+
+
+                    document.getElementById("Message").innerHTML = " <i class='fa fa-check-circle'></i> Review Added";
+                    document.getElementById("Message").style.color = "#3c763d";
+                    document.getElementById("Alertdiv").style.backgroundColor = '#d4edda';
+                    document.getElementById("Alertdiv").style.borderColor = "#c3e6cb";
+                    $("#Alertdiv").fadeIn();
+                    $("#Alertdiv").fadeOut(8000);
+
+                    var x = document.getElementById("reviewsection");
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+                    } else {
+                        x.style.display = "none";
+                    }
+                    $("#Review").val("");
+                    img.src = "/assets/img/review_default.png";
+                    /*document.getElementById("ImagePath").src = img.src*/
+                    document.getElementById("ReviewImage").value = null;
+
+                    //if (result.data.ReviewImage != null)
+                    //{
+                    //    img.src = result.data.ReviewImage;
+                    //    $("#reviews-imges-section").append("<img class='img-fluid review-img' src='" + img.src+"' alt='img'/>");
+                    //}
+                    totalreviews = parseInt(totalreviews) + parseInt(1);
+                    $("#txttotalreviews").val(totalreviews);
+                    document.getElementById("lbltotalreviews").innerHTML = "(" + totalreviews + ")";
+                    document.getElementById("lblcustomerreview").innerHTML = "(" + result.Totalimagereviews + ")";
+
+                    /*document.getElementById("lblaveragerating").innerHTML = "(" + result.Averagerating + ")";*/
+
+                    $("#averagrratingstars #avergaestarul li").remove();
+                    var avergarating = "";
+                    for (var i = 0; i < 5; i++)
+                    {
+                        if (i < result.Averagerating)
+                        {
+                            avergarating += "<li><i style='color:orange' class='fa fa-star'></i></li>";
+                        }
+                        else
+                        {
+                            avergarating += "<li><i style='color:lightgrey' class='fa fa-star'></i></li>";
+                        }
+                    }
+                    avergarating += "<li id='lblaveragerating'>(" + result.Averagerating + ")</li>";
+
+                    $("#averagrratingstars #avergaestarul").append(avergarating);
+                    //const element = document.getElementById("divreview_"+result.data.ReviewID);
+                    //element.scrollIntoView();
+
+
+                    document.getElementById("show_profile").style.display = "none";
+                    document.getElementById("upload-section").style.display = "block";
+
+                },
+                error: function (err) {
+                    console.log(err.statusText);
+                }
+            });
+        }
+        else
+        {
+            console.log("FormData is not supported.");
+        }
+
+    }
+
+
+    function MovetoOrdercart() {
+
+         var link = "@Url.Action("MovetoOrdercart", "Products", new{ id = "id"})";
+        link = link.replace('id', parseInt(@UserID));
+        link = link.replace(/&amp;/g, '&');
+        window.location.href = link;
+    }
+    //$(document).ready(function () {
+    //    var params1 = {
+
+    //        apiKey: '8vRQ2lPFc4Y75D78jzrmzfCzu0spL8EKIPrqfbth',
+
+
+    //    };
+    //    var selectFrame = function () {
+
+    //        // show the popup
+    //        document.getElementById('popupContainer1').style.display = 'block';
+
+    //        // init fitmix if this is the first selection
+    //        if (!window.myFitmixWidget) {
+    //            // create fitmix only once
+    //            myFitmixWidget = FitMix.createWidget('fitmixContainer1', params1, function () {
+    //                // setFrame when FitMix is ready
+    //                myFitmixWidget.setFrame('')
+    //            });
+    //        } else {
+    //            // set frame on FitMix
+    //            myFitmixWidget.setFrame('')
+    //            myFitmixWidget.resumeStream(); // -> resume the stream after a pauseStream
+    //            //myFitmixWidget.openCamera(); // -> open the camera after a closeCamera, user on safari will be prompted again to allow camera access
+    //        }
+
+    //    };
+
+    //});
+    //var params1 = {
+
+    //    apiKey: '8vRQ2lPFc4Y75D78jzrmzfCzu0spL8EKIPrqfbth',
+
+
+    //};
+    //var selectFrame = function (frame) {
+
+    //    // show the popup
+    //    document.getElementById('popupContainer1').style.display = 'block';
+
+    //    // init fitmix if this is the first selection
+    //    if (!window.myFitmixWidget) {
+    //        // create fitmix only once
+    //        myFitmixWidget = FitMix.createWidget('fitmixContainer1', params1, function () {
+    //            // setFrame when FitMix is ready
+    //            myFitmixWidget.setFrame(frame)
+    //        });
+    //    } else {
+    //        // set frame on FitMix
+    //        myFitmixWidget.setFrame(frame)
+    //        myFitmixWidget.resumeStream(); // -> resume the stream after a pauseStream
+    //        //myFitmixWidget.openCamera(); // -> open the camera after a closeCamera, user on safari will be prompted again to allow camera access
+    //    }
+
+    //};
+    function selectlenses(GlassID) {
+
+        var Image = $("#Image").val();
+        var txtcolors = $("#txtcolors").val();
+        var txtsizes = $("#txtsizes").val();
+        var variationid = $("#VariationId").val();
+        var txtUserId = $("#txtUserId").val();
+        var Productcategory = $("#Productcategory").val();
+
+          var link = "@Url.Action("Orderprocessing", "Products",new{ Productid = "pid", VariationId = "vid", Image = "mid", size = "sid", USID = "UID", Productcategory="PC"})";
+        link = link.replace('pid', GlassID);
+        link = link.replace('vid', variationid);
+        link = link.replace('mid', Image);
+        link = link.replace('sid', txtsizes);
+        link = link.replace('UID', txtUserId);
+        link = link.replace('PC', Productcategory);
+        link = link.replace(/&amp;/g, '&');
+
+
+                       window.location.href = link;
+
+    }
+    function Getsize(size, sizeid) {
+        $('.product-button a').addClass('bg-transparent');
+
+        if (document.getElementById(sizeid).classList.contains("bg-transparent")) {
+            $('#' + sizeid).removeClass('bg-transparent');
+            $("#txtsizes").val(size);
+        }
+
+
+
+    }
+    function show(input) {
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                /*$('#ImagePath').attr('src', e.target.result);*/
+
+                document.getElementById("upload-section").style.display = "none";
+                document.getElementById("show_profile").style.display="block"
+                document.getElementById("show_profile").style.backgroundImage = "url(" + e.target.result + ")";
+
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+    function hideshowreview() {
+        document.getElementById("show_profile").style.display = "none";
+        document.getElementById("upload-section").style.display = "block";
+
+        $("#ReviewImage").val('');
+
+    }
+    function updaterating(rating) {
+
+        $("#Rating").val();
+        $("#Rating").val(rating);
+    }
+
+
+    function showhidereviewsection() {
+        var x = document.getElementById("reviewsection");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+
+        document.getElementById("show_profile").style.display = "none";
+        document.getElementById("upload-section").style.display = "block";
+
+        $("#ReviewImage").val('');
+    }
+
+
+    function Changecolour(VariationID,colorid, imgurl, colorname) {
+        $("#Image").val(imgurl);
+        $("#maincolordiv ul li").removeClass('color_list_transform');
+        $('#' + colorid).addClass('color_list_transform');
+        /*document.getElementById(colorid).style = "background-color:"+colorname+"; transform: scale(1.2, 1.3)";*/
+        /*document.getElementsByTagName("H1")[0].setAttribute("class", "democlass");*/
+        $("#txtcolors").val(colorname);
+        $("#VariationId").val(VariationID);
+        /*document.getElementById('Main-Image').src = imgurl;*/
+
+        //$("#variationslider div").remove();
+
+        //var variationsliderimages = "";
+
+        //variationsliderimages="<div class='profile-widget'>\
+        //                        <div class='doc-img'>\
+        //                            <a onclick='Changecolour(1,'1-colorli','','')'>\
+        //                                            <img id='slider-image' style='width:132px; height:auto' src='/ProjectImages/Variations/2.jpg' class='img-fluid' alt='No Image'dd>\
+        //                                        </a>\
+        // <a onclick='Changecolour(1,'1-colorli','','')'>\
+        //                                            <img id='slider-image' style='width:132px; height:auto' src='/ProjectImages/Variations/4.jpg' class='img-fluid' alt='No Image'dd>\
+        //                                        </a>\
+        //<a onclick='Changecolour(1,'1-colorli','','')'>\
+        //                                            <img id='slider-image' style='width:132px; height:auto' src='/ProjectImages/Variations/5.jpg' class='img-fluid' alt='No Image'dd>\
+        //                                        </a>\
+        //                                    </div>\
+        //                                </div>"
+        //$("#variationslider").append(variationsliderimages);
+    }
+    function Changecolour1(colorid, imgurl) {
+
+
+        document.getElementById(colorid).src = imgurl;
+    }
+</script>

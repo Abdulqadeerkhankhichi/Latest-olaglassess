@@ -1,0 +1,329 @@
+﻿
+@{
+    ViewBag.Title = "Sunglassess";
+}
+
+@{
+    ViewBag.Title = "Sunglassess";
+    List<string> genderlist = new List<string>();
+    List<string> materiallist = new List<string>();
+    List<string> sizelist = new List<string>();
+    List<string> shapelist = new List<string>();
+}
+<head>
+
+    @*<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>*@
+    <style>
+        .contact-btn {
+            display: inline-block !important;
+            /* padding: 14px 24px; */
+            width: 135px;
+            height: 50px;
+            border-radius: 28px;
+            background-color: var(--yellow);
+            color: var(--white);
+            border: 1px solid var(--yellow);
+            font-size: 16px;
+            transition: .4s;
+            margin-top: 38px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<!-- ::::products-hero-aria  start:::::: -->
+<section class="products-hero-aria hero-banner-img custum-mg">
+    <!-- ::::hero-banner-img start:::::: -->
+    <div class="content-product hero-banner-img">
+        <h1 data-aos="fade-down" data-aos-easing="linear" data-aos-duration="1500">Working on this graphics </h1>
+    </div>
+    <!-- ::::hero-banner-img end:::::: -->
+</section>
+<!-- ::::products-hero-aria  end:::::: -->
+<!-- ::::products start:::::: -->
+<section class="products products-page">
+    <!-- ::::products has-bg start:::::: -->
+    <div class="has-bg">
+        <div class="has-bg-five">
+            <img src="~/assets/img/product-bg/left-1.png" alt="img">
+        </div>
+        <div class="has-bg-six">
+            <img src="~/assets/img/product-bg/right-1.png" alt="img">
+        </div>
+    </div>
+    <div class="has-bg has-bg2">
+        <div class="has-bg-five">
+            <img src="~/assets/img/product-bg/right-2.png" alt="img">
+        </div>
+        <div class="has-bg-six">
+            <img src="~/assets/img/product-bg/left-2.png" alt="img">
+        </div>
+    </div>
+    <!-- ::::season has-bg start:::::: -->
+    
+    <!-- ::::season has-bg ebd:::::: -->
+    <!-- ::::products has-bg end:::::: -->
+    <div class="container custum-pd2">
+
+        <div class="product-bg  products-page-one-bg p-0">
+            <br/>
+            <div class="display-by">
+                <ul class="prooduct-design">
+                    @*<li>Brands</li>
+                <li>Sizes</li>
+                <li>Color</li>
+                <li>prices</li>
+                <li>Close</li>*@
+                </ul>
+                <div class="group">
+                    <span>Display by :</span>
+                    <img id="col-6" class="group1" src="/assets/img/col-6-grey.png" alt="img" onclick="changeproductsdiv(6,'/assets/img/col-6-green.png','/assets/img/col-3-grey.png')">
+                    <img id="col-3" class="group1" src="/assets/img/col-3-green.png" alt="img" onclick="changeproductsdiv(3,'/assets/img/col-6-grey.png','/assets/img/col-3-green.png')">
+                </div>
+            </div>
+            <br/>
+            <div class="row g-4" id="product-rows">
+                <!-- ::::products single item:::::: -->
+
+
+                @{int Duplicatecheck = 0;}
+                @if (ViewBag.ProductList != null)
+                {
+                    foreach (var item in ViewBag.ProductList)
+                    {
+
+                        if (Duplicatecheck != @item.GlassID)
+                        {
+                            Duplicatecheck = @item.GlassID;
+                            <div class="col-lg-3" id="product_style">
+                                <div class="product-item" id="Product_Items">
+                                    <div class="img">
+
+                                        <div class="img-wgt">
+                                            <img onmouseover="sideviewimage('@item.GlassID-image-color','@item.SideViewImagePath')" onmouseout="originalimage('@item.GlassID-image-color','@item.ImagePath')" onclick="Productdetails(@item.GlassID)" id="@item.GlassID-image-color" class="img-fluid" src="@item.ImagePath" alt="ig"> 
+                                        </div>
+                                       
+
+                                    </div>
+
+
+                                    <div class="details">
+                                        <div class="product-info-shot">
+                                            <h6><a target="_blank" href="@Url.Action("Product_Details","Products",new { Productid=@item.GlassID})">@item.Title </a></h6>
+                                        </div>
+                                        
+
+                                        <div class="color">
+                                            <p>$@item.Price</p>
+                                            <div class="icon">
+                                                @{int likecount = 0; }
+                                                @foreach (var likes in ViewBag.ProductList)
+                                                {
+                                                    if (item.GlassID == likes.GlassID && likes.Likestatus == 1)
+                                                    {
+                                                        likecount = 1;
+                                                        <a id='@item.GlassID-Favourite' onclick="UpdateFavourite(@item.GlassID,'black','@item.GlassID-Favourite')"> <i style="background-color:red !important;color:white !important" class="far fa-heart heart-icon"></i></a>
+                                                        break;
+                                                    }
+
+                                                }
+                                                @if (likecount == 0)
+                                                {
+                                                    if (Session["UserID"] != null)
+                                                    {
+                                                        <a id='@item.GlassID-Favourite' onclick="UpdateFavourite(@item.GlassID,'Red','@item.GlassID-Favourite')">
+                                                            <i style="background-color:black !important;color:white !important" class="far fa-heart heart-icon"></i>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a class="tooltip" id='@item.GlassID-Favourite' onclick="UpdateFavourite(@item.GlassID,'Red','@item.GlassID-Favourite')">
+                                                            <i style="background-color:black !important;color:white !important" class="far fa-heart heart-icon"></i>
+                                                            <span class="tooltiptext">Please login to add the product in the wishlist</span>
+                                                        </a>
+                                                    }
+
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <!--::::::products single item:::::: -->
+
+                    }
+                }
+
+
+
+
+
+            </div>
+            <div class="col-lg-8 mx-auto ">
+                <div class="pagination pagination-bg d-flex align-items-center justify-content-center">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid custum-pd ">
+
+    </div>
+</section>
+
+  
+
+
+<!-- ::::season end:::::: -->
+<!-- ::::servie start:::::: -->
+<section class="service ">
+    <!-- ::::servie has-bg start:::::: -->
+    <div class="has-bg">
+        <div class="has-bg-19">
+            <img src="~/assets/img/product-bg/right-4.png" alt="img">
+        </div>
+        <div class="has-bg-20">
+            <img src="~/assets/img/product-bg/left-4.png" alt="img">
+        </div>
+    </div>
+    <!-- ::::servie has-bg end:::::: -->
+    <!-- ::::servie has-bg end:::::: -->
+    <div class="container custum-pd2">
+        <div class="row">
+            <!-- ::::servie single item:::::: -->
+            <div class="col-lg-4">
+                <div class="service-item" data-aos="fade-right" data-aos-duration="3000">
+                    <div class="icon">
+
+                        <img style="width:79px;height:80px" src="~/assets/img/eye-glasses1.png" alt="icon">
+                    </div>
+                    <h4>
+                        BEST GLASSES AT BEST PRICE
+                    </h4>
+                    <p>
+                        We offer the best quality frames and lenses at the most affordable price. We already supply to
+                        Clinics in Hawai’i and are trusted by thousands of people who buy  from us every year.
+                    </p>
+                </div>
+            </div>
+            <!-- ::::servie single item:::::: -->
+            <div class="col-lg-4">
+                <div class="service-item" data-aos="fade-up" data-aos-duration="3000">
+                    <div class="icon">
+                        <img style="width:79px;height:80px" src="~/assets/img/Free_Shipping.png" alt="icon">
+                    </div>
+                    <h4>fAST SHIPPING fROM HAWAII </h4>
+                    <p>
+                        We are hased in Hawai’i. All our product is completed in Hawai’i and therefore arrives at your door withing days of placing an order
+
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="service-item" data-aos="fade-left" data-aos-duration="3000">
+                    <div class="icon">
+
+                        <img style="width:79px;height:80px" src="~/assets/img/Insurance.png" alt="icon">
+
+                    </div>
+                    <h4>INSURANCE REIMBURSEMENT</h4>
+                    <p>
+                        First online glasses company that uses your vision insurance reducing your cost even further.
+                        We accept : VSP, Eyemed, Aetna, Davis Vision etc.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+<!-- ::::servie end:::::: -->
+<!-- ::::  has-radious:::::: -->
+@*<div class="has-radious">
+    <div class="radious-one">
+        <a href="#">
+
+            <img src="~/assets/img/chat.svg" alt="chat">
+        </a>
+    </div>
+</div>*@
+<script src="~/assets/js/jquery-1.12.4.min.js"></script>
+<script>
+
+    function sideviewimage(imageid, imagepath) {
+
+        if (imagepath != "") {
+            document.getElementById(imageid).src = imagepath;
+        }
+
+    }
+
+    function originalimage(imageid, imagepath) {
+        document.getElementById(imageid).src = imagepath;
+    }
+
+       function Productdetails(productid) {
+         var link = "@Url.Action("Product_Details", "Products",new{ Productid = "pid"})";
+        link = link.replace('pid', productid);
+        window.location.href = link;
+    }
+
+
+    function changeproductsdiv(type, col2image, col3image) {
+
+
+
+        if (type == 3) {
+            $("#product-rows div").removeClass("col-lg-6");
+            $("#product-rows #product_style").addClass("col-lg-3");
+            document.getElementById('col-6').src = col2image;
+            document.getElementById('col-3').src = col3image;
+        }
+        else if (type == 6) {
+            $("#product-rows div").removeClass("col-lg-3");
+            $("#product-rows #product_style").addClass("col-lg-6");
+            document.getElementById('col-6').src = col2image;
+            document.getElementById('col-3').src = col3image;
+        }
+
+
+        //if (document.getElementById('product_style').classList.contains("col-lg-3")) {
+
+        //    $("#product-rows div").removeClass("col-lg-3");
+
+        //    $("#product-rows #product_style").addClass("col-lg-6");
+
+        //}
+        //else if (document.getElementById('product_style').classList.contains("col-lg-6")) {
+
+        //}
+
+
+
+
+    }
+    $(document).ready(function () {
+
+        jQuery('.js-example-basic-single').select2();
+        $("ul li a").removeClass("active");
+        $('#Accessories').addClass('active');
+    });
+
+
+    function Changecolour(colorid, imgurl) {
+
+        /*        $("#Product_Items img").remove();*/
+        /*var img = document.createElement('img');*/
+        /*img.src = "/assets/img/index-bg/prouduct-7.png";*/
+        /*$("#Product_Items .img").append("<img class='img-fluid' src='" + img.src + "' alt='ig' />");*/
+        document.getElementById(colorid).src = imgurl;
+    }
+</script>
