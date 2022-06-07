@@ -134,7 +134,7 @@ namespace Olaglasses.Controllers
             if (Image != null)
             {
                 var ext = Path.GetExtension(Image.FileName);
-                string myfile = user.Firstname + "_" + user.UserID + ext;
+                string myfile = user.Firstname.Trim() + "_" + user.UserID + ext;
                 var path = Path.Combine(Server.MapPath("~/ProjectImages/UserImages"), myfile);
                 var path1 = Path.Combine(("\\ProjectImages\\UserImages"), myfile);
                 user.UserImage = path1;
@@ -145,7 +145,7 @@ namespace Olaglasses.Controllers
             if (ImageCoverPhoto != null)
             {
                 var ext = Path.GetExtension(ImageCoverPhoto.FileName);
-                string myfile = user.Firstname + "_" + user.UserID + ext;
+                string myfile = user.Firstname.Trim() + "_" + user.UserID + ext;
                 var path = Path.Combine(Server.MapPath("~/ProjectImages/UserCoverImages"), myfile);
                 var path1 = Path.Combine(("/ProjectImages/UserCoverImages/"), myfile);
                 user.CoverPhoto = path1;

@@ -1,6 +1,6 @@
 ﻿@using Olaglasses.Models;
 @{
-    List<spgetorderDetails_Result1> spgetorderDetails = (List<spgetorderDetails_Result1>)ViewBag.OrderDetails;
+    List<spgetorderDetails_Result3> spgetorderDetails = (List<spgetorderDetails_Result3>)ViewBag.OrderDetails;
     Layout = null;
 }
 <head>
@@ -376,10 +376,10 @@
                         <li>$@item.ProductPrice</li>
                     </ul>
 
-                    <ul>
+                    @*<ul>
                         <li>Glassess order#  @item.OrderID</li>
                         <li>$@item.ProductPrice</li>
-                    </ul>
+                    </ul>*@
                     <ul>
                         <li>Frame</li>
                         <li>$@item.ProductPrice</li>
@@ -402,10 +402,22 @@
                     {
                         <ul>
                             <li>Uv Protection</li>
-                            
-                                <li>$20</li>
-                            
+
+                            <li>$20</li>
+
                         </ul>
+                    }
+                    @if (Convert.ToInt32(item.ExtraAmount) > 0)
+                    {
+                        <ul>
+                            <li>Extra Charges</li>
+
+                            <li>$15</li>
+
+                        </ul>
+                      
+
+
                     }
                 </div>
                         }
@@ -422,7 +434,7 @@
                         <div class="Subtotal">
                             <ul class="active">
                                 <li>Subtotal</li>
-                                <li>$@item.Subtotal</li>
+                                <li>$@item.ProductTotal</li>
                             </ul>
                         </div>
                     }
@@ -455,7 +467,7 @@
                     <li>$@item.Discount</li>
                 </ul>}
                     <div class="total-order">
-                        <h6>order Total</h6>
+                        <h6>Order Total</h6>
                         <h6>$@item.TotalAmount</h6>
                     </div>
 

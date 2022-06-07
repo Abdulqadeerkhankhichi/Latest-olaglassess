@@ -144,7 +144,7 @@ namespace Olaglasses.Controllers
         [Customexception]
         public ActionResult OrderDetails(int? id = 1)
         {
-            List<spgetorderDetails_Result1> spgetorderDetails = dbEntity.spgetorderDetails(id).ToList();
+            List<spgetorderDetails_Result3> spgetorderDetails = dbEntity.spgetorderDetails(id).ToList();
             ViewBag.OrderDetails = spgetorderDetails;
             return View();
 

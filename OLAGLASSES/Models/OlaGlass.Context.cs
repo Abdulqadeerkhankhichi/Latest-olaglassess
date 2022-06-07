@@ -112,13 +112,13 @@ namespace Olaglasses.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Sp_Get_Product_List_Filter_Result>("Sp_Get_Product_List_Filter", productTypeParameter, userIDParameter, cwhereParameter);
         }
     
-        public virtual ObjectResult<spgetorderDetails_Result1> spgetorderDetails(Nullable<int> orderID)
+        public virtual ObjectResult<spgetorderDetails_Result3> spgetorderDetails(Nullable<int> orderID)
         {
             var orderIDParameter = orderID.HasValue ?
                 new ObjectParameter("OrderID", orderID) :
                 new ObjectParameter("OrderID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spgetorderDetails_Result1>("spgetorderDetails", orderIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spgetorderDetails_Result3>("spgetorderDetails", orderIDParameter);
         }
     }
 }

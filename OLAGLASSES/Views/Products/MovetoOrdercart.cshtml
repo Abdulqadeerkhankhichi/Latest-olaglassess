@@ -100,28 +100,28 @@
 
                                             @*<div class="dropdown ">
 
-                                                    @if (item.VisionType == "Reading")
-                                                    {
-                                                        <input name="@item.Cartid-vision" class='@item.Cartid-vision' type="radio" onclick="updatevalue('RE',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',39,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity')" checked><label>Reading</label>
-                                                    }
-                                                    else
-                                                    {
-                                                        <input name="@item.Cartid-vision" class='@item.Cartid-vision' type="radio" onclick="updatevalue('DI',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',39,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity')"><label>Reading</label>
-                                                    }
+                    @if (item.VisionType == "Reading")
+                    {
+                        <input name="@item.Cartid-vision" class='@item.Cartid-vision' type="radio" onclick="updatevalue('RE',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',39,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity')" checked><label>Reading</label>
+                    }
+                    else
+                    {
+                        <input name="@item.Cartid-vision" class='@item.Cartid-vision' type="radio" onclick="updatevalue('DI',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',39,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity')"><label>Reading</label>
+                    }
 
 
 
-                                                    @if (item.VisionType == "Distance")
-                                                    {
-                                                        <input name="@item.Cartid-vision" class='@item.Cartid-vision' type="radio" onclick="updatevalue('RE',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',39,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity')" checked><label>Distance</label>
-                                                    }
-                                                    else
-                                                    {
-                                                        <input name="@item.Cartid-vision" class='@item.Cartid-vision' type="radio" onclick="updatevalue('DI',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',39,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity')"><label>Distance</label>
-                                                    }
+                    @if (item.VisionType == "Distance")
+                    {
+                        <input name="@item.Cartid-vision" class='@item.Cartid-vision' type="radio" onclick="updatevalue('RE',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',39,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity')" checked><label>Distance</label>
+                    }
+                    else
+                    {
+                        <input name="@item.Cartid-vision" class='@item.Cartid-vision' type="radio" onclick="updatevalue('DI',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',39,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity')"><label>Distance</label>
+                    }
 
 
-                                                </div>*@
+                </div>*@
                                         </li>
                                     </ul>
 
@@ -135,7 +135,7 @@
                                             <div class="dropdown ">
                                                 @if (item.UVProtection == "on")
                                                 {
-                                                    UVProtectionvalue = 20;
+                                                    UVProtectionvalue = 20  * @Convert.ToInt32(item.Quantity);
                                                 }
                                                 else
                                                 {
@@ -143,28 +143,28 @@
                                                 }
                                                 @if (item.LensType == "Standard")
                                                 {
-                                                    Subtotatal += Convert.ToInt32(39) + Convert.ToInt32(item.Price) * @Convert.ToInt32(item.Quantity) + Convert.ToInt32(UVProtectionvalue);
+                                                    Subtotatal += (Convert.ToInt32(39) * @Convert.ToInt32(item.Quantity)) + (Convert.ToInt32(item.Price) * @Convert.ToInt32(item.Quantity)) + Convert.ToInt32(UVProtectionvalue);
                                                     <input id='@item.Cartid-txtlensamount' value="39" hidden />
                                                     @*<input onclick="updatevalue('SL',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',39,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity')" name="@item.Cartid-lens" class='@item.Cartid-lens' type="radio" checked><label>Standard Lens ($39)</label>
-                                                        <input onclick="updatevalue('EL',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',49,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity')" name="@item.Cartid-lens" class='@item.Cartid-lens' type="radio"> <label>Enhanced Lens ($49)</label>*@
+                        <input onclick="updatevalue('EL',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',49,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity')" name="@item.Cartid-lens" class='@item.Cartid-lens' type="radio"> <label>Enhanced Lens ($49)</label>*@
                                                     <p id='@item.Cartid-lbllenstype'> Standard Lens($39)</p>
                                                     <input id='@item.Cartid-txtlenstype' value="Standard Lens($39)" hidden />
                                                 }
                                                 else if (item.LensType == "Enhanced")
                                                 {
-                                                    Subtotatal += Convert.ToInt32(49) + Convert.ToInt32(item.Price) * @Convert.ToInt32(item.Quantity) + Convert.ToInt32(UVProtectionvalue);
+                                                    Subtotatal += (Convert.ToInt32(49) * @Convert.ToInt32(item.Quantity)) + (Convert.ToInt32(item.Price) * @Convert.ToInt32(item.Quantity)) + Convert.ToInt32(UVProtectionvalue);
                                                     <input id='@item.Cartid-txtlensamount' value="49" hidden />
                                                     @*<input onclick="updatevalue('SL',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',39,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity')" name="@item.Cartid-lens" class='@item.Cartid-lens' type="radio"><label>Standard Lens ($39)</label>
-                                                        <input onclick="updatevalue('EL',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',49,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity')" name="@item.Cartid-lens" class='@item.Cartid-lens' type="radio" checked> <label>Enhanced Lens ($49)</label>*@
+                        <input onclick="updatevalue('EL',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',49,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity')" name="@item.Cartid-lens" class='@item.Cartid-lens' type="radio" checked> <label>Enhanced Lens ($49)</label>*@
                                                     <p id='@item.Cartid-lbllenstype'> Enhanced Lens($49)</p>
                                                     <input id='@item.Cartid-txtlenstype' value="Enhanced Lens($49)" hidden />
                                                 }
                                                 else if (item.LensType == "Premium Coatings")
                                                 {
-                                                    Subtotatal += Convert.ToInt32(49) + Convert.ToInt32(item.Price) * @Convert.ToInt32(item.Quantity) + Convert.ToInt32(UVProtectionvalue);
+                                                    Subtotatal += (Convert.ToInt32(49) * @Convert.ToInt32(item.Quantity)) + (Convert.ToInt32(item.Price) * @Convert.ToInt32(item.Quantity)) + Convert.ToInt32(UVProtectionvalue);
                                                     <input id='@item.Cartid-txtlensamount' value="49" hidden />
                                                     @*<input onclick="updatevalue('SL',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',39,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity')" name="@item.Cartid-lens" class='@item.Cartid-lens' type="radio"><label>Standard Lens ($39)</label>
-                                                        <input onclick="updatevalue('EL',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',49,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity')" name="@item.Cartid-lens" class='@item.Cartid-lens' type="radio" checked> <label>Enhanced Lens ($49)</label>*@
+                        <input onclick="updatevalue('EL',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',49,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity')" name="@item.Cartid-lens" class='@item.Cartid-lens' type="radio" checked> <label>Enhanced Lens ($49)</label>*@
                                                     <p id='@item.Cartid-lbllenstype'> Premium Coatings($49)</p>
                                                     <input id='@item.Cartid-txtlenstype' value="Premium Coatings($49)" hidden />
                                                 }
@@ -174,8 +174,35 @@
                                             </div>
                                         </li>
                                     </ul>
+                                    @if (Convert.ToInt32(item.Extracharges) > 0)
+                                    {
+                                        <ul>
+
+                                            <li><strong>Extra Charges</strong></li>
+                                            <li> : </li>
+                                            <li>
 
 
+                                                <div class="dropdown ">
+
+                                                    @{
+                                                        Subtotatal += Convert.ToInt32(15) *  @Convert.ToInt32(item.Quantity);
+                                                    }
+                                                    <p> $15</p>
+                                                    <input id='@item.Cartid-lblextracharges' value="15" hidden />
+
+
+
+
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    }
+                                    else
+                                    {
+                                        <p style="display:none" > 0</p>
+                                        <input id='@item.Cartid-lblextracharges' value="" hidden />
+                                    }
                                 </div>
                                 <div class="lien">
 
@@ -185,7 +212,7 @@
                                             @*UV Protection ($20)*@
                                             Add Premium Coatings (Only+$10)
 
-                                            <input id="@item.Cartid-premium" onclick="updatevalue('PC',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',0,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity','@item.Cartid-premium','@item.Cartid-lbllenstype','@item.Cartid-txtlenstype')" type="checkbox">
+                                            <input id="@item.Cartid-premium" onclick="updatevalue('PC',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',0,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity','@item.Cartid-premium','@item.Cartid-lbllenstype','@item.Cartid-txtlenstype','@item.Cartid-lblextracharges')" type="checkbox">
                                             <span class="checkmark"></span>
 
 
@@ -197,7 +224,7 @@
                                             @*UV Protection ($20)*@
                                             Add Premium Coatings (Only+$10)
 
-                                            <input checked="checked" id="@item.Cartid-premium" onclick="updatevalue('PC',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',0,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity','@item.Cartid-premium','@item.Cartid-lbllenstype','@item.Cartid-txtlenstype')" type="checkbox">
+                                            <input checked="checked" id="@item.Cartid-premium" onclick="updatevalue('PC',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',0,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity','@item.Cartid-premium','@item.Cartid-lbllenstype','@item.Cartid-txtlenstype','@item.Cartid-lblextracharges')" type="checkbox">
                                             <span class="checkmark"></span>
 
 
@@ -209,12 +236,12 @@
                                         for UV Protection
                                         @if (item.UVProtection == "on")
                                         {
-                                            <input id="@item.Cartid-UVProtection" onclick="updatevalue('UV',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',0,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity','@item.Cartid-premium','@item.Cartid-lbllenstype','@item.Cartid-txtlenstype')" type="checkbox" checked="checked">
+                                            <input id="@item.Cartid-UVProtection" onclick="updatevalue('UV',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',0,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity','@item.Cartid-premium','@item.Cartid-lbllenstype','@item.Cartid-txtlenstype','@item.Cartid-lblextracharges')" type="checkbox" checked="checked">
                                             <span class="checkmark"></span>
                                         }
                                         else
                                         {
-                                            <input id="@item.Cartid-UVProtection" onclick="updatevalue('UV',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',0,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity','@item.Cartid-premium','@item.Cartid-lbllenstype','@item.Cartid-txtlenstype')" type="checkbox">
+                                            <input id="@item.Cartid-UVProtection" onclick="updatevalue('UV',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',0,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity','@item.Cartid-premium','@item.Cartid-lbllenstype','@item.Cartid-txtlenstype','@item.Cartid-lblextracharges')" type="checkbox">
                                             <span class="checkmark"></span>
                                         }
 
@@ -248,11 +275,11 @@
                 <div class="my-cart-item ">
                     <div class="number-p">
                         <button class="min minus"
-                                onclick="this.parentNode.querySelector('input[type=number]').stepDown(),updatevalue('QL',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',0,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity','@item.Cartid-premium','@item.Cartid-lbllenstype','@item.Cartid-txtlenstype')">
+                                onclick="this.parentNode.querySelector('input[type=number]').stepDown(),updatevalue('QL',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',0,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity','@item.Cartid-premium','@item.Cartid-lbllenstype','@item.Cartid-txtlenstype','@item.Cartid-lblextracharges')">
                             -
                         </button>
                         <input id="@item.Cartid-txtquantity" class="quantity number" min="1" name="quantity" value="@item.Quantity" type="number">
-                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp() ,updatevalue('QL',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',0,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity','@item.Cartid-premium','@item.Cartid-lbllenstype','@item.Cartid-txtlenstype')"
+                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp() ,updatevalue('QL',@item.Cartid,'@item.Cartid-UVProtection','@item.Cartid-IndividualTotalAmount',0,'@item.Cartid-txtlensamount','@item.Cartid-unitprice','@item.Cartid-totalprice','@item.Cartid-txtquantity','@item.Cartid-premium','@item.Cartid-lbllenstype','@item.Cartid-txtlenstype','@item.Cartid-lblextracharges')"
                                 class="plus max">
                             +
                         </button>
@@ -266,7 +293,7 @@
                         </span>
                         <h5>
                             <input hidden id='@item.Cartid-unitprice' value="@item.Price" />
-                            @item.Price
+                            $@item.Price
                         </h5>
                     </div>
 
@@ -278,37 +305,41 @@
                         </span>
                         @{int Totalprice = 0;}
                         @{int UVProtection = 0;}
+                        @{int Extracharges = 0;}
 
 
 
                         @if (@item.UVProtection == "on")
                         {
-                            UVProtection = 20;
+                            UVProtection = 20  * @Convert.ToInt32(item.Quantity);
                         }
                         else
                         {
                             UVProtection = 0;
                         }
-
+                        @if (Convert.ToInt32(@item.Extracharges) > 0)
+                        {
+                            Extracharges =  15 * @Convert.ToInt32(item.Quantity);
+                        }
 
                         @if (item.Productcategory != "Accessory")
                         {
                             if (item.LensType == "Standard")
                             {
-                                Totalprice = @Convert.ToInt32(item.Price) * @Convert.ToInt32(item.Quantity) + @Convert.ToInt32(39) + @Convert.ToInt32(UVProtection);
+                                Totalprice = (@Convert.ToInt32(item.Price) * @Convert.ToInt32(item.Quantity)) + (@Convert.ToInt32(39) * @Convert.ToInt32(item.Quantity)) + @Convert.ToInt32(UVProtection) + @Convert.ToInt32(Extracharges) ;
 
 
 
                             }
                             else if (item.LensType == "Premium Coatings")
                             {
-                                Totalprice = @Convert.ToInt32(item.Price) * @Convert.ToInt32(item.Quantity) + @Convert.ToInt32(39) + @Convert.ToInt32(UVProtection) + 10;
+                                Totalprice = (@Convert.ToInt32(item.Price) * @Convert.ToInt32(item.Quantity)) + (@Convert.ToInt32(39) * @Convert.ToInt32(item.Quantity)) + @Convert.ToInt32(UVProtection) + 10 + @Convert.ToInt32(Extracharges);
 
 
                             }
                             else
                             {
-                                Totalprice = @Convert.ToInt32(item.Price) * @Convert.ToInt32(item.Quantity) + @Convert.ToInt32(49) + @Convert.ToInt32(UVProtection);
+                                Totalprice = (@Convert.ToInt32(item.Price) * @Convert.ToInt32(item.Quantity)) + (@Convert.ToInt32(49) * @Convert.ToInt32(item.Quantity))  + @Convert.ToInt32(UVProtection) + @Convert.ToInt32(Extracharges);
 
 
                             }
@@ -467,7 +498,7 @@
                             <div class="subtotal" id="discountdiv">
                                 <i class="fa fa-times"></i>
                                 <p>
-                                    Disount: <small id="discountpercentage">(@Discount%) </small>
+                                    Disount: <small id="discountpercentage">(@Discount) </small>
 
                                     <span id="spandisplaydiscountamount">$@Discountamount</span>
                                 </p>
@@ -482,7 +513,7 @@
                                 <p>
                                     Disount: <small id="discountpercentage"> </small>
 
-                                    <span id="spandisplaydiscountamount">%</span>
+                                    @*<span id="spandisplaydiscountamount">%</span>*@
                                 </p>
 
 
@@ -492,7 +523,7 @@
 
                         <div class="Ordertotal d-flex justify-content-between align-items-center flex-wrap">
 
-                            <h3>Ordertotal</h3>
+                            <h3>Order total</h3>
                             <h3 id="lblordertotal">$164.98</h3>
 
                         </div>
@@ -614,7 +645,7 @@
 
                         <div class="Ordertotal d-flex justify-content-between align-items-center flex-wrap">
 
-                            <h3>Ordertotal</h3>
+                            <h3>Order total</h3>
                             <h3 id="lblordertotal">$164.98</h3>
 
                         </div>
@@ -698,7 +729,7 @@
 
 
 
-    function updatevalue(updatetype,cartid,UVProtectionstatus, IndividualTotalAmount, Lensstatusvaue, LensPrice, UnitPrice, TotalPrice, TotalQuantity,IsPremiumcoating,lbllenstype,txtlenstype) {
+    function updatevalue(updatetype,cartid,UVProtectionstatus, IndividualTotalAmount, Lensstatusvaue, LensPrice, UnitPrice, TotalPrice, TotalQuantity,IsPremiumcoating,lbllenstype,txtlenstype,lblextracharges) {
 
         var UVProtection = 0;
         var PremiumCoating = 0;
@@ -709,6 +740,7 @@
         var Quantity = document.getElementById(TotalQuantity).value;
         var price = document.getElementById(UnitPrice).value;
         var txtLensPrice = document.getElementById(LensPrice).value;
+        var extracharges = document.getElementById(lblextracharges).value; 
         var Lens = 0;
 
 
@@ -754,7 +786,8 @@
         result = parseInt(Quantity) * parseInt(price);
        /* alert(result + ", " + parseInt(Lens) + ", " + parseInt(UVProtection) + ", " + parseInt(PremiumCoating));*/
 
-        result = result + (parseInt(Lens) * parseInt(Quantity)) + (parseInt(UVProtection) * parseInt(Quantity)) + (parseInt(PremiumCoating) * parseInt(Quantity)) ;
+        
+        result = result + (parseInt(Lens) * parseInt(Quantity)) + (parseInt(UVProtection) * parseInt(Quantity)) + (parseInt(PremiumCoating) * parseInt(Quantity)) + (parseInt(extracharges) * parseInt(Quantity)) ;
 
 
 
@@ -870,7 +903,7 @@
                             Discountamount = parseFloat(result.amount);
                             //document.getElementById("discountpercentage").innerHTML = '(' + result.amount + ')';
                         }
-                        
+
 
                         $("#txtdiscountpercentage").val(result);
                         $("#txtdiscountamount").val(Discountamount.toFixed(1));

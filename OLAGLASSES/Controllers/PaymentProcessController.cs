@@ -142,20 +142,7 @@ namespace Olaglasses.Controllers
 
             try
             {
-                tblOrder order = new tblOrder();
-                foreach (var item in orders)
-                {
-                    order.BFname = item.BFname;
-                    order.BLname = item.BLname;
-                    order.BAddress = item.BAddress;
-                    order.Bcity = item.Bcity;
-                    order.BState = item.BState;
-                    order.BPostalCode = item.BPostalCode;
-                    order.BCountry = item.BCountry;
-                    order.BEmail = item.BEmail;
-                    order.BPhone = item.BPhone;
-
-                }
+                
 
                 string s = "";
                 string stripeexception = "";
@@ -263,31 +250,43 @@ namespace Olaglasses.Controllers
 
                 else
                 {
+                    tblOrder tblOrder = new tblOrder();
+                    foreach (var item in orders)
+                    {
+                        tblOrder.BFname = item.BFname;
+                        tblOrder.BLname = item.BLname;
+                        tblOrder.BAddress = item.BAddress;
+                        tblOrder.Bcity = item.Bcity;
+                        tblOrder.BState = item.BState;
+                        tblOrder.BPostalCode = item.BPostalCode;
+                        tblOrder.BCountry = item.BCountry;
+                        tblOrder.BEmail = item.BEmail;
+                        tblOrder.BPhone = item.BPhone;
+
+                    }
                     tblAddress address = new tblAddress();
                     tblUserPrescription userPrescription;
                     tblOrderDetails orderDetails;
                     tblOrderPrescription orderPrescription;
-                    tblOrder tblOrder = new tblOrder();
-                    tblOrder = order;
                     tblOrder.userID = userID;
                     tblOrder.OrderDate = DateTime.Now;
                     tblOrder.UserName = user.Firstname + " " + user.Lastname;
                     tblOrder.UserEmail = user.UserEmail;
                     tblOrder.Status = "Not Started";
                     tblOrder.Total = Convert.ToDecimal(amount);
-                    tblOrder.UserAddress = user.Address;
+                    tblOrder.UserAddress = tblOrder.BAddress +" "+ tblOrder.Bcity + " " + tblOrder.BState + " " + tblOrder.BPostalCode + " " + tblOrder.BCountry;
                     
                     if (IsSame == "on")
                     {
-                        tblOrder.SFname = order.BFname;
-                        tblOrder.SLname = order.BLname;
-                        tblOrder.SAddress = order.BAddress;
-                        tblOrder.Scity = order.Bcity;
-                        tblOrder.SState = order.BState;
-                        tblOrder.SPostalCode = order.BPostalCode;
-                        tblOrder.SCountry = order.BCountry;
-                        tblOrder.SEmail = order.BEmail;
-                        tblOrder.SPhone = order.BPhone;
+                        tblOrder.SFname = tblOrder.BFname;
+                        tblOrder.SLname = tblOrder.BLname;
+                        tblOrder.SAddress = tblOrder.BAddress;
+                        tblOrder.Scity = tblOrder.Bcity;
+                        tblOrder.SState = tblOrder.BState;
+                        tblOrder.SPostalCode = tblOrder.BPostalCode;
+                        tblOrder.SCountry = tblOrder.BCountry;
+                        tblOrder.SEmail = tblOrder.BEmail;
+                        tblOrder.SPhone = tblOrder.BPhone;
 
 
                     }
@@ -306,27 +305,27 @@ namespace Olaglasses.Controllers
                     dbEntity.SaveChanges();
 
                     address.userID = userID;
-                    address.BFname = order.BFname;
-                    address.BLname = order.BLname;
-                    address.BAddress = order.BAddress;
-                    address.Bcity = order.Bcity;
-                    address.BState = order.BState;
-                    address.BPostalCode = order.BPostalCode;
-                    address.BCountry = order.BCountry;
-                    address.BEmail = order.BEmail;
-                    address.BPhone = order.BPhone;
+                    address.BFname = tblOrder.BFname;
+                    address.BLname = tblOrder.BLname;
+                    address.BAddress = tblOrder.BAddress;
+                    address.Bcity = tblOrder.Bcity;
+                    address.BState = tblOrder.BState;
+                    address.BPostalCode = tblOrder.BPostalCode;
+                    address.BCountry = tblOrder.BCountry;
+                    address.BEmail = tblOrder.BEmail;
+                    address.BPhone = tblOrder.BPhone;
                     if (IsSame == "on")
                     {
                         
-                        address.SFname = order.BFname;
-                        address.SLname = order.BLname;
-                        address.SAddress = order.BAddress;
-                        address.Scity = order.Bcity;
-                        address.SState = order.BState;
-                        address.SPostalCode = order.BPostalCode;
-                        address.SCountry = order.BCountry;
-                        address.SEmail = order.BEmail;
-                        address.SPhone = order.BPhone;
+                        address.SFname = tblOrder.BFname;
+                        address.SLname = tblOrder.BLname;
+                        address.SAddress = tblOrder.BAddress;
+                        address.Scity = tblOrder.Bcity;
+                        address.SState = tblOrder.BState;
+                        address.SPostalCode = tblOrder.BPostalCode;
+                        address.SCountry = tblOrder.BCountry;
+                        address.SEmail = tblOrder.BEmail;
+                        address.SPhone = tblOrder.BPhone;
 
                     }
                     dbEntity.tblAddress.Add(address);
@@ -355,10 +354,15 @@ namespace Olaglasses.Controllers
                         orderDetails.FrameColor = item.Colour;
                         orderDetails.ProductImage = item.ProductImagePath;
                         orderDetails.ShippingAmount = item.Shippingamount;
+                        orderDetails.ExtraAmount = item.Extracharges;
                         subTotal = item.TotalAmount;
                         //if (item.LensType == "Standard")
                         //{
                         //    subTotal = subTotal + 39;
+                        //}
+                        //if (Convert.ToInt32(item.Extracharges) > 0 )
+                        //{
+                        //    subTotal = subTotal + 15;
                         //}
                         //else if (item.LensType == "Enhanced")
                         //{
@@ -500,7 +504,7 @@ namespace Olaglasses.Controllers
         public ActionResult OrderDetails(int? id = 1)
         {
             ViewBag.ProductVirtualList = dbEntity.Sp_Get_Product_List(0, "").ToList();
-            List<spgetorderDetails_Result1> spgetorderDetails = dbEntity.spgetorderDetails(id).ToList();
+            List<spgetorderDetails_Result3> spgetorderDetails = dbEntity.spgetorderDetails(id).ToList();
             ViewBag.OrderDetails = spgetorderDetails;
             return View();
         }
@@ -508,7 +512,7 @@ namespace Olaglasses.Controllers
         public ActionResult OrderDetailsView(int? id = 1)
         {
             ViewBag.ProductVirtualList = dbEntity.Sp_Get_Product_List(0, "").ToList();
-            List<spgetorderDetails_Result1> spgetorderDetails = dbEntity.spgetorderDetails(id).ToList();
+            List<spgetorderDetails_Result3> spgetorderDetails = dbEntity.spgetorderDetails(id).ToList();
             ViewBag.OrderDetails = spgetorderDetails;
             return View();
 

@@ -121,6 +121,14 @@
                                     <li>$20</li>
                                 </ul>
                             }
+                            if (Convert.ToInt32(item.Extracharges) > 0)
+                            {
+                                <ul>
+                                    <li>Extra Charges</li>
+                                    <li>$15</li>
+                                </ul>
+
+                            }
                             subtotal = subtotal + item.TotalAmount;
                         }
                     }

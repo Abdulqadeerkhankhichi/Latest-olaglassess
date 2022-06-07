@@ -32,5 +32,6 @@ namespace Olaglasses.Models
         public string ProductImage { get; set; }
         public Nullable<double> ShippingAmount { get; set; }
         public Nullable<double> Subtotal { get; set; }
+        public Nullable<double> ExtraAmount { get; set; }
     }
 }

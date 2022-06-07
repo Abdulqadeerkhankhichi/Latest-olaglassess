@@ -14,7 +14,7 @@ namespace Olaglasses.Controllers
         public ActionResult shippinglabel(int id=0)
         {
 
-            List<spgetorderDetails_Result1> spgetorderDetails = dbEntities.spgetorderDetails(id).ToList();
+            List<spgetorderDetails_Result3> spgetorderDetails = dbEntities.spgetorderDetails(id).ToList();
             ViewBag.OrderDetails = spgetorderDetails;
             return View();
         }

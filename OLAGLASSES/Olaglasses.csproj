@@ -192,10 +192,7 @@
       <DependentUpon>OlaGlass.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\RatePackage.cs" />
-    <Compile Include="Models\spgetorderDetails_Result.cs">
-      <DependentUpon>OlaGlass.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\spgetorderDetails_Result1.cs">
+    <Compile Include="Models\spgetorderDetails_Result3.cs">
       <DependentUpon>OlaGlass.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Sp_Get_Favourite_List_Result.cs">
@@ -908,10 +905,10 @@
     <Content Include="ProjectImages\Variations\user-pnghut_horse.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="assets\fonts\TT Commons Bold.woff" />
-    <Content Include="assets\fonts\TT Commons Light.woff" />
-    <Content Include="assets\fonts\TT Commons Medium.woff" />
-    <Content Include="assets\fonts\TT Commons Regular.woff" />
+    <Content Include="assets\fonts\TTCommonsBold.woff" />
+    <Content Include="assets\fonts\TTCommonsLight.woff" />
+    <Content Include="assets\fonts\TTCommonsMedium.woff" />
+    <Content Include="assets\fonts\TTCommonsRegular.woff" />
     <Content Include="assets\webfonts\fa-brands-400.eot" />
     <Content Include="assets\webfonts\fa-brands-400.ttf" />
     <Content Include="assets\webfonts\fa-brands-400.woff" />

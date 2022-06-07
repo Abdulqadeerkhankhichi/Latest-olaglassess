@@ -982,12 +982,14 @@
                                         if (item.VariationID == Convert.ToInt32(ViewBag.VariationID))
                                         {
                                             <a style="margin-top:5px" id='@item.VariationID-size'
+                                               onclick="reloadvariationimages(@item.ProductID,@item.VariationID,'@item.Color1','@item.ColorCode','@item.VariationID-size','@item.VariationID-imageslider','@item.VariationID-thmbimageslider');Changecolour(@item.VariationID,'@item.VariationID-colorli','@item.ImagePath','@item.Color1')"
                                                @*onclick="Getsize('@item.size','@item.VariationID-size')"*@
                                                class="btn" href="#">@item.size @item.FrameAWidth - @item.FrameDBBridger - @item.FrameTempleLegs</a>
                                         }
                                         else
                                         {
                                             <a style="margin-top:5px" id='@item.VariationID-size'
+                                               onclick="reloadvariationimages(@item.ProductID,@item.VariationID,'@item.Color1','@item.ColorCode','@item.VariationID-size','@item.VariationID-imageslider','@item.VariationID-thmbimageslider');Changecolour(@item.VariationID,'@item.VariationID-colorli','@item.ImagePath','@item.Color1')"
                                                @*onclick="Getsize('@item.size','@item.VariationID-size')"*@
                                                class="btn bg-transparent">@item.size @item.FrameAWidth - @item.FrameDBBridger - @item.FrameTempleLegs</a>
                                         }
@@ -997,12 +999,16 @@
                                         if (item.VariationID == Convert.ToInt32(ViewBag.VariationID))
                                         {
                                             <a style="margin-top:5px" id='@item.VariationID-size'
+                                                onclick="reloadvariationimages(@item.ProductID,@item.VariationID,'@item.Color1','@item.ColorCode','@item.VariationID-size','@item.VariationID-imageslider','@item.VariationID-thmbimageslider');Changecolour(@item.VariationID,'@item.VariationID-colorli','@item.ImagePath','@item.Color1')"
+                                              
                                                @*onclick="Getsize('@item.size','@item.VariationID-size')"*@
                                                class="btn" href="#">@item.size @item.FrameAWidth - @item.FrameDBBridger - @item.FrameTempleLegs</a>
                                         }
                                         else
                                         {
                                             <a style="margin-top:5px" id='@item.VariationID-size'
+                                                onclick="reloadvariationimages(@item.ProductID,@item.VariationID,'@item.Color1','@item.ColorCode','@item.VariationID-size','@item.VariationID-imageslider','@item.VariationID-thmbimageslider');Changecolour(@item.VariationID,'@item.VariationID-colorli','@item.ImagePath','@item.Color1')"
+                                              
                                                @*onclick="Getsize('@item.size','@item.VariationID-size')"*@
                                                class="btn bg-transparent" >@item.size @item.FrameAWidth - @item.FrameDBBridger - @item.FrameTempleLegs</a>
                                         }

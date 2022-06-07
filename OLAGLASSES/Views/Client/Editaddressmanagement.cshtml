@@ -60,6 +60,10 @@
                 padding-top: 10px;
             }
         }
+        .protfolio-hero-aria .protfolio-banner {
+            background-position: inherit !important;
+            background-size: cover !important;
+        }
     </style>
 </head>
 <!-- ::::protfolio-hero-aria start:::::: -->
@@ -142,99 +146,100 @@
                     }
                     @using (Html.BeginForm("Editaddressmanagement", "Client", FormMethod.Post))
                     {
-                        <form>
-                            <input hidden name="AddressID" id="AddressID" value="@Model.AddressID" />
-                            <div class="Cardholder input-area ">
-                                <h3>Billing Information</h3>
-                                <br>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label for="fname">First Name*</label> <br>
-                                        <input class="form-control edit_pescription" type="text" name="BFname" id="BFname" required value="@Model.BFname">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="fname">Last Name*</label> <br>
-                                        <input class="form-control edit_pescription" type="text" name="BLname" id="BLname" value="@Model.BLname" required>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label for="fname">Address*</label> <br>
-                                        <input class="form-control edit_pescription" type="text" name="BAddress" id="BAddress" value="@Model.BAddress" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="fname">City*</label> <br>
-                                        <input class="form-control edit_pescription" type="text" name="Bcity" id="Bcity" value="@Model.Bcity" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="fname">State*</label> <br>
-                                        <input class="form-control edit_pescription" type="text" name="BState" id="BState" value="@Model.BState" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="fname">Postal Code*</label> <br>
-                                        <input class="form-control edit_pescription" type="text" name="BPostalCode" id="BPostalCode" value="@Model.BPostalCode" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="fname">Country*</label> <br>
-                                        <input class="form-control edit_pescription" type="text" name="BCountry" id="BCountry" value="@Model.BCountry" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="fname">Phone*</label> <br>
-                                        <input class="form-control edit_pescription" type="text" name="BPhone" id="BPhone" value="@Model.BPhone" required>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="fname">Email*</label> <br>
-                                        <input class="form-control edit_pescription" type="email" name="BEmail" id="BEmail" value="@Model.BEmail" required>
-                                        <small style="color:red !important;font-weight:bold;font-size:14px !important " id="ErrorAccessMessagesubscribeNowEmail"> </small>
-                                    </div>
-
-                                </div>
+                <form>
+                    <input hidden name="AddressID" id="AddressID" value="@Model.AddressID" />
+                    <input hidden name="userID" id="userID" value="@Model.userID" />
+                    <div class="Cardholder input-area ">
+                        <h3>Billing Information</h3>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="fname">First Name*</label> <br>
+                                <input class="form-control edit_pescription" type="text" name="BFname" id="BFname" required value="@Model.BFname">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fname">Last Name*</label> <br>
+                                <input class="form-control edit_pescription" type="text" name="BLname" id="BLname" value="@Model.BLname" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="fname">Address*</label> <br>
+                                <input class="form-control edit_pescription" type="text" name="BAddress" id="BAddress" value="@Model.BAddress" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fname">City*</label> <br>
+                                <input class="form-control edit_pescription" type="text" name="Bcity" id="Bcity" value="@Model.Bcity" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fname">State*</label> <br>
+                                <input class="form-control edit_pescription" type="text" name="BState" id="BState" value="@Model.BState" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fname">Postal Code*</label> <br>
+                                <input class="form-control edit_pescription" type="text" name="BPostalCode" id="BPostalCode" value="@Model.BPostalCode" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fname">Country*</label> <br>
+                                <input class="form-control edit_pescription" type="text" name="BCountry" id="BCountry" value="@Model.BCountry" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fname">Phone*</label> <br>
+                                <input class="form-control edit_pescription" type="text" name="BPhone" id="BPhone" value="@Model.BPhone" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fname">Email*</label> <br>
+                                <input class="form-control edit_pescription" type="email" name="BEmail" id="BEmail" value="@Model.BEmail" required>
+                                <small style="color:red !important;font-weight:bold;font-size:14px !important " id="ErrorAccessMessagesubscribeNowEmail"> </small>
                             </div>
 
-                            <div class="Cardholder input-area Shipping" id="Shipping">
-                                <h3>Shipping Information</h3>
-                                <br>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label for="fname">First Name*</label> <br>
-                                        <input class="form-control edit_pescription" type="text" name="SFname" id="SFname" value="@Model.SFname">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="fname">Last Name*</label> <br>
-                                        <input class="form-control edit_pescription" type="text" name="SLname" id="SLname" value="@Model.SLname">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label for="fname">Address*</label> <br>
-                                        <input class="form-control edit_pescription" type="text" name="SAddress" id="SAddress" value="@Model.SAddress">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="fname">City*</label> <br>
-                                        <input class="form-control edit_pescription" type="text" name="Scity" id="Scity" value="@Model.Scity">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="fname">State*</label> <br>
-                                        <input class="form-control edit_pescription" type="text" name="SState" id="SState" value="@Model.SState">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="fname">Postal Code*</label> <br>
-                                        <input class="form-control edit_pescription" type="text" name="SPostalCode" id="SPostalCode" value="@Model.SPostalCode">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="fname">Country*</label> <br>
-                                        <input class="form-control edit_pescription" type="text" name="SCountry" id="SCountry" value="@Model.SCountry">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="fname">Phone*</label> <br>
-                                        <input class="form-control edit_pescription" type="text" name="SPhone" id="SPhone" value="@Model.SPhone">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="fname">Email*</label> <br>
-                                        <input class="form-control edit_pescription" type="text" name="SEmail" id="SEmail" value="@Model.SEmail">
-                                        <small style="color:red !important;font-weight:bold;font-size:14px !important " id="ErrorAccessMessagesubscribeNowEmailS"> </small>
-                                    </div>
+                        </div>
+                    </div>
 
-                                </div>
+                    <div class="Cardholder input-area Shipping" id="Shipping">
+                        <h3>Shipping Information</h3>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="fname">First Name*</label> <br>
+                                <input class="form-control edit_pescription" type="text" name="SFname" id="SFname" value="@Model.SFname">
                             </div>
-                            <button class="btn btn-primary submit-btn" type="submit" name="form_submit" value="submit">Submit</button>
-                        </form>
+                            <div class="col-md-6">
+                                <label for="fname">Last Name*</label> <br>
+                                <input class="form-control edit_pescription" type="text" name="SLname" id="SLname" value="@Model.SLname">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="fname">Address*</label> <br>
+                                <input class="form-control edit_pescription" type="text" name="SAddress" id="SAddress" value="@Model.SAddress">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fname">City*</label> <br>
+                                <input class="form-control edit_pescription" type="text" name="Scity" id="Scity" value="@Model.Scity">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fname">State*</label> <br>
+                                <input class="form-control edit_pescription" type="text" name="SState" id="SState" value="@Model.SState">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fname">Postal Code*</label> <br>
+                                <input class="form-control edit_pescription" type="text" name="SPostalCode" id="SPostalCode" value="@Model.SPostalCode">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fname">Country*</label> <br>
+                                <input class="form-control edit_pescription" type="text" name="SCountry" id="SCountry" value="@Model.SCountry">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fname">Phone*</label> <br>
+                                <input class="form-control edit_pescription" type="text" name="SPhone" id="SPhone" value="@Model.SPhone">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fname">Email*</label> <br>
+                                <input class="form-control edit_pescription" type="text" name="SEmail" id="SEmail" value="@Model.SEmail">
+                                <small style="color:red !important;font-weight:bold;font-size:14px !important " id="ErrorAccessMessagesubscribeNowEmailS"> </small>
+                            </div>
+
+                        </div>
+                    </div>
+                    <button class="btn btn-primary submit-btn" type="submit" name="form_submit" value="submit">Submit</button>
+                </form>
                     }
                 </div>
             </div>

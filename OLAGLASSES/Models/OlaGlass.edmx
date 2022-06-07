@@ -209,6 +209,7 @@ warning 6002: The table/view 'OlaGlasses.dbo.ForgetPassword' does not have a pri
           <Property Name="ProductImage" Type="varchar" MaxLength="500" />
           <Property Name="ShippingAmount" Type="float" />
           <Property Name="Subtotal" Type="float" />
+          <Property Name="ExtraAmount" Type="float" />
         </EntityType>
         <EntityType Name="tblOrderPrescription">
           <Key>
@@ -636,11 +637,11 @@ warning 6002: The table/view 'OlaGlasses.dbo.ForgetPassword' does not have a pri
           <EntitySet Name="tblOrderPrescription" EntityType="OlaGlassesModel.tblOrderPrescription" />
           <EntitySet Name="tblUserPrescription" EntityType="OlaGlassesModel.tblUserPrescription" />
           <EntitySet Name="tblcart" EntityType="OlaGlassesModel.tblcart" />
-          <FunctionImport Name="spgetorderDetails" ReturnType="Collection(OlaGlassesModel.spgetorderDetails_Result1)">
-          <Parameter Name="OrderID" Mode="In" Type="Int32" />
-          </FunctionImport>
           <EntitySet Name="tblEmailSubscribe" EntityType="OlaGlassesModel.tblEmailSubscribe" />
           <EntitySet Name="tblAddress" EntityType="OlaGlassesModel.tblAddress" />
+          <FunctionImport Name="spgetorderDetails" ReturnType="Collection(OlaGlassesModel.spgetorderDetails_Result3)">
+          <Parameter Name="OrderID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="tblSize">
           <Key>
@@ -762,6 +763,7 @@ warning 6002: The table/view 'OlaGlasses.dbo.ForgetPassword' does not have a pri
           <Property Name="ProductImage" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="ShippingAmount" Type="Double" />
           <Property Name="Subtotal" Type="Double" />
+          <Property Name="ExtraAmount" Type="Double" />
         </EntityType>
         <EntityType Name="tblVariation">
           <Key>
@@ -1104,6 +1106,132 @@ warning 6002: The table/view 'OlaGlasses.dbo.ForgetPassword' does not have a pri
           <Property Name="SPhone" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="SEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="spgetorderDetails_Result2">
+          <Property Type="Int32" Name="OrderID" Nullable="false" />
+          <Property Type="Int32" Name="userID" Nullable="true" />
+          <Property Type="String" Name="UserName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="UserEmail" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="IsPaid" Nullable="true" />
+          <Property Type="Decimal" Name="TotalAmount" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="OrderComments" Nullable="true" MaxLength="1000" />
+          <Property Type="DateTime" Name="OrderDate" Nullable="true" />
+          <Property Type="String" Name="UserAddress" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="OrderDetailID" Nullable="false" />
+          <Property Type="Int32" Name="ProductID" Nullable="true" />
+          <Property Type="String" Name="Productname" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProductPrice" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="BFname" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BLname" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BAddress" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="BCity" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BState" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BPostalCode" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BPhone" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BEmail" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BCountry" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SFname" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SLname" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SAddress" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="SCity" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SState" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SPostalCode" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SPhone" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SEmail" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SCountry" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Vision" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="LensType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="UV_Protection" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProductTotal" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="ProductVariation" Nullable="true" />
+          <Property Type="Int32" Name="quantity" Nullable="true" />
+          <Property Type="Double" Name="TaxAmount" Nullable="true" />
+          <Property Type="Double" Name="Discount" Nullable="true" />
+          <Property Type="Double" Name="Discountpercentage" Nullable="true" />
+          <Property Type="String" Name="FrameColor" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ProductImage" Nullable="true" MaxLength="500" />
+          <Property Type="Double" Name="ShippingAmount" Nullable="true" />
+          <Property Type="Double" Name="Subtotal" Nullable="true" />
+          <Property Type="Int32" Name="PrescriptionID" Nullable="true" />
+          <Property Type="String" Name="r_sph" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="r_cyl" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="r_axis" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="r_add" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="l_sph" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="l_cyl" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="l_axis" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="l_add" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="prescription" Nullable="true" MaxLength="300" />
+          <Property Type="DateTime" Name="prescriptionDate" Nullable="true" />
+          <Property Type="Double" Name="PD" Nullable="true" />
+          <Property Type="String" Name="PDImage" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="PrescriptionImage" Nullable="true" MaxLength="500" />
+          <Property Type="Double" Name="ExtraAmount" Nullable="true" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="spgetorderDetails_Result3">
+          <Property Type="Int32" Name="OrderID" Nullable="false" />
+          <Property Type="Int32" Name="userID" Nullable="true" />
+          <Property Type="String" Name="UserName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="UserEmail" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="IsPaid" Nullable="true" />
+          <Property Type="Decimal" Name="TotalAmount" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="OrderComments" Nullable="true" MaxLength="1000" />
+          <Property Type="DateTime" Name="OrderDate" Nullable="true" />
+          <Property Type="String" Name="UserAddress" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="OrderDetailID" Nullable="false" />
+          <Property Type="Int32" Name="ProductID" Nullable="true" />
+          <Property Type="String" Name="Productname" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProductPrice" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="BFname" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BLname" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BAddress" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="BCity" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BState" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BPostalCode" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BPhone" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BEmail" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BCountry" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SFname" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SLname" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SAddress" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="SCity" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SState" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SPostalCode" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SPhone" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SEmail" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="SCountry" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Vision" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="LensType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="UV_Protection" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProductTotal" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="ProductVariation" Nullable="true" />
+          <Property Type="Int32" Name="quantity" Nullable="true" />
+          <Property Type="Double" Name="TaxAmount" Nullable="true" />
+          <Property Type="Double" Name="Discount" Nullable="true" />
+          <Property Type="Double" Name="Discountpercentage" Nullable="true" />
+          <Property Type="String" Name="FrameColor" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="ProductImage" Nullable="true" MaxLength="500" />
+          <Property Type="Double" Name="ShippingAmount" Nullable="true" />
+          <Property Type="Double" Name="Subtotal" Nullable="true" />
+          <Property Type="Int32" Name="PrescriptionID" Nullable="true" />
+          <Property Type="String" Name="r_sph" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="r_cyl" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="r_axis" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="r_add" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="l_sph" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="l_cyl" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="l_axis" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="l_add" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="prescription" Nullable="true" MaxLength="300" />
+          <Property Type="DateTime" Name="prescriptionDate" Nullable="true" />
+          <Property Type="Double" Name="PD" Nullable="true" />
+          <Property Type="String" Name="PDImage" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="PrescriptionImage" Nullable="true" MaxLength="500" />
+          <Property Type="Double" Name="ExtraAmount" Nullable="true" />
+          <Property Type="DateTime" Name="CreatedDate" Nullable="true" Precision="23" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1357,6 +1485,7 @@ warning 6002: The table/view 'OlaGlasses.dbo.ForgetPassword' does not have a pri
           <EntitySetMapping Name="tblOrderDetails">
             <EntityTypeMapping TypeName="OlaGlassesModel.tblOrderDetails">
               <MappingFragment StoreEntitySet="tblOrderDetails">
+                <ScalarProperty Name="ExtraAmount" ColumnName="ExtraAmount" />
                 <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
                 <ScalarProperty Name="ShippingAmount" ColumnName="ShippingAmount" />
                 <ScalarProperty Name="ProductImage" ColumnName="ProductImage" />
@@ -1581,9 +1710,44 @@ warning 6002: The table/view 'OlaGlasses.dbo.ForgetPassword' does not have a pri
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblEmailSubscribe">
+            <EntityTypeMapping TypeName="OlaGlassesModel.tblEmailSubscribe">
+              <MappingFragment StoreEntitySet="tblEmailSubscribe">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="SubscribeEmail" ColumnName="SubscribeEmail" />
+                <ScalarProperty Name="SubscribeID" ColumnName="SubscribeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAddress">
+            <EntityTypeMapping TypeName="OlaGlassesModel.tblAddress">
+              <MappingFragment StoreEntitySet="tblAddress">
+                <ScalarProperty Name="SEmail" ColumnName="SEmail" />
+                <ScalarProperty Name="SPhone" ColumnName="SPhone" />
+                <ScalarProperty Name="SCountry" ColumnName="SCountry" />
+                <ScalarProperty Name="SPostalCode" ColumnName="SPostalCode" />
+                <ScalarProperty Name="SState" ColumnName="SState" />
+                <ScalarProperty Name="Scity" ColumnName="Scity" />
+                <ScalarProperty Name="SAddress" ColumnName="SAddress" />
+                <ScalarProperty Name="SLname" ColumnName="SLname" />
+                <ScalarProperty Name="SFname" ColumnName="SFname" />
+                <ScalarProperty Name="BEmail" ColumnName="BEmail" />
+                <ScalarProperty Name="BPhone" ColumnName="BPhone" />
+                <ScalarProperty Name="BCountry" ColumnName="BCountry" />
+                <ScalarProperty Name="BPostalCode" ColumnName="BPostalCode" />
+                <ScalarProperty Name="BState" ColumnName="BState" />
+                <ScalarProperty Name="Bcity" ColumnName="Bcity" />
+                <ScalarProperty Name="BAddress" ColumnName="BAddress" />
+                <ScalarProperty Name="BLname" ColumnName="BLname" />
+                <ScalarProperty Name="BFname" ColumnName="BFname" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="spgetorderDetails" FunctionName="OlaGlassesModel.Store.spgetorderDetails">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="OlaGlassesModel.spgetorderDetails_Result1">
+              <ComplexTypeMapping TypeName="OlaGlassesModel.spgetorderDetails_Result3">
                 <ScalarProperty Name="OrderID" ColumnName="OrderID" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
@@ -1643,45 +1807,11 @@ warning 6002: The table/view 'OlaGlasses.dbo.ForgetPassword' does not have a pri
                 <ScalarProperty Name="PD" ColumnName="PD" />
                 <ScalarProperty Name="PDImage" ColumnName="PDImage" />
                 <ScalarProperty Name="PrescriptionImage" ColumnName="PrescriptionImage" />
+                <ScalarProperty Name="ExtraAmount" ColumnName="ExtraAmount" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="tblEmailSubscribe">
-            <EntityTypeMapping TypeName="OlaGlassesModel.tblEmailSubscribe">
-              <MappingFragment StoreEntitySet="tblEmailSubscribe">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="SubscribeEmail" ColumnName="SubscribeEmail" />
-                <ScalarProperty Name="SubscribeID" ColumnName="SubscribeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblAddress">
-            <EntityTypeMapping TypeName="OlaGlassesModel.tblAddress">
-              <MappingFragment StoreEntitySet="tblAddress">
-                <ScalarProperty Name="SEmail" ColumnName="SEmail" />
-                <ScalarProperty Name="SPhone" ColumnName="SPhone" />
-                <ScalarProperty Name="SCountry" ColumnName="SCountry" />
-                <ScalarProperty Name="SPostalCode" ColumnName="SPostalCode" />
-                <ScalarProperty Name="SState" ColumnName="SState" />
-                <ScalarProperty Name="Scity" ColumnName="Scity" />
-                <ScalarProperty Name="SAddress" ColumnName="SAddress" />
-                <ScalarProperty Name="SLname" ColumnName="SLname" />
-                <ScalarProperty Name="SFname" ColumnName="SFname" />
-                <ScalarProperty Name="BEmail" ColumnName="BEmail" />
-                <ScalarProperty Name="BPhone" ColumnName="BPhone" />
-                <ScalarProperty Name="BCountry" ColumnName="BCountry" />
-                <ScalarProperty Name="BPostalCode" ColumnName="BPostalCode" />
-                <ScalarProperty Name="BState" ColumnName="BState" />
-                <ScalarProperty Name="Bcity" ColumnName="Bcity" />
-                <ScalarProperty Name="BAddress" ColumnName="BAddress" />
-                <ScalarProperty Name="BLname" ColumnName="BLname" />
-                <ScalarProperty Name="BFname" ColumnName="BFname" />
-                <ScalarProperty Name="userID" ColumnName="userID" />
-                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

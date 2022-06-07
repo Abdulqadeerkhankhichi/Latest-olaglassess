@@ -42,29 +42,29 @@ Primary use:    project based
     width: 20%;
 }
 @font-face {
-    font-family: "tt commons";
-    src: url(../fonts/TT\ Commons\ Light.woff);
+    font-family: "TT Commons";
+    src: url(../fonts/TTCommonsLight.otf);
     font-weight: 300;
     font-display: auto;
 }
 
 @font-face {
-    font-family: "tt commons";
-    src: url(../fonts/TT\ Commons\ Regular.woff);
+    font-family: "TT Commons";
+    src: url(../fonts/TTCommonsRegular.otf);
     font-weight: 400;
     font-display: auto;
 }
 
 @font-face {
-    font-family: "tt commons";
-    src: url(../fonts/TT\ Commons\ Medium.woff);
+    font-family: "TT Commons";
+    src: url(../fonts/TTCommonsMedium.otf);
     font-weight: 500;
     font-display: auto;
 }
 
 @font-face {
-    font-family: "tt commons";
-    src: url(../fonts/TT\ Commons\ Bold.woff);
+    font-family: "TT Commons";
+    src: url(../fonts/TTCommonsBold.otf);
     font-weight: 700;
     font-display: auto;
 }
@@ -190,7 +190,7 @@ ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    font-family: 'tt commons' !important;
+    font-family: 'TT Commons' !important;
 }
 
 * {
@@ -203,7 +203,7 @@ a:hover,
 a:focus {
     text-decoration: none;
     cursor: pointer;
-    font-family: 'tt commons' !important;
+    font-family: 'TT Commons' !important;
 }
 .vbox-close {
     color: rgb(210, 210, 210);
@@ -235,7 +235,7 @@ p {
     margin: 0;
     padding: 0;
     letter-spacing: 0;
-    font-family: 'tt commons' !important;
+    font-family: 'TT Commons' !important;
 }
 
 p {
@@ -244,7 +244,7 @@ p {
     font-size: 16px !important;
     line-height: 150%;
     letter-spacing: 0.01em;
-    font-family: 'tt commons' !important;
+    font-family: 'TT Commons' !important;
 }
 
 span,
@@ -256,7 +256,7 @@ input,
 label,
 textarea,
 select {
-    font-family: 'tt commons' !important;
+    font-family: 'TT Commons' !important;
 }
 
 .title h2 {
@@ -479,7 +479,7 @@ select {
     width: 169px;
     padding: 14px 24px;
     text-align: center;
-    font-family: 'TT commons';
+    font-family: 'TT Commons';
 }
 
 .virtual-btn img {
@@ -7587,7 +7587,7 @@ p {
     color: var(--black);
     font-size: 20px !important;
     font-weight: 400;
-    font-family: "TT commons" !important;
+    font-family: "TT Commons" !important;
     line-height: 23px;
     padding-top: 8px;
     text-align: center;
@@ -8283,7 +8283,7 @@ p {
 }
 
 .protfolio-system .protfolio-system-right .gender li {
-    font-family: 'TT commons';
+    font-family: 'TT Commons';
     color: var(--black);
     padding-bottom: 30px;
     font-size: 20px;

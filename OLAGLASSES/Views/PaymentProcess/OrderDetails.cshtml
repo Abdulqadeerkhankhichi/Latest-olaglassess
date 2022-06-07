@@ -1,6 +1,6 @@
 ﻿@using Olaglasses.Models;
 @{
-    List<spgetorderDetails_Result1> spgetorderDetails = (List<spgetorderDetails_Result1>)ViewBag.OrderDetails;
+    List<spgetorderDetails_Result3> spgetorderDetails = (List<spgetorderDetails_Result3>)ViewBag.OrderDetails;
 }
 @{
     ViewBag.Title = "OrderDetails";
@@ -166,6 +166,7 @@
                                         <td></td>
 
                                     </tr>
+
                                     <tr>
                                         @if (@item.Discount != null && @item.Discount > 0)
                                         {

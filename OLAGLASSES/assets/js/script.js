@@ -1,6 +1,6 @@
 $(function () {
 	$(window).on('load', function(event) {
-        $('#preloader').delay(300).fadeOut(300);
+        $('#preloader').delay(100).fadeOut(100);
     });
 	//   $(".virtual-btn").click(function () {
 

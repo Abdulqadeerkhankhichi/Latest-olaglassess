@@ -3,6 +3,8 @@ using Olaglasses.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -14,6 +16,25 @@ namespace Olaglasses.Controllers
     [FilterConfig.AuthorizeActionFilter]
     public class GlassessController : Controller
     {
+
+        private void GenerateThumbnails(double scaleFactor, Stream sourcePath, string targetPath)
+        {
+            using (var image = Image.FromStream(sourcePath))
+            {
+                // can given width of image as we want  
+                var newWidth = (int)(image.Width * scaleFactor);
+                // can given height of image as we want  
+                var newHeight = (int)(image.Height * scaleFactor);
+                var thumbnailImg = new Bitmap(newWidth, newHeight);
+                var thumbGraph = Graphics.FromImage(thumbnailImg);
+                thumbGraph.CompositingQuality = CompositingQuality.HighQuality;
+                thumbGraph.SmoothingMode = SmoothingMode.HighQuality;
+                thumbGraph.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                var imageRectangle = new Rectangle(0, 0, newWidth, newHeight);
+                thumbGraph.DrawImage(image, imageRectangle);
+                thumbnailImg.Save(targetPath, image.RawFormat);
+            }
+        }
         OlaGlassesEntities dbEntity = new OlaGlassesEntities();
         [Customexception]
         public ActionResult Index(string message)
@@ -202,7 +223,9 @@ namespace Olaglasses.Controllers
                 var path = Path.Combine(Server.MapPath("/ProjectImages/Variations/"), SideViewImagePath.FileName.Replace(" ", "_"));
                 var path1 = Path.Combine(("/ProjectImages/Variations/"), SideViewImagePath.FileName.Replace(" ", "_"));
                 product.SideViewImagePath = path1;
-                SideViewImagePath.SaveAs(path);
+                //SideViewImagePath.SaveAs(path);
+                Stream strm = SideViewImagePath.InputStream;
+                GenerateThumbnails(0.3, strm, path);
             }
 
             if (product.VariationID > 0)
@@ -214,7 +237,10 @@ namespace Olaglasses.Controllers
                         var path = Path.Combine(Server.MapPath("/ProjectImages/Variations/"), item.FileName.Replace(" ", "_"));
                         var path1 = Path.Combine(("/ProjectImages/Variations/"), item.FileName.Replace(" ", "_"));
                         product.ImagePath = path1;
-                        item.SaveAs(path);
+                        //item.SaveAs(path);
+                        Stream strm = item.InputStream;
+                        GenerateThumbnails(0.3, strm, path);
+
 
                         tvi.ProductID = (int)product.ProductID;
                         tvi.VariationID = (int)product.VariationID;
@@ -252,8 +278,9 @@ namespace Olaglasses.Controllers
                         var path = Path.Combine(Server.MapPath("/ProjectImages/Variations/"), item.FileName.Replace(" ", "_"));
                         var path1 = Path.Combine(("/ProjectImages/Variations/"), item.FileName.Replace(" ", "_"));
                         product.ImagePath = path1;
-                        item.SaveAs(path);
-
+                        //item.SaveAs(path);
+                        Stream strm = item.InputStream;
+                        GenerateThumbnails(0.3, strm, path);
                         tvi.ProductID = (int)product.ProductID;
                         tvi.VariationID = (int)id;
                         tvi.ImagePath = path1;

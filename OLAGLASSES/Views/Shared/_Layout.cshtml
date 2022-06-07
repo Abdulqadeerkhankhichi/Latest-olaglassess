@@ -99,10 +99,14 @@
     <link rel="stylesheet" href="~/assets/css/responsive.css?var=2.1">
 
     <style>
+        ol, ul {
+             padding-left: 0rem !important; 
+        }
         .tooltip {
             position: relative;
             display: inline-block;
             opacity: 1 !important;
+            z-index: 0 !important;
         }
 
             .tooltip .tooltiptext {
@@ -1276,7 +1280,7 @@
     return;
 
             }
-            if (Password.length <= 6) {
+            if (Password.length < 6) {
                 document.getElementById("txtPasswordRegister").style.borderColor = "red";
                 document.getElementById("ErrorPasswordRegister").innerHTML = "Enter atleast 6 characters.";
                 $("#ErrorPasswordRegister").fadeIn();
@@ -1302,7 +1306,7 @@
             document.getElementById("btnRegister").style.borderColor = "black";
             document.getElementById("btnRegister").disabled = true;
 
-
+            $("#ErrorAccessMessageR").fadeOut();
     $.ajax({
     type: "POST",
     url: '@Url.Action("Register", "Account")',
@@ -1442,7 +1446,7 @@
     dataType: "json",
     contentType: "application/json; charset=utf-8",
         success: function (result) {
-
+        
     if (result.status == "-1") {
 
         document.getElementById("ErrorAccessMessage").innerHTML = "User not registered ";
@@ -1451,17 +1455,17 @@
         document.getElementById("btnLogin").style.backgroundColor = '#009B95';
         document.getElementById("btnLogin").style.borderColor = "#009B95";
         document.getElementById("btnLogin").disabled = false;
-
+        $("#ErrorAccessMessage").fadeIn();
     }
     else if (result.status == "-2") {
-
+      
         document.getElementById("ErrorAccessMessage").innerHTML = "Incorrect password";
         document.getElementById("ErrorAccessMessage").style.color = "#a94442";
         document.getElementById("btnLogin").innerHTML = "Sign in";
         document.getElementById("btnLogin").style.backgroundColor = '#009B95';
         document.getElementById("btnLogin").style.borderColor = "#009B95";
         document.getElementById("btnLogin").disabled = false;
-
+        $("#ErrorAccessMessage").fadeIn();
     }
 
     else if (result.status == "-3") {
@@ -1472,6 +1476,7 @@
         document.getElementById("btnLogin").style.backgroundColor = '#009B95';
         document.getElementById("btnLogin").style.borderColor = "#009B95";
         document.getElementById("btnLogin").disabled = false;
+        $("#ErrorAccessMessage").fadeIn();
     }
 
 

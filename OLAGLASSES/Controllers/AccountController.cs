@@ -416,6 +416,63 @@ namespace Olaglasses.Controllers
                         Session["Email"] = us.UserEmail;
                         Session["Role"] = us.Role;
                         Session["UserStatus"] = us.UserStatus;
+
+
+                        HttpCookie UserID = Request.Cookies["_UserID"];
+                        UserID = new HttpCookie("_UserID");
+                        UserID.Value = Convert.ToString(us.UserID);
+                        UserID.Expires = DateTime.Now.AddHours(3);
+                        Response.Cookies.Add(UserID);
+
+                        HttpCookie Emailcookie = Request.Cookies["_UserEmail"];
+                        Emailcookie = new HttpCookie("_UserEmail");
+                        Emailcookie.Value = Convert.ToString(us.UserEmail);
+                        Emailcookie.Expires = DateTime.Now.AddDays(1);
+                        Response.Cookies.Add(Emailcookie);
+
+                        HttpCookie Namecookie = Request.Cookies["_UserName"];
+                        Namecookie = new HttpCookie("_UserName");
+                        Namecookie.Value = Convert.ToString(us.Firstname + " " + us.Lastname);
+                        Namecookie.Expires = DateTime.Now.AddHours(3);
+                        Response.Cookies.Add(Namecookie);
+
+
+                        HttpCookie Imagecookie = Request.Cookies["_UserImage"];
+                        Imagecookie = new HttpCookie("_UserImage");
+                        if (us.UserImage == null)
+                        {
+                            Imagecookie.Value = "/ProjectImages/UserImages/user.jpg";
+                        }
+                        else
+                        {
+                            Imagecookie.Value = us.UserImage;
+                        }
+
+                        Imagecookie.Expires = DateTime.Now.AddHours(3);
+                        Response.Cookies.Add(Imagecookie);
+
+
+                        HttpCookie UserRolecookie = Request.Cookies["_UserRole"];
+                        UserRolecookie = new HttpCookie("_UserRole");
+                        UserRolecookie.Value = us.Role;
+                        UserRolecookie.Expires = DateTime.Now.AddHours(3);
+                        Response.Cookies.Add(UserRolecookie);
+
+                        HttpCookie CoverImagecookie = Request.Cookies["_CoverImagecookie"];
+                        CoverImagecookie = new HttpCookie("_CoverImagecookie");
+                        if (us.CoverPhoto == null)
+                        {
+                            CoverImagecookie.Value = "/ProjectImages/UserImages/banner.png";
+                        }
+                        else
+                        {
+                            CoverImagecookie.Value = us.CoverPhoto;
+                        }
+
+                        CoverImagecookie.Expires = DateTime.Now.AddDays(30);
+                        Response.Cookies.Add(CoverImagecookie);
+
+
                         if (us.Role == "admin")
                         {
                             return RedirectToAction("Index", "Dashboard");
@@ -485,6 +542,59 @@ namespace Olaglasses.Controllers
                     Session["UserStatus"] = user.UserStatus;
 
 
+                    HttpCookie UserID = Request.Cookies["_UserID"];
+                    UserID = new HttpCookie("_UserID");
+                    UserID.Value = Convert.ToString(user.UserID);
+                    UserID.Expires = DateTime.Now.AddHours(3);
+                    Response.Cookies.Add(UserID);
+
+                    HttpCookie Emailcookie = Request.Cookies["_UserEmail"];
+                    Emailcookie = new HttpCookie("_UserEmail");
+                    Emailcookie.Value = Convert.ToString(user.UserEmail);
+                    Emailcookie.Expires = DateTime.Now.AddDays(1);
+                    Response.Cookies.Add(Emailcookie);
+
+                    HttpCookie Namecookie = Request.Cookies["_UserName"];
+                    Namecookie = new HttpCookie("_UserName");
+                    Namecookie.Value = Convert.ToString(user.Firstname + " " + user.Lastname);
+                    Namecookie.Expires = DateTime.Now.AddHours(3);
+                    Response.Cookies.Add(Namecookie);
+
+
+                    HttpCookie Imagecookie = Request.Cookies["_UserImage"];
+                    Imagecookie = new HttpCookie("_UserImage");
+                    if (user.UserImage == null)
+                    {
+                        Imagecookie.Value = "/ProjectImages/UserImages/user.jpg";
+                    }
+                    else
+                    {
+                        Imagecookie.Value = user.UserImage;
+                    }
+
+                    Imagecookie.Expires = DateTime.Now.AddHours(3);
+                    Response.Cookies.Add(Imagecookie);
+
+
+                    HttpCookie UserRolecookie = Request.Cookies["_UserRole"];
+                    UserRolecookie = new HttpCookie("_UserRole");
+                    UserRolecookie.Value = user.Role;
+                    UserRolecookie.Expires = DateTime.Now.AddHours(3);
+                    Response.Cookies.Add(UserRolecookie);
+
+                    HttpCookie CoverImagecookie = Request.Cookies["_CoverImagecookie"];
+                    CoverImagecookie = new HttpCookie("_CoverImagecookie");
+                    if (user.CoverPhoto == null)
+                    {
+                        CoverImagecookie.Value = "/ProjectImages/UserImages/banner.png";
+                    }
+                    else
+                    {
+                        CoverImagecookie.Value = user.CoverPhoto;
+                    }
+
+                    CoverImagecookie.Expires = DateTime.Now.AddDays(30);
+                    Response.Cookies.Add(CoverImagecookie);
 
 
 
@@ -568,7 +678,19 @@ namespace Olaglasses.Controllers
                     UserRolecookie.Expires = DateTime.Now.AddHours(3);
                     Response.Cookies.Add(UserRolecookie);
 
+                    HttpCookie CoverImagecookie = Request.Cookies["_CoverImagecookie"];
+                    CoverImagecookie = new HttpCookie("_CoverImagecookie");
+                    if (userexists.CoverPhoto == null)
+                    {
+                        CoverImagecookie.Value = "/ProjectImages/UserImages/banner.png";
+                    }
+                    else
+                    {
+                        CoverImagecookie.Value = userexists.CoverPhoto;
+                    }
 
+                    CoverImagecookie.Expires = DateTime.Now.AddDays(30);
+                    Response.Cookies.Add(CoverImagecookie);
 
                     if (userexists.Role == "admin")
                     {
@@ -650,7 +772,19 @@ namespace Olaglasses.Controllers
                     UserRolecookie.Value = UserInformation.Role;
                     UserRolecookie.Expires = DateTime.Now.AddHours(3);
                     Response.Cookies.Add(UserRolecookie);
+                    HttpCookie CoverImagecookie = Request.Cookies["_CoverImagecookie"];
+                    CoverImagecookie = new HttpCookie("_CoverImagecookie");
+                    if (UserInformation.CoverPhoto == null)
+                    {
+                        CoverImagecookie.Value = "/ProjectImages/UserImages/banner.png";
+                    }
+                    else
+                    {
+                        CoverImagecookie.Value = UserInformation.CoverPhoto;
+                    }
 
+                    CoverImagecookie.Expires = DateTime.Now.AddDays(30);
+                    Response.Cookies.Add(CoverImagecookie);
                     if (user.Role == "admin")
                     {
                         return Json(new { status = "1", url = Url.Action("Index", "Dashboard") });

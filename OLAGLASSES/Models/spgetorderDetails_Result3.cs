@@ -11,7 +11,7 @@ namespace Olaglasses.Models
 {
     using System;
     
-    public partial class spgetorderDetails_Result1
+    public partial class spgetorderDetails_Result3
     {
         public int OrderID { get; set; }
         public Nullable<int> userID { get; set; }
@@ -72,6 +72,7 @@ namespace Olaglasses.Models
         public Nullable<double> PD { get; set; }
         public string PDImage { get; set; }
         public string PrescriptionImage { get; set; }
+        public Nullable<double> ExtraAmount { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
     }
 }

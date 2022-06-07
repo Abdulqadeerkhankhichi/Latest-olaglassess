@@ -230,10 +230,10 @@
                                         </div>
                                         <div class="glsber_details ">
                                             <h5>Total Width</h5>
-                                            <input onchange="Applyproductfilter(this,'','','')" type="range" min="110" max="150" value="0" class="range" id="myRange">
+                                            <input onchange="Applyproductfilter(this,'','','')" type="range" min="30" max="100" value="0" class="range" id="myRange">
                                             <div class="d-flex align-items-center  justify-content-between">
-                                                <span>110mm </span>
-                                                <span>150mm  </span>
+                                                <span>30mm </span>
+                                                <span>100mm  </span>
                                             </div>
                                         </div>
                                     </div>
@@ -974,7 +974,7 @@
 <script>
     function scrollToBottom(id) {
         $('html,body').animate({
-            scrollTop: $(".Products_Section").offset().top
+            scrollTop: $("#Products_Section").offset().top
         },
             'slow');
     }
@@ -1188,12 +1188,7 @@
 
 
                   $("#pagin li").remove();
-                  $(function () {
-                      $('#page').Pagination({
-                          size: 100
-
-                      });
-                  });
+                 
 
                   var pageSize = 8;
                   var pageCount = $(".product_style").length / pageSize;
@@ -1283,12 +1278,12 @@
     }
     $(document).ready(function () {
 
-        $(function () {
-            $('#page').Pagination({
-                size: 100
+        //$(function () {
+        //    $('#page').Pagination({
+        //        size: 100
 
-            });
-        });
+        //    });
+        //});
 
         var pageSize = 8;
 
