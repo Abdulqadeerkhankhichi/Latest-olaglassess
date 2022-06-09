@@ -54,7 +54,35 @@ $(function () {
 	// review slider
 
 	// review slider
+	if ($(window).width() < 460) {
 
+		$(".click-aria").click(function () {
+			$(".dropdown--menu").toggleClass("click-show");
+		});
+		$(".click-aria").click(function () {
+			$(".glasses-item-one").toggleClass("click-show-bg");
+		});
+		// 
+		$(".click-aria2").click(function () {
+			$(".dropdown--menu3").toggleClass("click-show2");
+		});
+		$(".click-aria2").click(function () {
+			$(".glasses-item.glasses-item-tow.text-center").toggleClass("click-show-bg2");
+		});
+		// 
+		$(".click-aria3").click(function () {
+			$(".dropdown--menu4").toggleClass("click-show3");
+		});
+		$(".click-aria3").click(function () {
+			$(".glasses-item.glasses-item-three.text-center").toggleClass("click-show-bg3");
+		});
+		$(".click-aria5").click(function () {
+			$(".dropdown--menu--5").toggleClass("click-show5");
+		});
+		$(".click-aria5").click(function () {
+			$(".glasses-item.text-center.last-item").toggleClass("click-show-bg4");
+		});
+	}
 	$('.owl-carousel.reviews-imges').owlCarousel({
 		loop: true,
 		margin: 0,
@@ -106,48 +134,48 @@ $(function () {
 			}
 		}
 	})
+	if ($(window).width() > 460) {
+		$(".ddl2").mouseover(function () {
+			$(".dropdown--menu").toggleClass("click-show");
+			$(".glasses-item-one").toggleClass("click-show-bg");
+		});
 
-	$(".ddl2").mouseover(function () {
-		$(".dropdown--menu").toggleClass("click-show");
-		$(".glasses-item-one").toggleClass("click-show-bg");
-	});
+		$(".ddl2").mouseout(function () {
+			$(".dropdown--menu").toggleClass("click-show");
+			$(".glasses-item-one").toggleClass("click-show-bg");
+		});
 
-	$(".ddl2").mouseout(function () {
-		$(".dropdown--menu").toggleClass("click-show");
-		$(".glasses-item-one").toggleClass("click-show-bg");
-	});
+		$(".ddl3").mouseover(function () {
+			$(".dropdown--menu3").toggleClass("click-show2");
+			$(".glasses-item.glasses-item-tow.text-center").toggleClass("click-show-bg2");
+		});
+		$(".ddl3").mouseout(function () {
+			$(".dropdown--menu3").toggleClass("click-show2");
+			$(".glasses-item.glasses-item-tow.text-center").toggleClass("click-show-bg2");
+		});
 
-	$(".ddl3").mouseover(function () {
-		$(".dropdown--menu3").toggleClass("click-show2");
-		$(".glasses-item.glasses-item-tow.text-center").toggleClass("click-show-bg2");
-	});
-	$(".ddl3").mouseout(function () {
-		$(".dropdown--menu3").toggleClass("click-show2");
-		$(".glasses-item.glasses-item-tow.text-center").toggleClass("click-show-bg2");
-	});
+		$(".ddl4").mouseover(function () {
+			$(".dropdown--menu4").toggleClass("click-show3");
+			$(".glasses-item.glasses-item-three.text-center").toggleClass("click-show-bg3");
+		});
 
-	$(".ddl4").mouseover(function () {
-		$(".dropdown--menu4").toggleClass("click-show3");
-		$(".glasses-item.glasses-item-three.text-center").toggleClass("click-show-bg3");
-	});
-
-	$(".ddl4").mouseout(function () {
-		$(".dropdown--menu4").toggleClass("click-show3");
-		$(".glasses-item.glasses-item-three.text-center").toggleClass("click-show-bg3");
-	});
+		$(".ddl4").mouseout(function () {
+			$(".dropdown--menu4").toggleClass("click-show3");
+			$(".glasses-item.glasses-item-three.text-center").toggleClass("click-show-bg3");
+		});
 
 
-	$(".ddl5").mouseover(function () {
-		$(".dropdown--menu--5").toggleClass("click-show5");
-		$(".glasses-item.text-center.last-item").toggleClass("click-show-bg4");
-	});
+		$(".ddl5").mouseover(function () {
+			$(".dropdown--menu--5").toggleClass("click-show5");
+			$(".glasses-item.text-center.last-item").toggleClass("click-show-bg4");
+		});
 
-	$(".ddl5").mouseout(function () {
-		
-		$(".dropdown--menu--5").toggleClass("click-show5");
-		$(".glasses-item.text-center.last-item").toggleClass("click-show-bg4");
-	});
+		$(".ddl5").mouseout(function () {
 
+			$(".dropdown--menu--5").toggleClass("click-show5");
+			$(".glasses-item.text-center.last-item").toggleClass("click-show-bg4");
+		});
+	}
 
 	$('.blog-aria').slick({
 		dots: false,

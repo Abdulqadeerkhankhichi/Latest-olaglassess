@@ -552,9 +552,9 @@ namespace Olaglasses.Controllers
                     cwhere += " and    C.colorname in (" + colorfilters + ") ";
                 }
 
-                if(width!=null && width>0)
+                if(width != null && width>0)
                 {
-                    cwhere += " and   V.FrameAWidth between 110 and "+width+"";
+                    cwhere += " and   V.FrameAWidth between "+width+" and 110 ";
                 }
 
 

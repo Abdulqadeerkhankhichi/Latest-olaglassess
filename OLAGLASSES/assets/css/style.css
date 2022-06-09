@@ -427,8 +427,8 @@ select {
 
 .navigation .nav-right ul li .cart-icon {
     /* color: var(--Secondery-color); */
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     line-height: 35px;
     text-align: center;
@@ -439,8 +439,8 @@ select {
 }
 
 .peple-icon {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     line-height: 35px;
     text-align: center;
@@ -1696,7 +1696,10 @@ section.news-details-area.news-blog.news-blog-details .blog-item:hover .details 
     box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.07), 0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0503198), 0px 22.3363px 17.869px rgba(0, 0, 0, 0.0417275), 0px 12.5216px 10.0172px rgba(0, 0, 0, 0.035), 0px 6.6501px 5.32008px rgba(0, 0, 0, 0.0282725), 0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0196802);
     cursor: pointer;
 }
-
+/*.glasses .glasses-item:checked {
+    box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.07), 0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0503198), 0px 22.3363px 17.869px rgba(0, 0, 0, 0.0417275), 0px 12.5216px 10.0172px rgba(0, 0, 0, 0.035), 0px 6.6501px 5.32008px rgba(0, 0, 0, 0.0282725), 0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0196802);
+    cursor: pointer;
+}*/
 .glasses .last-item {
     /*height: 330px !important;*/
     font-size: 20px;
@@ -5833,7 +5836,7 @@ p.segment-height {
 }
 
 .my-cart-area .coupon form input {
-    width: 556px;
+    width: 500px;
     height: 50px;
     border-radius: 25px;
     border: 0;
@@ -5849,7 +5852,7 @@ p.segment-height {
 }
 
 .my-cart-area .coupon form button {
-    width: 160px;
+    width: 30%;
     height: 50px;
     background-color: var(--Secondery-color);
     border-radius: 25px;
